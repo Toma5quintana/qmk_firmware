@@ -31,12 +31,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define LED_MATRIX_ROW_CHANNELS 3
 #define LED_MATRIX_ROWS_HW (LED_MATRIX_ROWS * LED_MATRIX_ROW_CHANNELS)
 #define LED_MATRIX_ROW_PINS { C0, C1, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, B6, B7, B8, B9, B10, B11 }
-// #define LED_MATRIX_ROW_PINS { B9, B10, B11, B6, B7, B8, C10, C11, C12, C7, C8, C9, C4, C5, C6, C0, C1, C3 } // (R, B, G) * 6 (# of rows)
-// #define LED_MATRIX_ROW_PINS { B11, B10, B9, B8, B7, B6, C12, C11, C10, C9, C8, C7, C6, C5, C4, C3, C1, C0 } // Reversing the rows seems to work better
+
 
 #define LED_MATRIX_COLS 17
 #define LED_MATRIX_COL_PINS { A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, B0, B1 }
-// #define LED_MATRIX_COL_PINS { B5, B4, B3, B2, B1, B0, A14, A13, A12, A11, A10, A9, A8, A7, A6, A5, A4, A3, A2, A1, A0 }
+
 
 #define DRIVER_LED_TOTAL (6*17)
 
