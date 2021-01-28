@@ -189,8 +189,9 @@ OSAL_IRQ_HANDLER(Vector80) {
 
     // Disable PWM outputs on column pins
     SN_CT16B1->PWMIOENB = 0;
-
-    SN_CT16B1->IC = mskCT16_MR24IC; // Clear match interrupt status
+    // Clear match interrupt status
+    SN_CT16B1->IC = mskCT16_MR24IC;
+    // Reset the counter
     SN_CT16B1->TMRCTRL = CT16_CRST;
 
     // Turn the selected LED row off
