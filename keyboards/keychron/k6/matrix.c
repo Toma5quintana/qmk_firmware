@@ -317,6 +317,7 @@ OSAL_IRQ_HANDLER(SN32_CT16B1_HANDLER) {
     }
     writePinHigh(led_row_pins[led_row]);
     CT16B1_IRQHandler();
+    while (SN_CT16B1->TC == 0xFF);
     OSAL_IRQ_EPILOGUE();
 }
 
