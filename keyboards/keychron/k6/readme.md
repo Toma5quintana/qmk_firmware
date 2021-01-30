@@ -1,10 +1,8 @@
-# Keychron K6 
-## **THIS IS A WORK IN PROGRESS, _DO NOT TRY TO FLASH IT!_**
+## Keychron K6 
+# **This is still a work in progress, flash at your own risk.**
 
 K6 ISO Nordic RGB
 This is by no means any original work, only a poor attempt to adapt the work done by the people listed above and I therefore take no credit for their work.
-
-All work so far is based on the assumption that Keychron has followed the same design principles on the K6 as on the K4, all of this is still untested.
 
 Layout by: [Alexander Frank](https://github.com/jedifindtrick) 
 
