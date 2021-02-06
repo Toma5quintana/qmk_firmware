@@ -30,3 +30,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define LED_MATRIX_COL_PINS { A8, A9, A10, A11, A12, A13, A14, A15, B0, B1, B2, B3, B4, B5, B6, B7 }
 
 #define DRIVER_LED_TOTAL (LED_MATRIX_ROWS * LED_MATRIX_COLS)
+//#define RGB_MATRIX_STARTUP_MODE RGBLIGHT_MODE_STATIC_LIGHT
+//#define RGB_MATRIX_KEYPRESSES
