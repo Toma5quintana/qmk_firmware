@@ -1,6 +1,6 @@
 # Keychron K4
 
-K4 RGB v1
+K4 Gateron RGB v1
 
 Keyboard Maintainer: [Dimitris Mantzouranis](https://github.com/dexter93)
 Based on Redragon K566 by: [Adam Honse](https://github.com/CalcProgrammer1) and Kemove DK63 by: [Stephen Peery](https://github.com/smp4488)

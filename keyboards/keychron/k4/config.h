@@ -26,7 +26,7 @@
 
 #define MANUFACTURER    Keychron
 #define PRODUCT         K4
-#define DESCRIPTION     K4 v1
+#define DESCRIPTION     K4 Gateron RGB v1
 
 /* key matrix size */
 #define MATRIX_ROWS 6
