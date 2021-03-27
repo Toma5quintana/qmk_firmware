@@ -1,6 +1,6 @@
-# Redragon K552-1 Kumara
+# Redragon K552 Kumara
 
-K552-1
+K552
 
 Keyboard Maintainer: [HorrorTroll](https://github.com/HorrorTroll)
 Heavily based on Allreli K643 by: [flolbr](https://github.com/flolbr)
