@@ -243,7 +243,14 @@ int main(void) {
                 /* Remote wakeup */
                 if (suspend_wakeup_condition()) {
                     usbWakeupHost(&USB_DRIVER);
+                    //Generally there is no need to restart usb driver
+                    //Change is introduced in https://github.com/qmk/qmk_firmware/pull/10088
+                    //Restarting driver entails bus disconnet/connect and device reenumeration
+                    //SN32 USB driver currently doesn't have proper handling for usb restart thus comment it for now
+                    //Alternatively it is posible to workaround it via ifndefs
+#if !defined(SN32F24xx)
                     restart_usb_driver(&USB_DRIVER);
+#endif
                 }
             }
             /* Woken up */
