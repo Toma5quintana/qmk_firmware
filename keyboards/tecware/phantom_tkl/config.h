@@ -47,4 +47,4 @@
 #define NO_DEBUG 1
 #define NO_PRINT 1
 
-#define FORCE_NKRO TRUE
+//#define FORCE_NKRO TRUE
