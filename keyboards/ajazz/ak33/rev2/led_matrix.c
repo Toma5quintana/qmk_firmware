@@ -40,7 +40,7 @@
     GPIO    GND
 */
 
-LED_TYPE led_state[DRIVER_LED_TOTAL];
+LED_TYPE led_state[LED_MATRIX_ROWS * LED_MATRIX_COLS];
 
 void init(void) {}
 
