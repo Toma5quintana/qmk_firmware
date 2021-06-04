@@ -45,8 +45,3 @@
 //#define LOCKING_RESYNC_ENABLE
 
 #include "config_led.h"
-#ifdef OPENRGB_ENABLE
-#    define OPENRGB_ZONES_COUNT 1
-#    define OPENRGB_MATRIX_COLUMNS 14
-#    define OPENRGB_MATRIX_ROWS 5
-#endif
