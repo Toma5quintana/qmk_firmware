@@ -26,7 +26,7 @@ enum layer_names {
 };
 
 // K580 Media Keys
-// 1,20                 1,19            6,20           4,20 
+// 1,20                 1,19            6,20           4,20
 // Vol/Brightness       Media prev.     Play/Pause     Media next
 
 // K580 Macro Keys
@@ -70,8 +70,8 @@ int macro_state[] = {0,  0,  0,  0,  0,  0  };
 
 // Map Macro state to RGB channels of LED indices 77 and 78
 void set_macro_leds(int state[]) {
-    rgb_matrix_set_color(77, state[2]*255, state[1]*255, state[0]*255);
-    rgb_matrix_set_color(78, state[5]*255, state[4]*255, state[3]*255);
+    rgb_matrix_set_color(118, state[2]*255, state[1]*255, state[0]*255);
+    rgb_matrix_set_color(119, state[5]*255, state[4]*255, state[3]*255);
 }
 
 void macro_led_toggle(int i) {
@@ -97,56 +97,13 @@ void macro_led_clear(void) {
 }
 
 
-/* Side LED support
-                        Left - Top to bottom         Right - Top to bottom */
-int side_leds[2][7] = {{13,112,114,115,116,117,118},{17,18,19,20,79,100,98}};
-
-//colors      hsv
-#define Red    {0,255,255}
-#define Orange {28,255,255}
-#define Yellow {43,255,255}
-#define Green  {85,255,255}
-#define Blue   {170,255,255}
-#define Violet {193,255,255}
-#define Sakura {242,171,255}
-#define White  {0,0,255}
-#define ______ {0,0,0}       //no color
-int side_led_colors[][3] = {______, Red, Orange, Yellow, Green, Blue, Violet, Sakura, White};
-uint8_t side_led_colors_length = sizeof(side_led_colors)/sizeof(side_led_colors[0]);
-uint8_t side_led_current_index = 0;
-
-void side_led_set_color(int i, int color[]){
-    HSV hsv = {
-      .h = pgm_read_byte(&color[0]),
-      .s = pgm_read_byte(&color[1]),
-      .v = pgm_read_byte(&color[2]),
-    };
-    if (!hsv.h && !hsv.s && !hsv.v) {
-        rgb_matrix_set_color(i, 0, 0, 0);
-    } else{
-        RGB rgb = hsv_to_rgb( hsv );
-        float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
-        rgb_matrix_set_color( i, f * rgb.r, f * rgb.g, f * rgb.b );
-    }
-}
-
-void side_led_switch(void) {
-    side_led_current_index = (side_led_current_index + 1) % (side_led_colors_length - 1);
-    for (int i = 0; i < 2; i++){
-        for (int j = 0; j < 7; j++){
-            side_led_set_color(side_leds[i][j],side_led_colors[side_led_current_index]);
-        }
-    }
-}
-
-
 // Macro support (for default keymap)
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
     case U_VOLBRI:
         if (record->event.pressed) {
             // switch volume/brightness for encoder
-            BRI = !BRI;            
+            BRI = !BRI;
         } else {
             // on release
         }
@@ -179,11 +136,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case U_REC:
         if (record->event.pressed) {
             macro_led_toggle(5);
-        }
-        break;
-    case RGB_TOG:
-        if (record->event.pressed) {
-            side_led_switch();
         }
         break;
     }

@@ -58,7 +58,7 @@ WAIT_FOR_USB = no
 CUSTOM_MATRIX = yes
 KEYBOARD_SHARED_EP = yes
 
-# ENCODER 
+# ENCODER
 ENCODER_ENABLE =yes
 
 # Custom RGB matrix handling

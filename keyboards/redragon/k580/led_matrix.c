@@ -41,7 +41,7 @@
 */
 
 LED_TYPE led_state[LED_MATRIX_ROWS * LED_MATRIX_COLS];
-uint8_t led_pos[DRIVER_LED_TOTAL];
+uint8_t led_pos[DRIVER_LED_TOTAL + 2];
 #ifdef UNDERGLOW_IDX
 static const unsigned int underglow_led_idx[UNDERGLOW_LEDS] = UNDERGLOW_IDX;
 #endif
@@ -57,6 +57,8 @@ void init(void) {
             i++;
         }
     }
+    led_pos[DRIVER_LED_TOTAL] = 77;
+    led_pos[DRIVER_LED_TOTAL + 1] = 78;
 #ifdef UNDERGLOW_IDX
     i = 0;
     for (unsigned int x = DRIVER_LED_TOTAL - UNDERGLOW_LEDS; x < DRIVER_LED_TOTAL; x++) {
