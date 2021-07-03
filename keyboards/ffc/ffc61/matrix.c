@@ -221,7 +221,7 @@ OSAL_IRQ_HANDLER(SN32_CT16B1_HANDLER) {
             }
 
             // Disable the row
-			for (uint8_t delay_idx = 0; delay_idx < 45; delay_idx++)
+			for (uint8_t delay_idx = 0; delay_idx < 50; delay_idx++)
 			{
 			   writePinHigh(row_pins[row_index]);
 			}
