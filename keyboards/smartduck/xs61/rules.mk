@@ -61,8 +61,4 @@ KEYBOARD_SHARED_EP = yes
 # Custom RGB matrix handling
 RGB_MATRIX_ENABLE = yes
 RGB_MATRIX_DRIVER = custom
-<<<<<<< HEAD
-=======
-
->>>>>>> f3f435524b9acbcb1006c16d915d0efe074c6fee
 OPENRGB_ENABLE = yes
