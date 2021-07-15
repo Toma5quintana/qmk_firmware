@@ -28,6 +28,9 @@
 #define PRODUCT         K87
 #define DESCRIPTION     K87
 
+#define FORCE_NKRO
+#define USB_POLLING_INTERVAL_MS 2
+
 /* key matrix size */
 #define MATRIX_ROWS 6
 #define MATRIX_COLS 17
@@ -37,13 +40,15 @@
 #define MATRIX_COL_PINS { A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, B0, B1 }
 #define MATRIX_ROW_PINS { C15, D11, D10, D9, D8, D7 }
 
-#define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_CYCLE_OUT_IN_DUAL//RGB_MATRIX_SOLID_COLOR
+#define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_SOLID_COLOR
 
-// #define RGB_MATRIX_STARTUP_HUE (157-8)
+#define RGB_MATRIX_STARTUP_HUE (20)
 
-// #define RGB_MATRIX_STARTUP_SAT (192+16) //UINT8_MAX
+#define RGB_MATRIX_STARTUP_SAT (255) 
 
-// #define RGB_MATRIX_STARTUP_VAL RGB_MATRIX_MAXIMUM_BRIGHTNESS
+#define RGB_MATRIX_STARTUP_VAL (255)
+
+NKRO_ENABLE = yes     // USB Nkey Rollover
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 5
