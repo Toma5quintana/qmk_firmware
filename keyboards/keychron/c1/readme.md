@@ -11,11 +11,11 @@ Make example for this keyboard (after setting up your build environment):
 
 ### Firmware Status:
 * Default - 99% done (Siri Hotkey for MacOS missing)
-* VIA - ?
+* VIA - Currently unsupported.
 
 ### Firmware Version:
-* Default - 0.7.101.3161-g21daff-dirty
-* VIA - ?
+* Default - 0.7.101
+* VIA - N/A
 * * *
 # Keymapping
 
@@ -43,10 +43,10 @@ Home | Increase RGB Saturation
 End | Decrease RGB Saturation
 Page Up | Increase RGB Hue
 Page Down | Decrease RGB Hue
-⬆ | Increase RGB Effect Speed
-⬅ | Previous RGB Effect
-⬇ | Decrease RGB Effect Speed
-➡ | Next RGB Effect
+↑ | Increase RGB Effect Speed
+← | Previous RGB Effect
+↓ | Decrease RGB Effect Speed
+→ | Next RGB Effect
 
 ### Mac Mode
 Without Fn | With Fn
@@ -70,11 +70,11 @@ Home | Increase RGB Saturation
 End | Decrease RGB Saturation
 Page Up | Increase RGB Hue
 Page Down | Decrease RGB Hue
-⬆ | Increase RGB Effect Speed
-⬅ | Previous RGB Effect
-⬇ | Decrease RGB Effect Speed
-➡ | Next RGB Effect
+↑ | Increase RGB Effect Speed
+← | Previous RGB Effect
+↓ | Decrease RGB Effect Speed
+→ | Next RGB Effect
 * * *
-For more info and detailed flashing instructions, please visit https://github.com/alex-dinh/keychron-k8
+For more info and detailed flashing instructions, please visit https://github.com/CanUnesi/QMK-on-K6#readme
 
 See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).
