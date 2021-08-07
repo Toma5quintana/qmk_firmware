@@ -44,6 +44,7 @@
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 0
 
-//#define FORCE_NKRO
+// Forces N-key rollover
+#define FORCE_NKRO
 
 #include "config_led.h"
