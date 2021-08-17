@@ -121,7 +121,7 @@ void matrix_init(void) {
         switch(led_col_pins[i]) {
             // Intentional fall-through for the PWM B-pin mapping
             case B8:
-                if(LED_CAPS_LOCK_PIN != B8 && LED_SCROLL_LOCK_PIN != B8 && LED_NUM_LOCK_PIN != B8){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != B8 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != B8 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != B8 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM0EN_EN;
                 }
             case A0:
@@ -130,7 +130,7 @@ void matrix_init(void) {
                 break;
 
             case B9:
-                if(LED_CAPS_LOCK_PIN != B9 && LED_SCROLL_LOCK_PIN != B9 && LED_NUM_LOCK_PIN != B9){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != B9 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != B9 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != B9 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM1EN_EN;
                 }
             case A1:
@@ -139,7 +139,7 @@ void matrix_init(void) {
                 break;
             
             case B10:
-                if(LED_CAPS_LOCK_PIN != B10 && LED_SCROLL_LOCK_PIN != B10 && LED_NUM_LOCK_PIN != B10){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != B10 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != B10 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != B10 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM2EN_EN;
                 }
             case A2:
@@ -148,7 +148,7 @@ void matrix_init(void) {
                 break;
 
             case B11:
-                if(LED_CAPS_LOCK_PIN != B11 && LED_SCROLL_LOCK_PIN != B11 && LED_NUM_LOCK_PIN != B11){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != B11 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != B11 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != B11 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM3EN_EN;
                 }
             case A3:
@@ -157,7 +157,7 @@ void matrix_init(void) {
                 break;
 
             case B12:
-                if(LED_CAPS_LOCK_PIN != B12 && LED_SCROLL_LOCK_PIN != B12 && LED_NUM_LOCK_PIN != B12){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != B12 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != B12 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != B12 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM4EN_EN;
                 }
             case A4:
@@ -166,7 +166,7 @@ void matrix_init(void) {
                 break;
 
             case B13:
-                if(LED_CAPS_LOCK_PIN != B13 && LED_SCROLL_LOCK_PIN != B13 && LED_NUM_LOCK_PIN != B13){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != B13 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != B13 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != B13 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM5EN_EN;
                 }
             case A5:
@@ -175,7 +175,7 @@ void matrix_init(void) {
                 break;
 
             case B14:
-                if(LED_CAPS_LOCK_PIN != B14 && LED_SCROLL_LOCK_PIN != B14 && LED_NUM_LOCK_PIN != B14){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != B14 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != B14 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != B14 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM6EN_EN;
                 }
             case A6:
@@ -184,7 +184,7 @@ void matrix_init(void) {
                 break;
 
             case B15:
-                if(LED_CAPS_LOCK_PIN != B15 && LED_SCROLL_LOCK_PIN != B15 && LED_NUM_LOCK_PIN != B15){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != B15 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != B15 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != B15 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM7EN_EN;
                 }
             case A7:
@@ -193,7 +193,7 @@ void matrix_init(void) {
                 break;
 
             case C0:
-                if(LED_CAPS_LOCK_PIN != C0 && LED_SCROLL_LOCK_PIN != C0 && LED_NUM_LOCK_PIN != C0){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != C0 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != C0 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != C0 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM8EN_EN;
                 }
             case A8:
@@ -202,7 +202,7 @@ void matrix_init(void) {
                 break;
 
             case C1:
-                if(LED_CAPS_LOCK_PIN != C1 && LED_SCROLL_LOCK_PIN != C1 && LED_NUM_LOCK_PIN != C1){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != C1 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != C1 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != C1 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM9EN_EN;
                 }
             case A9:
@@ -211,7 +211,7 @@ void matrix_init(void) {
                 break;
 
             case C2:
-                if(LED_CAPS_LOCK_PIN != C2 && LED_SCROLL_LOCK_PIN != C2 && LED_NUM_LOCK_PIN != C2){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != C2 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != C2 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != C2 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM10EN_EN;
                 }
             case A10:
@@ -220,7 +220,7 @@ void matrix_init(void) {
                 break;
 
             case C3:
-                if(LED_CAPS_LOCK_PIN != C3 && LED_SCROLL_LOCK_PIN != C3 && LED_NUM_LOCK_PIN != C3){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != C3 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != C3 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != C3 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM11EN_EN;
                 }
             case A11:
@@ -229,7 +229,7 @@ void matrix_init(void) {
                 break;
 
             case C4:
-                if(LED_CAPS_LOCK_PIN != C4 && LED_SCROLL_LOCK_PIN != C4 && LED_NUM_LOCK_PIN != C4){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != C4 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != C4 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != C4 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM12EN_EN;
                 }
             case A12:
@@ -238,7 +238,7 @@ void matrix_init(void) {
                 break;
 
             case C5:
-                if(LED_CAPS_LOCK_PIN != C5 && LED_SCROLL_LOCK_PIN != C5 && LED_NUM_LOCK_PIN != C5){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != C5 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != C5 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != C5 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM13EN_EN;
                 }
             case A13:
@@ -247,7 +247,7 @@ void matrix_init(void) {
                 break;
 
             case C6:
-                if(LED_CAPS_LOCK_PIN != C6 && LED_SCROLL_LOCK_PIN != C6 && LED_NUM_LOCK_PIN != C6){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != C6 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != C6 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != C6 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM14EN_EN;
                 }
             case A14:
@@ -256,7 +256,7 @@ void matrix_init(void) {
                 break;
 
             case C7:
-                if(LED_CAPS_LOCK_PIN != C7 && LED_SCROLL_LOCK_PIN != C7 && LED_NUM_LOCK_PIN != C7){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != C7 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != C7 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != C7 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM15EN_EN;
                 }
             case A15:
@@ -265,7 +265,7 @@ void matrix_init(void) {
                 break;
 
             case C8:
-                if(LED_CAPS_LOCK_PIN != C8 && LED_SCROLL_LOCK_PIN != C8 && LED_NUM_LOCK_PIN != C8){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != C8 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != C8 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != C8 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM16EN_EN;
                 }
             case B0:
@@ -274,7 +274,7 @@ void matrix_init(void) {
                 break;
 
             case C9:
-                if(LED_CAPS_LOCK_PIN != C9 && LED_SCROLL_LOCK_PIN != C9 && LED_NUM_LOCK_PIN != C9){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != C9 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != C9 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != C9 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM17EN_EN;
                 }
             case B1:
@@ -283,7 +283,7 @@ void matrix_init(void) {
                 break;
 
             case C10:
-                if(LED_CAPS_LOCK_PIN != C10 && LED_SCROLL_LOCK_PIN != C10 && LED_NUM_LOCK_PIN != C10){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != C10 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != C10 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != C10 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM18EN_EN;
                 }
             case B2:
@@ -292,7 +292,7 @@ void matrix_init(void) {
                 break;
 
             case C11:
-                if(LED_CAPS_LOCK_PIN != C11 && LED_SCROLL_LOCK_PIN != C11 && LED_NUM_LOCK_PIN != C11){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != C11 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != C11 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != C11 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM19EN_EN;
                 }
             case B3:
@@ -301,7 +301,7 @@ void matrix_init(void) {
                 break;
 
             case C12:
-                if(LED_CAPS_LOCK_PIN != C12 && LED_SCROLL_LOCK_PIN != C12 && LED_NUM_LOCK_PIN != C12){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != C12 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != C12 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != C12 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM20EN_EN;
                 }
             case B4:
@@ -310,7 +310,7 @@ void matrix_init(void) {
                 break;
 
             case C13:
-                if(LED_CAPS_LOCK_PIN != C13 && LED_SCROLL_LOCK_PIN != C13 && LED_NUM_LOCK_PIN != C13){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != C13 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != C13 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != C13 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM21EN_EN;
                 }
             case B5:
@@ -319,7 +319,7 @@ void matrix_init(void) {
                 break;
 
             case C14:
-                if(LED_CAPS_LOCK_PIN != C14 && LED_SCROLL_LOCK_PIN != C14 && LED_NUM_LOCK_PIN != C14){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != C14 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != C14 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != C14 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM22EN_EN;
                 }
             case B6:
@@ -328,7 +328,7 @@ void matrix_init(void) {
                 break;
 
             case C15:
-                if(LED_CAPS_LOCK_PIN != C15 && LED_SCROLL_LOCK_PIN != C15 && LED_NUM_LOCK_PIN != C15){
+                if((!defined(LED_CAPS_LOCK_PIN) || LED_CAPS_LOCK_PIN != C15 ) && (!defined(LED_SCROLL_LOCK_PIN) || LED_SCROLL_LOCK_PIN != C15 ) && (!defined(LED_NUM_LOCK_PIN) || LED_NUM_LOCK_PIN != C15 )){
                     SN_PFPA->CT16B1 |= mskCT16_PWM23EN_EN;
                 }
             case B7:
