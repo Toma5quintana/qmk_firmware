@@ -121,168 +121,216 @@ void matrix_init(void) {
         switch(led_col_pins[i]) {
             // Intentional fall-through for the PWM B-pin mapping
             case B8:
-                SN_PFPA->CT16B1 |= mskCT16_PWM0EN_EN;
+                if(LED_CAPS_LOCK_PIN != B8 && LED_SCROLL_LOCK_PIN != B8 && LED_NUM_LOCK_PIN != B8){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM0EN_EN;
+                }
             case A0:
                 pwm_en_msk |= mskCT16_PWM0EN_EN;
                 mr_offset[0] = i;
                 break;
 
             case B9:
-                SN_PFPA->CT16B1 |= mskCT16_PWM1EN_EN;
+                if(LED_CAPS_LOCK_PIN != B9 && LED_SCROLL_LOCK_PIN != B9 && LED_NUM_LOCK_PIN != B9){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM1EN_EN;
+                }
             case A1:
                 pwm_en_msk |= mskCT16_PWM1EN_EN;
                 mr_offset[1] = i;
                 break;
             
             case B10:
-                SN_PFPA->CT16B1 |= mskCT16_PWM2EN_EN;
+                if(LED_CAPS_LOCK_PIN != B10 && LED_SCROLL_LOCK_PIN != B10 && LED_NUM_LOCK_PIN != B10){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM2EN_EN;
+                }
             case A2:
                 pwm_en_msk |= mskCT16_PWM2EN_EN;
                 mr_offset[2] = i;
                 break;
 
             case B11:
-                SN_PFPA->CT16B1 |= mskCT16_PWM3EN_EN;
+                if(LED_CAPS_LOCK_PIN != B11 && LED_SCROLL_LOCK_PIN != B11 && LED_NUM_LOCK_PIN != B11){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM3EN_EN;
+                }
             case A3:
                 pwm_en_msk |= mskCT16_PWM3EN_EN;
                 mr_offset[3] = i;
                 break;
 
             case B12:
-                SN_PFPA->CT16B1 |= mskCT16_PWM4EN_EN;
+                if(LED_CAPS_LOCK_PIN != B12 && LED_SCROLL_LOCK_PIN != B12 && LED_NUM_LOCK_PIN != B12){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM4EN_EN;
+                }
             case A4:
                 pwm_en_msk |= mskCT16_PWM4EN_EN;
                 mr_offset[4] = i;
                 break;
 
             case B13:
-                SN_PFPA->CT16B1 |= mskCT16_PWM5EN_EN;
+                if(LED_CAPS_LOCK_PIN != B13 && LED_SCROLL_LOCK_PIN != B13 && LED_NUM_LOCK_PIN != B13){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM5EN_EN;
+                }
             case A5:
                 pwm_en_msk |= mskCT16_PWM5EN_EN;
                 mr_offset[5] = i;
                 break;
 
             case B14:
-                SN_PFPA->CT16B1 |= mskCT16_PWM6EN_EN;
+                if(LED_CAPS_LOCK_PIN != B14 && LED_SCROLL_LOCK_PIN != B14 && LED_NUM_LOCK_PIN != B14){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM6EN_EN;
+                }
             case A6:
                 pwm_en_msk |= mskCT16_PWM6EN_EN;
                 mr_offset[6] = i;
                 break;
 
             case B15:
-                SN_PFPA->CT16B1 |= mskCT16_PWM7EN_EN;
+                if(LED_CAPS_LOCK_PIN != B15 && LED_SCROLL_LOCK_PIN != B15 && LED_NUM_LOCK_PIN != B15){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM7EN_EN;
+                }
             case A7:
                 pwm_en_msk |= mskCT16_PWM7EN_EN;
                 mr_offset[7] = i;
                 break;
 
             case C0:
-                SN_PFPA->CT16B1 |= mskCT16_PWM8EN_EN;
+                if(LED_CAPS_LOCK_PIN != C0 && LED_SCROLL_LOCK_PIN != C0 && LED_NUM_LOCK_PIN != C0){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM8EN_EN;
+                }
             case A8:
                 pwm_en_msk |= mskCT16_PWM8EN_EN;
                 mr_offset[8] = i;
                 break;
 
             case C1:
-                SN_PFPA->CT16B1 |= mskCT16_PWM9EN_EN;
+                if(LED_CAPS_LOCK_PIN != C1 && LED_SCROLL_LOCK_PIN != C1 && LED_NUM_LOCK_PIN != C1){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM9EN_EN;
+                }
             case A9:
                 pwm_en_msk |= mskCT16_PWM9EN_EN;
                 mr_offset[9] = i;
                 break;
 
             case C2:
-                SN_PFPA->CT16B1 |= mskCT16_PWM10EN_EN;
+                if(LED_CAPS_LOCK_PIN != C2 && LED_SCROLL_LOCK_PIN != C2 && LED_NUM_LOCK_PIN != C2){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM10EN_EN;
+                }
             case A10:
                 pwm_en_msk |= mskCT16_PWM10EN_EN;
                 mr_offset[10] = i;
                 break;
 
             case C3:
-                SN_PFPA->CT16B1 |= mskCT16_PWM11EN_EN;
+                if(LED_CAPS_LOCK_PIN != C3 && LED_SCROLL_LOCK_PIN != C3 && LED_NUM_LOCK_PIN != C3){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM11EN_EN;
+                }
             case A11:
                 pwm_en_msk |= mskCT16_PWM11EN_EN;
                 mr_offset[11] = i;
                 break;
 
             case C4:
-                SN_PFPA->CT16B1 |= mskCT16_PWM12EN_EN;
+                if(LED_CAPS_LOCK_PIN != C4 && LED_SCROLL_LOCK_PIN != C4 && LED_NUM_LOCK_PIN != C4){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM12EN_EN;
+                }
             case A12:
                 pwm_en_msk |= mskCT16_PWM12EN_EN;
                 mr_offset[12] = i;
                 break;
 
             case C5:
-                SN_PFPA->CT16B1 |= mskCT16_PWM13EN_EN;
+                if(LED_CAPS_LOCK_PIN != C5 && LED_SCROLL_LOCK_PIN != C5 && LED_NUM_LOCK_PIN != C5){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM13EN_EN;
+                }
             case A13:
                 pwm_en_msk |= mskCT16_PWM13EN_EN;
                 mr_offset[13] = i;
                 break;
 
             case C6:
-                SN_PFPA->CT16B1 |= mskCT16_PWM14EN_EN;
+                if(LED_CAPS_LOCK_PIN != C6 && LED_SCROLL_LOCK_PIN != C6 && LED_NUM_LOCK_PIN != C6){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM14EN_EN;
+                }
             case A14:
                 pwm_en_msk |= mskCT16_PWM14EN_EN;
                 mr_offset[14] = i;
                 break;
 
             case C7:
-                SN_PFPA->CT16B1 |= mskCT16_PWM15EN_EN;
+                if(LED_CAPS_LOCK_PIN != C7 && LED_SCROLL_LOCK_PIN != C7 && LED_NUM_LOCK_PIN != C7){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM15EN_EN;
+                }
             case A15:
                 pwm_en_msk |= mskCT16_PWM15EN_EN;
                 mr_offset[15] = i;
                 break;
 
             case C8:
-                SN_PFPA->CT16B1 |= mskCT16_PWM16EN_EN;
+                if(LED_CAPS_LOCK_PIN != C8 && LED_SCROLL_LOCK_PIN != C8 && LED_NUM_LOCK_PIN != C8){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM16EN_EN;
+                }
             case B0:
                 pwm_en_msk |= mskCT16_PWM16EN_EN;
                 mr_offset[16] = i;
                 break;
 
             case C9:
-                SN_PFPA->CT16B1 |= mskCT16_PWM17EN_EN;
+                if(LED_CAPS_LOCK_PIN != C9 && LED_SCROLL_LOCK_PIN != C9 && LED_NUM_LOCK_PIN != C9){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM17EN_EN;
+                }
             case B1:
                 pwm_en_msk |= mskCT16_PWM17EN_EN;
                 mr_offset[17] = i;
                 break;
 
             case C10:
-                SN_PFPA->CT16B1 |= mskCT16_PWM18EN_EN;
+                if(LED_CAPS_LOCK_PIN != C10 && LED_SCROLL_LOCK_PIN != C10 && LED_NUM_LOCK_PIN != C10){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM18EN_EN;
+                }
             case B2:
                 pwm_en_msk |= mskCT16_PWM18EN_EN;
                 mr_offset[18] = i;
                 break;
 
             case C11:
-                SN_PFPA->CT16B1 |= mskCT16_PWM19EN_EN;
+                if(LED_CAPS_LOCK_PIN != C11 && LED_SCROLL_LOCK_PIN != C11 && LED_NUM_LOCK_PIN != C11){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM19EN_EN;
+                }
             case B3:
                 pwm_en_msk |= mskCT16_PWM19EN_EN;
                 mr_offset[19] = i;
                 break;
 
             case C12:
-                SN_PFPA->CT16B1 |= mskCT16_PWM20EN_EN;
+                if(LED_CAPS_LOCK_PIN != C12 && LED_SCROLL_LOCK_PIN != C12 && LED_NUM_LOCK_PIN != C12){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM20EN_EN;
+                }
             case B4:
                 pwm_en_msk |= mskCT16_PWM20EN_EN;
                 mr_offset[20] = i;
                 break;
 
             case C13:
-                SN_PFPA->CT16B1 |= mskCT16_PWM21EN_EN;
+                if(LED_CAPS_LOCK_PIN != C13 && LED_SCROLL_LOCK_PIN != C13 && LED_NUM_LOCK_PIN != C13){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM21EN_EN;
+                }
             case B5:
                 pwm_en_msk |= mskCT16_PWM21EN_EN;
                 mr_offset[21] = i;
                 break;
 
             case C14:
-                SN_PFPA->CT16B1 |= mskCT16_PWM22EN_EN;
+                if(LED_CAPS_LOCK_PIN != C14 && LED_SCROLL_LOCK_PIN != C14 && LED_NUM_LOCK_PIN != C14){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM22EN_EN;
+                }
             case B6:
                 pwm_en_msk |= mskCT16_PWM22EN_EN;
                 mr_offset[22] = i;
                 break;
 
             case C15:
-                SN_PFPA->CT16B1 |= mskCT16_PWM23EN_EN;
+                if(LED_CAPS_LOCK_PIN != C15 && LED_SCROLL_LOCK_PIN != C15 && LED_NUM_LOCK_PIN != C15){
+                    SN_PFPA->CT16B1 |= mskCT16_PWM23EN_EN;
+                }
             case B7:
                 pwm_en_msk |= mskCT16_PWM23EN_EN;
                 mr_offset[23] = i;
