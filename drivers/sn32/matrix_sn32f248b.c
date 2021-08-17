@@ -36,6 +36,7 @@ static const pin_t row_pins[MATRIX_ROWS] = MATRIX_ROW_PINS;
 static const pin_t col_pins[MATRIX_COLS] = MATRIX_COL_PINS;
 static const pin_t led_row_pins[LED_MATRIX_ROWS_HW] = LED_MATRIX_ROW_PINS;
 static const pin_t led_col_pins[LED_MATRIX_COLS] = LED_MATRIX_COL_PINS;
+static pin_t status_led_pins[5] = {0,0,0,0,0};
 static uint16_t row_ofsts[LED_MATRIX_ROWS];
 static uint8_t mr_offset[24] = {0};
 static uint32_t pwm_en_msk = 0;
@@ -118,171 +119,358 @@ void matrix_init(void) {
     
     // Enable PWM function, IOs and select the PWM modes for the LED column pins
     for(uint8_t i = 0; i < LED_MATRIX_COLS; i++) {
+// Populate the LED status indicator pins, if any
+#if defined(LED_NUM_LOCK_PIN) || defined(LED_CAPS_LOCK_PIN) || defined(LED_SCROLL_LOCK_PIN) || defined(LED_COMPOSE_PIN) || defined(LED_KANA_PIN)
+#    ifdef LED_NUM_LOCK_PIN
+        status_led_pins[0] = LED_NUM_LOCK_PIN;
+#    endif
+#    ifdef LED_CAPS_LOCK_PIN
+        status_led_pins[1] = LED_CAPS_LOCK_PIN;
+#    endif
+#    ifdef LED_SCROLL_LOCK_PIN
+        status_led_pins[2] = LED_SCROLL_LOCK_PIN;
+#    endif
+#    ifdef LED_COMPOSE_PIN
+        status_led_pins[3] = LED_COMPOSE_PIN;
+#    endif
+#    ifdef LED_KANA_PIN
+        status_led_pins[4] = LED_KANA_PIN;
+#    endif
+#endif
         switch(led_col_pins[i]) {
             // Intentional fall-through for the PWM B-pin mapping
+            // LED status indicators stay on PWM A-pin mapping
             case B8:
-                SN_PFPA->CT16B1 |= mskCT16_PWM0EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case B8:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM0EN_EN;
+                    }
+                }
             case A0:
                 pwm_en_msk |= mskCT16_PWM0EN_EN;
                 mr_offset[0] = i;
                 break;
 
             case B9:
-                SN_PFPA->CT16B1 |= mskCT16_PWM1EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case B9:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM1EN_EN;
+                    }
+                }
             case A1:
                 pwm_en_msk |= mskCT16_PWM1EN_EN;
                 mr_offset[1] = i;
                 break;
             
             case B10:
-                SN_PFPA->CT16B1 |= mskCT16_PWM2EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case B10:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM2EN_EN;
+                    }
+                }
             case A2:
                 pwm_en_msk |= mskCT16_PWM2EN_EN;
                 mr_offset[2] = i;
                 break;
 
             case B11:
-                SN_PFPA->CT16B1 |= mskCT16_PWM3EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case B11:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM3EN_EN;
+                    }
+                }
             case A3:
                 pwm_en_msk |= mskCT16_PWM3EN_EN;
                 mr_offset[3] = i;
                 break;
 
             case B12:
-                SN_PFPA->CT16B1 |= mskCT16_PWM4EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case B12:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM4EN_EN;
+                    }
+                }
             case A4:
                 pwm_en_msk |= mskCT16_PWM4EN_EN;
                 mr_offset[4] = i;
                 break;
 
             case B13:
-                SN_PFPA->CT16B1 |= mskCT16_PWM5EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case B13:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM5EN_EN;
+                    }
+                }
             case A5:
                 pwm_en_msk |= mskCT16_PWM5EN_EN;
                 mr_offset[5] = i;
                 break;
 
             case B14:
-                SN_PFPA->CT16B1 |= mskCT16_PWM6EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case B14:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM6EN_EN;
+                    }
+                }
             case A6:
                 pwm_en_msk |= mskCT16_PWM6EN_EN;
                 mr_offset[6] = i;
                 break;
 
             case B15:
-                SN_PFPA->CT16B1 |= mskCT16_PWM7EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case B15:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM7EN_EN;
+                    }
+                }
             case A7:
                 pwm_en_msk |= mskCT16_PWM7EN_EN;
                 mr_offset[7] = i;
                 break;
 
             case C0:
-                SN_PFPA->CT16B1 |= mskCT16_PWM8EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case C0:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM8EN_EN;
+                    }
+                }
             case A8:
                 pwm_en_msk |= mskCT16_PWM8EN_EN;
                 mr_offset[8] = i;
                 break;
 
             case C1:
-                SN_PFPA->CT16B1 |= mskCT16_PWM9EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case C1:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM9EN_EN;
+                    }
+                }
             case A9:
                 pwm_en_msk |= mskCT16_PWM9EN_EN;
                 mr_offset[9] = i;
                 break;
 
             case C2:
-                SN_PFPA->CT16B1 |= mskCT16_PWM10EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case C2:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM10EN_EN;
+                    }
+                }
             case A10:
                 pwm_en_msk |= mskCT16_PWM10EN_EN;
                 mr_offset[10] = i;
                 break;
 
             case C3:
-                SN_PFPA->CT16B1 |= mskCT16_PWM11EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case C3:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM11EN_EN;
+                    }
+                }
             case A11:
                 pwm_en_msk |= mskCT16_PWM11EN_EN;
                 mr_offset[11] = i;
                 break;
 
             case C4:
-                SN_PFPA->CT16B1 |= mskCT16_PWM12EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case C4:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM12EN_EN;
+                    }
+                }
             case A12:
                 pwm_en_msk |= mskCT16_PWM12EN_EN;
                 mr_offset[12] = i;
                 break;
 
             case C5:
-                SN_PFPA->CT16B1 |= mskCT16_PWM13EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case C5:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM13EN_EN;
+                    }
+                }
             case A13:
                 pwm_en_msk |= mskCT16_PWM13EN_EN;
                 mr_offset[13] = i;
                 break;
 
             case C6:
-                SN_PFPA->CT16B1 |= mskCT16_PWM14EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case C6:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM14EN_EN;
+                    }
+                }
             case A14:
                 pwm_en_msk |= mskCT16_PWM14EN_EN;
                 mr_offset[14] = i;
                 break;
 
             case C7:
-                SN_PFPA->CT16B1 |= mskCT16_PWM15EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case C7:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM15EN_EN;
+                    }
+                }
             case A15:
                 pwm_en_msk |= mskCT16_PWM15EN_EN;
                 mr_offset[15] = i;
                 break;
 
             case C8:
-                SN_PFPA->CT16B1 |= mskCT16_PWM16EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case C8:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM16EN_EN;
+                    }
+                }
             case B0:
                 pwm_en_msk |= mskCT16_PWM16EN_EN;
                 mr_offset[16] = i;
                 break;
 
             case C9:
-                SN_PFPA->CT16B1 |= mskCT16_PWM17EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case C9:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM17EN_EN;
+                    }
+                }
             case B1:
                 pwm_en_msk |= mskCT16_PWM17EN_EN;
                 mr_offset[17] = i;
                 break;
 
             case C10:
-                SN_PFPA->CT16B1 |= mskCT16_PWM18EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case C10:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM18EN_EN;
+                    }
+                }
             case B2:
                 pwm_en_msk |= mskCT16_PWM18EN_EN;
                 mr_offset[18] = i;
                 break;
 
             case C11:
-                SN_PFPA->CT16B1 |= mskCT16_PWM19EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case C11:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM19EN_EN;
+                    }
+                }
             case B3:
                 pwm_en_msk |= mskCT16_PWM19EN_EN;
                 mr_offset[19] = i;
                 break;
 
             case C12:
-                SN_PFPA->CT16B1 |= mskCT16_PWM20EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case C12:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM20EN_EN;
+                    }
+                }
             case B4:
                 pwm_en_msk |= mskCT16_PWM20EN_EN;
                 mr_offset[20] = i;
                 break;
 
             case C13:
-                SN_PFPA->CT16B1 |= mskCT16_PWM21EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case C13:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM21EN_EN;
+                    }
+                }
             case B5:
                 pwm_en_msk |= mskCT16_PWM21EN_EN;
                 mr_offset[21] = i;
                 break;
 
             case C14:
-                SN_PFPA->CT16B1 |= mskCT16_PWM22EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case C14:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM22EN_EN;
+                    }
+                }
             case B6:
                 pwm_en_msk |= mskCT16_PWM22EN_EN;
                 mr_offset[22] = i;
                 break;
 
             case C15:
-                SN_PFPA->CT16B1 |= mskCT16_PWM23EN_EN;
+                for(uint8_t k = 0; k < 4; k++) {
+                    switch(status_led_pins[k]){
+                        case C15:
+                            break;
+                        default:
+                            SN_PFPA->CT16B1 |= mskCT16_PWM23EN_EN;
+                    }
+                }
             case B7:
                 pwm_en_msk |= mskCT16_PWM23EN_EN;
                 mr_offset[23] = i;
