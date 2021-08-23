@@ -47,6 +47,7 @@ Page Down | Decrease RGB Hue
 ← | Previous RGB Effect
 ↓ | Decrease RGB Effect Speed
 → | Next RGB Effect
+B | Restart/Reset Keyboard
 
 ### Mac Mode
 Without Fn | With Fn
@@ -74,7 +75,10 @@ Page Down | Decrease RGB Hue
 ← | Previous RGB Effect
 ↓ | Decrease RGB Effect Speed
 → | Next RGB Effect
+B | Restart/Reset Keyboard
 * * *
+In an occassion that the keyboard does not send keystrokes to your PC, press `Fn + B`. This will restart your keyboard and it will be now be sending keystrokes to your PC.
+
 For more info and detailed flashing instructions, please visit https://github.com/CanUnesi/QMK-on-K6#readme
 
 See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).
