@@ -25,8 +25,8 @@
 #define DEVICE_VER      0x0001
 
 #define MANUFACTURER    Keychron
-#define PRODUCT         Keychron C1
-#define DESCRIPTION     C1 RGB Hotswap
+#define PRODUCT         Keychron "C1"
+#define DESCRIPTION     "C1" RGB Hotswap
 
 /* key matrix size */
 #define MATRIX_ROWS 6
@@ -42,6 +42,9 @@
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 0
+
+/* Force NKRO */
+#define FORCE_NKRO
 
 /* LED Status indicators */
 #define LED_CAPS_LOCK_PIN B10
