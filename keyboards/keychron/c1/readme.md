@@ -4,7 +4,7 @@ C1 Gateron Hotswap RGB ANSI
 
 Make example for this keyboard (after setting up your build environment):
 
-    make keychron/c1
+    make keychron/c1:default
 
 * * *
 # Firmware Details
