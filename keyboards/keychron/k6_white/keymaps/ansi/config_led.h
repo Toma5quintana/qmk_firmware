@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Backlight configuration
 #define BACKLIGHT_PINS { C0, C1, C2, D4, C9 }
-#define BACKLIGHT_ON_STATE 0
+#define BACKLIGHT_ON_STATE 1
  
 
 // LED matrix configuration
