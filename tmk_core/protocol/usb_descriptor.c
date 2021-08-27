@@ -41,6 +41,9 @@
 #include "usb_descriptor.h"
 #include "usb_descriptor_common.h"
 
+// Undefine C1 as pin so it displays correctly in the USB descriptor
+#undef C1
+
 #ifdef JOYSTICK_ENABLE
 #    include "joystick.h"
 #endif
@@ -356,7 +359,7 @@ const USB_Descriptor_Device_t PROGMEM DeviceDescriptor = {
         .Type                   = DTYPE_Device
     },
     .USBSpecification           = VERSION_BCD(1, 1, 0),
-    
+
 #if VIRTSER_ENABLE
     .Class                      = USB_CSCP_IADDeviceClass,
     .SubClass                   = USB_CSCP_IADDeviceSubclass,
