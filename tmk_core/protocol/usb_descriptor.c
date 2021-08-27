@@ -41,9 +41,6 @@
 #include "usb_descriptor.h"
 #include "usb_descriptor_common.h"
 
-// Undefine C1 as pin so it displays correctly in the USB descriptor
-#undef C1
-
 #ifdef JOYSTICK_ENABLE
 #    include "joystick.h"
 #endif

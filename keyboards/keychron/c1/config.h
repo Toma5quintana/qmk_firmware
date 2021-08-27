@@ -25,8 +25,8 @@
 #define DEVICE_VER      0x0001
 
 #define MANUFACTURER    Keychron
-#define PRODUCT         C1
-#define DESCRIPTION     C1 RGB Hotswap
+#define PRODUCT         c1
+#define DESCRIPTION     c1 RGB Hotswap
 
 /* key matrix size */
 #define MATRIX_ROWS 6
