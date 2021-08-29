@@ -43,6 +43,9 @@
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 0
 
+/* Polling Rate */
+#define USB_POLLING_INTERVAL_MS 1
+
 /* Force NKRO */
 #define FORCE_NKRO
 
