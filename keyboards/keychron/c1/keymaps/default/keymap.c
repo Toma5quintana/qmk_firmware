@@ -33,7 +33,7 @@ enum layer_names {
 #define KC_MSSN LGUI(KC_F3)
 #define KC_FIND LALT(LGUI(KC_SPC))
 #define KC_SIRI LGUI(KC_SPC)
-#define KC_MSCR LSHIFT(LGUI(KC_3))
+#define KC_MSCR LSFT(LGUI(KC_3))
 
 enum custom_keycodes {
   RST_KB = SAFE_RANGE,
