@@ -26,7 +26,7 @@
 
 #include "ch.h"
 #include "hal.h"
-#include "flash_sn32.h"
+#include "Flash.h"
 #include "SN32F240B.h"
 
 // HACK ALERT. This definition may not match your processor
