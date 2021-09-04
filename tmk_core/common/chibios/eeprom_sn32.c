@@ -14,6 +14,7 @@
  * Artur F.
  *
  * Modifications for QMK and STM32F303 by Yiancar
+ * Adapted for SONIX chips by dexter93
  */
 
 #include <stdio.h>
@@ -36,11 +37,9 @@ uint8_t DataBuf[FEE_PAGE_SIZE];
  *  RW_PAGE_BASE_ADDRESS and the last uC Flash Page
  ******************************************************************************/
 uint16_t EEPROM_Init(void) {
-    // unlock flash
-    // FLASH_Unlock();
 
     // Clear Flags
-    // FLASH_ClearFlag(FLASH_SR_EOP|FLASH_SR_PGERR|FLASH_SR_WRPERR);
+    // SN_FLASH->STATUS &= ~FLASH_PGERR
 
     return FEE_DENSITY_BYTES;
 }
@@ -62,7 +61,7 @@ void EEPROM_Erase(void) {
  *  the manipulated buffer written after PageErase.
  *******************************************************************************/
 uint16_t EEPROM_WriteDataByte(uint16_t Address, uint8_t DataByte) {
-    uint32_t FlashStatus = FLASH_OKAY;
+    FLASH_Status FlashStatus = FLASH_OKAY;
 
     uint32_t page;
     int      i;
@@ -77,9 +76,7 @@ uint16_t EEPROM_WriteDataByte(uint16_t Address, uint8_t DataByte) {
 
     // if current data is 0xFF, the byte is empty, just overwrite with the new one
     if ((*(__IO uint16_t *)(FEE_PAGE_BASE_ADDRESS + FEE_ADDR_OFFSET(Address))) == FEE_EMPTY_WORD) {
-        FlashStatus = FLASH_ProgramHalfWord(FEE_PAGE_BASE_ADDRESS + FEE_ADDR_OFFSET(Address), (uint8_t *)(0x00FF & DataByte));
-        // FlashStatus = FLASH_ProgramPage(FEE_PAGE_BASE_ADDRESS + FEE_ADDR_OFFSET(Address), 2, (uint16_t)(0x00FF & DataByte));
-
+        FlashStatus = FLASH_ProgramHalfWord(FEE_PAGE_BASE_ADDRESS + FEE_ADDR_OFFSET(Address), (uint16_t)(0x00FF & DataByte));
     } else {
         // Copy Page to a buffer
         memcpy(DataBuf, (uint8_t *)FEE_PAGE_BASE_ADDRESS + (page * FEE_PAGE_SIZE), FEE_PAGE_SIZE);  // !!! Calculate base address for the desired page
@@ -95,13 +92,10 @@ uint16_t EEPROM_WriteDataByte(uint16_t Address, uint8_t DataByte) {
         // Erase Page
         FlashStatus = FLASH_EraseSector(FEE_PAGE_BASE_ADDRESS + (page * FEE_PAGE_SIZE));
 
-        // __asm__ volatile ("bkpt");
-
         // Write new data (whole page) to flash if data has been changed
         for (i = 0; i < (FEE_PAGE_SIZE / 2); i++) {
             if ((__IO uint16_t)(0xFF00 | DataBuf[FEE_ADDR_OFFSET(i)]) != 0xFFFF) {
-                FlashStatus = FLASH_ProgramHalfWord((FEE_PAGE_BASE_ADDRESS + (page * FEE_PAGE_SIZE)) + (i * 2), (uint8_t *)(0xFF00 | DataBuf[FEE_ADDR_OFFSET(i)]));
-                // FlashStatus = FLASH_ProgramPage((FEE_PAGE_BASE_ADDRESS + (page * FEE_PAGE_SIZE)) + (i * 2), 2, (uint16_t)(0xFF00 | DataBuf[FEE_ADDR_OFFSET(i)]));
+                FlashStatus = FLASH_ProgramHalfWord((FEE_PAGE_BASE_ADDRESS + (page * FEE_PAGE_SIZE)) + (i * 2), (uint16_t)(0xFF00 | DataBuf[FEE_ADDR_OFFSET(i)]));
             }
         }
     }
@@ -178,7 +172,7 @@ void eeprom_update_dword(uint32_t *Address, uint32_t Value) {
     }
 }
 
-void eeprom_read_block(void *buf, const void *addr, uint32_t len) {
+void eeprom_read_block(void *buf, const void *addr, size_t len) {
     const uint8_t *p    = (const uint8_t *)addr;
     uint8_t *      dest = (uint8_t *)buf;
     while (len--) {
@@ -186,7 +180,7 @@ void eeprom_read_block(void *buf, const void *addr, uint32_t len) {
     }
 }
 
-void eeprom_write_block(const void *buf, void *addr, uint32_t len) {
+void eeprom_write_block(const void *buf, void *addr, size_t len) {
     uint8_t *      p   = (uint8_t *)addr;
     const uint8_t *src = (const uint8_t *)buf;
     while (len--) {
@@ -194,7 +188,7 @@ void eeprom_write_block(const void *buf, void *addr, uint32_t len) {
     }
 }
 
-void eeprom_update_block(const void *buf, void *addr, uint32_t len) {
+void eeprom_update_block(const void *buf, void *addr, size_t len) {
     uint8_t *      p   = (uint8_t *)addr;
     const uint8_t *src = (const uint8_t *)buf;
     while (len--) {
