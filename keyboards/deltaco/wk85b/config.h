@@ -28,16 +28,26 @@
 #define DESCRIPTION     WK85B wired keyboard
 
 /* key matrix size */
-#define MATRIX_COLS 14
 #define MATRIX_ROWS 5
+#define MATRIX_COLS 14
 
 #define DIODE_DIRECTION COL2ROW
 
-#define MATRIX_COL_PINS { A8, A9, A10, A11, A12, A13, A14, A15, B0, B1, B2, B3, B4, B5 }
 #define MATRIX_ROW_PINS { D11, D10, D9, D8, D7 }
+#define MATRIX_COL_PINS { A8, A9, A10, A11, A12, A13, A14, A15, B0, B1, B2, B3, B4, B5 }
 
-/* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
+/* Debounce reduces chatter (unintended# double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 5
+
+/* Add keypress led effects */
+#define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_RAINBOW_MOVING_CHEVRON
+#define RGBLIGHT_DEFAULT_MODE 	RGB_MATRIX_RAINBOW_MOVING_CHEVRON
+#define RGB_DISABLE_WHEN_USB_SUSPENDED true
+#define RGB_MATRIX_KEYRELEASES
+
+/* Optimizations */
+#define RGB_MATRIX_LED_PROCESS_LIMIT (DRIVER_LED_TOTAL + 4) / 5 // limits the number of LEDs to process in an animation per task run (increases keyboard responsiveness)
+#define RGB_MATRIX_LED_FLUSH_LIMIT 16 // limits in milliseconds how frequently an animation will update the LEDs. 16 (16ms) is equivalent to limiting to 60fps (increases keyboard responsiveness)
 
 #include "config_led.h"
 
