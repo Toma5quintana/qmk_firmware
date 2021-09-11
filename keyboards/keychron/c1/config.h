@@ -25,7 +25,7 @@
 #define DEVICE_VER      0x0001
 
 #define MANUFACTURER    Keychron
-#define PRODUCT         \x43\x31
+#define PRODUCT         Keychron \x43\x31
 #define DESCRIPTION     \x43\x31 RGB Hotswap
 
 /* key matrix size */
