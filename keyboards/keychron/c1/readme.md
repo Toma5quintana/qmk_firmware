@@ -1,4 +1,4 @@
-# Keychron C1
+# Keychron C1 RGB Hot-swappable
 
 ![Keychron C1](https://i.imgur.com/oB9h56v.png)
 
@@ -21,7 +21,7 @@ Flashing example for this keyboard:
 # Firmware Details
 ### Firmware Version:
 * Default - 0.7.101
-* VIA - Work in progress
+* VIA - EEPROM support currently unavailable for this keyboard/MCU.
 * * *
 In an occassion that the keyboard does not send keystrokes to your PC, press `Fn + B`. This will restart your keyboard and should resolve the problem.
 
