@@ -47,7 +47,7 @@
 #define LED_CAPS_LOCK_PIN   B10
 #define LED_MAC_PIN         B11 //labeled Mac on KB since no Scroll Lock
 #define LED_WIN_PIN         B12 //labeled Windows on KB since no Numpad
-#define LED_PIN_ON_STATE  1
+#define LED_PIN_ON_STATE    1
 
 /* Enable NKRO by default*/
 #define FORCE_NKRO
