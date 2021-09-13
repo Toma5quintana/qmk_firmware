@@ -23,6 +23,72 @@ Flashing example for this keyboard:
 * Default - 0.7.101
 * VIA - EEPROM support currently unavailable for this keyboard/MCU.
 * * *
+# Keymapping
+### Windows Mode
+<details>
+
+Without Fn | With Fn
+---------- | -------
+F1 | Decrease PC Brightness
+F2 | Increase PC Brightness
+F3 | Task View
+F4 | File Explorer
+F5 | Decrease KB Brightness
+F6 | Increase KB Brightness
+F7 | Previous Track
+F8 | Play/Pause Track
+F9 | Next Track
+F10 | Mute
+F11 | Decrease Volume
+F12 | Increase Volume
+Print Screen | Snip & Sketch
+Scroll lock | Cortana
+Pause/Break | Toggle RGB
+Home | Increase RGB Saturation
+End | Decrease RGB Saturation
+Page Up | Increase RGB Hue
+Page Down | Decrease RGB Hue
+↑ | Increase RGB Hue
+← | Decrease RGB Saturation
+↓ | Decrease RGB Hue
+→ | Increase RGB Saturation
+
+</details>
+
+### Mac Mode
+<details>
+
+Without Fn | With Fn
+---------- | -------
+F1 | Decrease PC Brightness
+F2 | Increase PC Brightness
+F3 | Mission Control
+F4 | Finder
+F5 | Decrease KB Brightness
+F6 | Increase KB Brightness
+F7 | Previous Track
+F8 | Play/Pause Track
+F9 | Next Track
+F10 | Mute
+F11 | Decrease Volume
+F12 | Increase Volume
+Take a screenshot (whole screen) | Take a screenshot (specific area)
+None | Siri (hold down)
+Pause/Break | Toggle RGB
+Home | Increase RGB Saturation
+End | Decrease RGB Saturation
+Page Up | Increase RGB Hue
+Page Down | Decrease RGB Hue
+↑ | Increase RGB Hue
+← | Decrease RGB Saturation
+↓ | Decrease RGB Hue
+→ | Increase RGB Saturation
+
+</details>
+
+In an occassion that the keyboard does not send keystrokes to your PC, press `Fn + B`. This will restart your keyboard and should resolve the problem.
+* * *
+
 In an occassion that the keyboard does not send keystrokes to your PC, press `Fn + B`. This will restart your keyboard and should resolve the problem.
 
 For more information and more detailed flashing instructions, please visit https://github.com/CanUnesi/QMK-on-K6#readme
