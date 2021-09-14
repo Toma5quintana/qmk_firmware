@@ -73,7 +73,7 @@ F10 | Mute
 F11 | Decrease Volume
 F12 | Increase Volume
 Take a screenshot (whole screen) | Take a screenshot (specific area)
-None | Siri (hold down)
+Siri (hold down) | None
 Change RGB | Toggle RGB
 Home | Increase RGB Saturation
 End | Decrease RGB Saturation
