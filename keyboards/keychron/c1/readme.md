@@ -42,8 +42,8 @@ F10 | Mute
 F11 | Decrease Volume
 F12 | Increase Volume
 Print Screen | Snip & Sketch
-Scroll lock | Cortana
-Pause/Break | Toggle RGB
+Cortana | None
+Change RGB | Toggle RGB
 Home | Increase RGB Saturation
 End | Decrease RGB Saturation
 Page Up | Increase RGB Hue
@@ -74,7 +74,7 @@ F11 | Decrease Volume
 F12 | Increase Volume
 Take a screenshot (whole screen) | Take a screenshot (specific area)
 None | Siri (hold down)
-Pause/Break | Toggle RGB
+Change RGB | Toggle RGB
 Home | Increase RGB Saturation
 End | Decrease RGB Saturation
 Page Up | Increase RGB Hue
