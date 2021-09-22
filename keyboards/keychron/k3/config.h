@@ -43,6 +43,4 @@
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 0
 
-#define RGB_MATRIX_CENTER { 7*14, 32 }
-
 #include "config_led.h"
