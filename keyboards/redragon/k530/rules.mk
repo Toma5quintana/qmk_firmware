@@ -1,5 +1,6 @@
 # project specific files
-SRC = ../../../drivers/sn32/matrix_sn32f248b.c
+SRC = matrix.c
+SRC += led_matrix.c
 SRC += config_led.c
 
 ## chip/board settings
@@ -59,6 +60,4 @@ KEYBOARD_SHARED_EP = yes
 
 # Custom RGB matrix handling
 RGB_MATRIX_ENABLE = yes
-RGB_MATRIX_DRIVER = SN32F248B
-
-OPENRGB_ENABLE = yes
+RGB_MATRIX_DRIVER = custom
