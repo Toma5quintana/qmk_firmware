@@ -23,8 +23,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 enum layer_names {
     WIN_BASE    = 0,
     WIN_FN      = 1,
-    MAC_BASE    = 2,
-    MAC_FN      = 3,
+    MAC_BASE    = 8,
+    MAC_FN      = 9,
 };
 
 enum custom_keycodes {

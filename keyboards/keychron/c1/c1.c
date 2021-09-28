@@ -30,7 +30,7 @@ static void mode_leds_update(void){
 void dip_switch_update_user(uint8_t index, bool active){
     if(index == 0) {
         if(active) { // Mac mode
-            layer_move(2);
+            layer_move(8);
         } else { // Windows mode
             layer_move(0);
         }
