@@ -386,10 +386,6 @@ define EXEC_TEENSY
 	$(TEENSY_LOADER_CLI) -mmcu=$(MCU_LDSCRIPT) -w -v $(BUILD_DIR)/$(TARGET).hex
 endef
 
-define EXEC_SONIX_FLASHER
-	$(DFU_UTIL) $(DFU_ARGS) $(BUILD_DIR)/$(TARGET).bin
-endef
-
 teensy: $(BUILD_DIR)/$(TARGET).hex cpfirmware sizeafter
 	$(call EXEC_TEENSY)
 
@@ -406,7 +402,7 @@ else ifeq ($(strip $(MCU_FAMILY)),KINETIS)
 else ifeq ($(strip $(MCU_FAMILY)),STM32)
 	$(call EXEC_DFU_UTIL)
 else ifeq ($(strip $(MCU_FAMILY)),SN32)
-	$(call EXEC_SONIX_FLASHER)
+	$(call EXEC_DFU_UTIL)
 else
 	$(PRINT_OK); $(SILENT) || printf "$(MSG_FLASH_BOOTLOADER)"
 endif
