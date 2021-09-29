@@ -696,8 +696,6 @@
 /*===========================================================================*/
 #define PORT_IDLE_THREAD_STACK_SIZE 0
 #define PORT_INT_REQUIRED_STACK  0
-#define RAW_IN_CAPACITY 1
-#define RAW_OUT_CAPACITY 1
 #endif /* CHCONF_H */
 
 /** @} */
