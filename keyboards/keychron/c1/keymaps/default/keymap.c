@@ -28,8 +28,7 @@ enum layer_names {
 };
 
 enum custom_keycodes {
-  RST_KB = SAFE_RANGE,
-  BAR
+  RST_KB = SAFE_RANGE
 };
 
 #define KC_TASK LGUI(KC_TAB)        // Task viewer
