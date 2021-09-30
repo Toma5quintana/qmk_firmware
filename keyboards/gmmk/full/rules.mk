@@ -52,6 +52,9 @@ LED_MATRIX_ENABLE = no
 LED_MATRIX_DRIVER = custom
 RGB_MATRIX_ENABLE = yes
 RGB_MATRIX_DRIVER = custom
+RAW_ENABLE = yes
+
+OPENRGB_ENABLE = yes
 
 # some options to reduce ram usage
 LDFLAGS += --specs=nano.specs
