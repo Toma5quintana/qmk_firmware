@@ -165,9 +165,12 @@ static const uint8_t openrgb_rgb_matrix_effects_indexes[]           = {
     42,
 #endif
 };
-static uint8_t raw_hid_buffer[RAW_EPSIZE];
-
+// static uint8_t raw_hid_buffer[RAW_EPSIZE];
+static uint8_t *raw_hid_buffer;
 void raw_hid_receive(uint8_t *data, uint8_t length) {
+    
+    raw_hid_buffer = data;
+    
     switch (*data) {
         case OPENRGB_GET_PROTOCOL_VERSION:
             openrgb_get_protocol_version();
@@ -187,7 +190,6 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
         case OPENRGB_GET_IS_MODE_ENABLED:
             openrgb_get_is_mode_enabled(data);
             break;
-
         case OPENRGB_SET_MODE:
             openrgb_set_mode(data);
             break;
@@ -203,7 +205,7 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
         raw_hid_buffer[RAW_EPSIZE - 1] = OPENRGB_END_OF_MESSAGE;
         raw_hid_send(raw_hid_buffer, RAW_EPSIZE);
     }
-    memset(raw_hid_buffer, 0x00, RAW_EPSIZE);
+    // memset(raw_hid_buffer, 0x00, RAW_EPSIZE);
 }
 
 void openrgb_get_protocol_version(void) {
