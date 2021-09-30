@@ -694,8 +694,8 @@
 /*===========================================================================*/
 /* Port-specific settings (override port settings defaulted in chcore.h).    */
 /*===========================================================================*/
-#define PORT_IDLE_THREAD_STACK_SIZE 0
-#define PORT_INT_REQUIRED_STACK  0
+#define	PORT_IDLE_THREAD_STACK_SIZE	0
+#define PORT_INT_REQUIRED_STACK		0
 #endif /* CHCONF_H */
 
 /** @} */
