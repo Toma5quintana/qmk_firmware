@@ -43,13 +43,3 @@ enum openrgb_responses {
 
 extern RGB g_openrgb_direct_mode_colors[DRIVER_LED_TOTAL];
 
-void openrgb_get_protocol_version(void);
-void openrgb_get_qmk_version(void);
-void openrgb_get_device_info(void);
-void openrgb_get_mode_info(void);
-void openrgb_get_led_info(uint8_t *data);
-void openrgb_get_is_mode_enabled(uint8_t *data);
-
-void openrgb_set_mode(uint8_t *data);
-void openrgb_direct_mode_set_single_led(uint8_t *data);
-void openrgb_direct_mode_set_leds(uint8_t *data);
