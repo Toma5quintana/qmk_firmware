@@ -25,7 +25,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define LED_MATRIX_COL_PINS MATRIX_COL_PINS
 
-#define KEYMAP_ISO defined(KEYBOARD_gmmk_full_rev1_iso) || defined(KEYBOARD_gmmk_full_rev2_iso) || defined(KEYBOARD_gmmk_full_rev3_iso)
+#ifdef QMK_KEYMAP_H
+    #include QMK_KEYMAP_H
+#endif
 
 #ifdef KEYMAP_ISO
     #define DRIVER_LED_TOTAL 105
