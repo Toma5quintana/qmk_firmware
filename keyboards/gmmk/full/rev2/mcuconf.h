@@ -18,22 +18,6 @@
 #define MCUCONF_H
 
 /*
- * STM32F0xx drivers configuration.
- * The following settings override the default settings present in
- * the various device driver implementation headers.
- * Note that the settings for each driver only have effect if the whole
- * driver is enabled in halconf.h.
- *
- * IRQ priorities:
- * 3...0       Lowest...Highest.
- *
- * DMA priorities:
- * 0...3        Lowest...Highest.
- */
-
-#define STM32F0xx_MCUCONF
-
-/*
  * HAL driver system settings.
  */
 
