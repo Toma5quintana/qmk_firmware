@@ -76,7 +76,7 @@ uint16_t EEPROM_WriteDataByte(uint16_t Address, uint8_t DataByte) {
 
     // if current data is 0xFF, the byte is empty, just overwrite with the new one
     if ((*(__IO uint16_t *)(FEE_PAGE_BASE_ADDRESS + FEE_ADDR_OFFSET(Address))) == FEE_EMPTY_WORD) {
-        FlashStatus = FLASH_ProgramHalfWord(FEE_PAGE_BASE_ADDRESS + FEE_ADDR_OFFSET(Address), (uint16_t)(0x00FF & DataByte));
+        FlashStatus = FLASH_ProgramWord(FEE_PAGE_BASE_ADDRESS + FEE_ADDR_OFFSET(Address), (uint16_t)(0x00FF & DataByte));
     } else {
         // Copy Page to a buffer
         memcpy(DataBuf, (uint8_t *)FEE_PAGE_BASE_ADDRESS + (page * FEE_PAGE_SIZE), FEE_PAGE_SIZE);  // !!! Calculate base address for the desired page
@@ -95,7 +95,7 @@ uint16_t EEPROM_WriteDataByte(uint16_t Address, uint8_t DataByte) {
         // Write new data (whole page) to flash if data has been changed
         for (i = 0; i < (FEE_PAGE_SIZE / 2); i++) {
             if ((__IO uint16_t)(0xFF00 | DataBuf[FEE_ADDR_OFFSET(i)]) != 0xFFFF) {
-                FlashStatus = FLASH_ProgramHalfWord((FEE_PAGE_BASE_ADDRESS + (page * FEE_PAGE_SIZE)) + (i * 2), (uint16_t)(0xFF00 | DataBuf[FEE_ADDR_OFFSET(i)]));
+                FlashStatus = FLASH_ProgramWord((FEE_PAGE_BASE_ADDRESS + (page * FEE_PAGE_SIZE)) + (i * 2), (uint16_t)(0xFF00 | DataBuf[FEE_ADDR_OFFSET(i)]));
             }
         }
     }

@@ -66,8 +66,7 @@
 #define FEE_DENSITY_BYTES ((FEE_PAGE_SIZE / 2) * FEE_DENSITY_PAGES - 1)
 #define FEE_LAST_PAGE_ADDRESS (FEE_PAGE_BASE_ADDRESS + (FEE_PAGE_SIZE * FEE_DENSITY_PAGES))
 #define FEE_EMPTY_WORD ((uint16_t)0xFFFF)
-#define FEE_ADDR_OFFSET(Address) (Address * 2)  // 1Byte per Word will be saved to preserve Flash
-
+#define FEE_ADDR_OFFSET(Address) (Address + 4)
 
 // Use this function to initialize the functionality
 uint16_t EEPROM_Init(void);
