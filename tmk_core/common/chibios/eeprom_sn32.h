@@ -32,12 +32,13 @@
 #include "ch.h"
 #include "hal.h"
 #include "Flash.h"
-#include "SN32F240B.h"
 
 // HACK ALERT. This definition may not match your processor
 // To Do. Work out correct value for EEPROM_PAGE_SIZE on the STM32F103CT6 etc
 #if defined(EEPROM_EMU_SN32F240B)
 #    define MCU_SN32F240B
+#elif defined(EEPROM_EMU_SN32F260)
+#    define MCU_SN32F260
 #else
 #    error "not implemented."
 #endif
@@ -47,6 +48,10 @@
 #        define FEE_PAGE_SIZE       (uint16_t)0x0040     // Page size = 64bytes
 #        define FEE_TOTAL_PAGES     1024     // How many pages are available
 #        define FEE_DENSITY_PAGES   100     // How many pages are used as EEPROM
+#    elif defined(MCU_SN32F260)
+#        define FEE_PAGE_SIZE       (uint16_t)0x0040     // Page size = 64bytes
+#        define FEE_TOTAL_PAGES     480     // How many pages are available
+#        define FEE_DENSITY_PAGES   20     // How many pages are used as EEPROM
 #    else
 #        error "No MCU type specified. Add something like -DMCU_SN32F240B to your compiler arguments (probably in a Makefile)."
 #    endif
@@ -55,6 +60,8 @@
 #ifndef EEPROM_START_ADDRESS
 #    if defined(MCU_SN32F240B)
 #        define FEE_MCU_FLASH_SIZE 64  // User ROM Size in Kb
+#    elif defined(MCU_SN32F260)
+#        define FEE_MCU_FLASH_SIZE 30  // User ROM Size in Kb
 #    else
 #        error "No MCU type specified. Add something like -DMCU_SN32F240B to your compiler arguments (probably in a Makefile)."
 #    endif

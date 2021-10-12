@@ -139,6 +139,10 @@ else
         SRC += $(PLATFORM_COMMON_DIR)/eeprom_sn32.c
         OPT_DEFS += -DEEPROM_EMU_SN32F240B
         OPT_DEFS += -DSN32_EEPROM_ENABLE
+      else ifeq ($(MCU_SERIES)_$(MCU_LDSCRIPT), SN32F260_SN32F260)
+        SRC += $(PLATFORM_COMMON_DIR)/eeprom_sn32.c
+        OPT_DEFS += -DEEPROM_EMU_SN32F260
+        OPT_DEFS += -DSN32_EEPROM_ENABLE        
       else ifeq ($(MCU_SERIES)_$(MCU_LDSCRIPT), STM32F0xx_STM32F042x6)
 
         # Stack sizes: Since this chip has limited RAM capacity, the stack area needs to be reduced.
