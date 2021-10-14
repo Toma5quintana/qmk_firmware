@@ -44,10 +44,6 @@ F12 | Increase Volume
 Print Screen | Snip & Sketch
 Cortana | None
 Change RGB | Toggle RGB
-Home | Increase RGB Saturation
-End | Decrease RGB Saturation
-Page Up | Increase RGB Hue
-Page Down | Decrease RGB Hue
 ↑ | Increase RGB Hue
 ← | Decrease RGB Saturation
 ↓ | Decrease RGB Hue
@@ -75,10 +71,6 @@ F12 | Increase Volume
 Take a screenshot (whole screen) | Take a screenshot (specific area)
 Siri (hold down) | None
 Change RGB | Toggle RGB
-Home | Increase RGB Saturation
-End | Decrease RGB Saturation
-Page Up | Increase RGB Hue
-Page Down | Decrease RGB Hue
 ↑ | Increase RGB Hue
 ← | Decrease RGB Saturation
 ↓ | Decrease RGB Hue
@@ -86,7 +78,6 @@ Page Down | Decrease RGB Hue
 
 </details>
 
-In an occassion that the keyboard does not send keystrokes to your PC, press `Fn + B`. This will restart your keyboard and should resolve the problem.
 * * *
 
 In an occassion that the keyboard does not send keystrokes to your PC, press `Fn + B`. This will restart your keyboard and should resolve the problem.
