@@ -13,6 +13,7 @@
 
 #define I2C_SCL A4
 #define I2C_SDA A5
+#define I2C_SDB B0
 
 #define I2C_SCL_IN readPin(I2C_SCL)
 #define I2C_SDA_IN readPin(I2C_SDA)
@@ -30,8 +31,8 @@
  *
  * i2c_delay 1 loop about 7 cycles. Under 48MHz, the actual delay is around 0.9us and 1.5us respectively.
  */
-#define I2C_SCL_HI_DELAY    i2c_delay(6)
-#define I2C_DELAY           i2c_delay(10)
+#define I2C_SCL_HI_DELAY    i2c_delay(4)
+#define I2C_DELAY           i2c_delay(4)
 
 static uint8_t sel_frame[2] = {0xFF, 0xFF};
 static uint8_t sel_frame_idx = 0;
@@ -48,10 +49,12 @@ void i2c_init(void)
     // drive strength all gpio A 20ma
     SN_GPIO0->MODE |= 0xFFFF0000;
 
-    setPinOutput(I2C_SCL);
     I2C_SCL_HI;
-    I2C_SDA_HI;
     I2C_SDA_HIZ;
+
+    setPinOutput(I2C_SDB);
+    writePinHigh(I2C_SDB);
+    i2c_delay(100);
 }
 
 static void i2c_process_bit(uint8_t *i2c_tx_byte)
@@ -67,8 +70,9 @@ static void i2c_process_bit(uint8_t *i2c_tx_byte)
 
     *i2c_tx_byte = *i2c_tx_byte << 1;
 
+    // I2C_DELAY;
     I2C_SCL_HI;
-    I2C_SCL_HI_DELAY;
+    I2C_DELAY;
     I2C_SCL_LO;
     I2C_DELAY;
 }
@@ -98,8 +102,8 @@ static uint8_t i2c_transaction(uint8_t i2c_addr_rw, uint8_t* i2c_data_ptr, uint8
 
 I2C_STATE_WRITE_BYTE:
 
-    I2C_SDA_LO;
-    I2C_SCL_LO;
+    // I2C_SDA_LO;
+    // I2C_SCL_LO;
 
     txb = *i2c_data_ptr++;
     i2c_process_bit(&txb);
@@ -114,11 +118,10 @@ I2C_STATE_WRITE_BYTE:
     i2c_byte_ct--;
 
 I2C_STATE_READ_ACK:
-    I2C_SDA_HIZ;
+    setPinInput(I2C_SDA);
     
     I2C_SCL_HI;
-
-    I2C_SCL_HI_DELAY;
+    I2C_DELAY;
     
     /* ignore ACK */
     fail = I2C_SDA_IN;
@@ -135,8 +138,10 @@ I2C_STATE_READ_ACK:
     /* STOP */
     I2C_SCL_HI;
     I2C_DELAY;
-    I2C_SDA_HI;
     I2C_SDA_HIZ;
+
+    I2C_DELAY;
+    I2C_DELAY;
 
     return fail;
 }
