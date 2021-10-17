@@ -31,8 +31,8 @@
  *
  * i2c_delay 1 loop about 7 cycles. Under 48MHz, the actual delay is around 0.9us and 1.5us respectively.
  */
-#define I2C_SCL_HI_DELAY    i2c_delay(4)
-#define I2C_DELAY           i2c_delay(4)
+#define I2C_SCL_HI_DELAY    i2c_delay(5)
+#define I2C_DELAY           i2c_delay(5)
 
 static uint8_t sel_frame[2] = {0xFF, 0xFF};
 static uint8_t sel_frame_idx = 0;
