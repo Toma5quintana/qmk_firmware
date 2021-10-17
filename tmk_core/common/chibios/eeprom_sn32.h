@@ -47,11 +47,11 @@
 #    if defined(MCU_SN32F240B)
 #        define FEE_PAGE_SIZE       (uint16_t)0x0040     // Page size = 64bytes
 #        define FEE_TOTAL_PAGES     1024     // How many pages are available
-#        define FEE_DENSITY_PAGES   100     // How many pages are used as EEPROM
+#        define FEE_DENSITY_PAGES   23     // How many pages are used as EEPROM
 #    elif defined(MCU_SN32F260)
 #        define FEE_PAGE_SIZE       (uint16_t)0x0040     // Page size = 64bytes
 #        define FEE_TOTAL_PAGES     480     // How many pages are available
-#        define FEE_DENSITY_PAGES   16      // How many pages are used as EEPROM
+#        define FEE_DENSITY_PAGES   23      // How many pages are used as EEPROM
 #    else
 #        error "No MCU type specified. Add something like -DMCU_SN32F240B to your compiler arguments (probably in a Makefile)."
 #    endif
