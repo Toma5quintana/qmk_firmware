@@ -51,7 +51,7 @@
 #    elif defined(MCU_SN32F260)
 #        define FEE_PAGE_SIZE       (uint16_t)0x0040     // Page size = 64bytes
 #        define FEE_TOTAL_PAGES     480     // How many pages are available
-#        define FEE_DENSITY_PAGES   20     // How many pages are used as EEPROM
+#        define FEE_DENSITY_PAGES   16      // How many pages are used as EEPROM
 #    else
 #        error "No MCU type specified. Add something like -DMCU_SN32F240B to your compiler arguments (probably in a Makefile)."
 #    endif
@@ -69,11 +69,11 @@
 
 // DONT CHANGE
 // Choose location for the first EEPROM Page address on the top of flash
-#define FEE_PAGE_BASE_ADDRESS ((uint32_t)(FEE_MCU_FLASH_SIZE * FEE_TOTAL_PAGES - ((FEE_DENSITY_PAGES + 1) * FEE_PAGE_SIZE))) // Last page used is 1022, don't mess with the last
-#define FEE_DENSITY_BYTES ((FEE_PAGE_SIZE / 2) * FEE_DENSITY_PAGES - 1)
+#define FEE_PAGE_BASE_ADDRESS ((uint32_t)(FEE_PAGE_SIZE * FEE_TOTAL_PAGES - ((FEE_DENSITY_PAGES + 1) * FEE_PAGE_SIZE))) // Last page used is 1022, don't mess with the last
+#define FEE_DENSITY_BYTES (FEE_PAGE_SIZE * FEE_DENSITY_PAGES - 1)
 #define FEE_LAST_PAGE_ADDRESS (FEE_PAGE_BASE_ADDRESS + (FEE_PAGE_SIZE * FEE_DENSITY_PAGES))
 #define FEE_EMPTY_WORD ((uint16_t)0xFFFF)
-#define FEE_ADDR_OFFSET(Address) (Address + 4)
+#define FEE_ADDR_OFFSET(Address) (Address)
 
 // Use this function to initialize the functionality
 uint16_t EEPROM_Init(void);
