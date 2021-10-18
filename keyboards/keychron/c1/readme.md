@@ -18,11 +18,6 @@ Flashing example for this keyboard:
 1. Lastly, click 'Flash QMK...' and find the compiled firmware.
 
 * * *
-# Firmware Details
-### Firmware Version:
-* Default - 0.7.101
-* VIA - EEPROM support currently unavailable for this keyboard/MCU.
-* * *
 # Keymapping
 ### Windows Mode
 <details>
@@ -69,17 +64,21 @@ F10 | Mute
 F11 | Decrease Volume
 F12 | Increase Volume
 Take a screenshot (whole screen) | Take a screenshot (specific area)
-Siri (hold down) | None
+[Siri (hold down)](#Siri) | None
 Change RGB | Toggle RGB
 ↑ | Increase RGB Hue
 ← | Decrease RGB Saturation
 ↓ | Decrease RGB Hue
 → | Increase RGB Saturation
 
+<div id="Siri"></div>
+
+## Enabling Siri Hotkey in MacOS
+To enable dedicated Siri button on your keyboard, please follow the steps on this website: <br>
+[How to use Siri on your Mac computer to search the web, play music, and more](https://www.businessinsider.com/how-to-use-siri-on-mac)
 </details>
 
 * * *
-
 In an occassion that the keyboard does not send keystrokes to your PC, press `Fn + B`. This will restart your keyboard and should resolve the problem.
 
 For more information and more detailed flashing instructions, please visit https://github.com/CanUnesi/QMK-on-K6#readme
