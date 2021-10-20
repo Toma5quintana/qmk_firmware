@@ -24,6 +24,7 @@ Ported to QMK by Stephen Peery <https://github.com/smp4488/>
 #include "ch.h"
 #include "hal.h"
 #include "CT16.h"
+#include "Flash.h"
 
 #include "color.h"
 #include "wait.h"
@@ -87,6 +88,12 @@ static void init_pins(void) {
         setPinOutput(led_row_pins[x]);
         writePinHigh(led_row_pins[x]);
    }
+}
+
+void wait_for_flash(void) {
+    if ((SN_FLASH->STATUS & FLASH_BUSY) == FLASH_BUSY) {
+        FLASH_WAIT_FOR_DONE
+    }
 }
 
 void matrix_init(void) {
@@ -319,7 +326,7 @@ void matrix_init(void) {
 
     // Wait until timer reset done.
     while (SN_CT16B1->TMRCTRL & mskCT16_CRST);
-
+    wait_for_flash();
     // Let TC start counting.
     SN_CT16B1->TMRCTRL |= mskCT16_CEN_EN;
 
@@ -331,6 +338,7 @@ uint8_t matrix_scan(void) {
     matrix_changed = false;
     for (uint8_t current_col = 0; current_col < MATRIX_COLS; current_col++) {
         for (uint8_t row_index = 0; row_index < MATRIX_ROWS; row_index++) {
+            wait_for_flash();
             // Determine if the matrix changed state
             if ((last_matrix[row_index] != raw_matrix[row_index])) {
                 matrix_changed         = true;
@@ -364,6 +372,7 @@ OSAL_IRQ_HANDLER(SN32_CT16B1_HANDLER) {
 
     // Turn the selected row off
     writePinLow(led_row_pins[current_row]);
+    wait_for_flash();
 
     // Turn the next row on
     current_row = (current_row + 1) % LED_MATRIX_ROWS_HW;
