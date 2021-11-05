@@ -1,11 +1,11 @@
-# Keychron C1 RGB Hot-swappable
+# Keychron C1 RGB
 
-![Keychron C1](https://i.imgur.com/oB9h56v.png)
+![Keychron C1 RGB](https://i.imgur.com/oB9h56v.png)
 
 A customizable TKL keyboard.
 
 * Keyboard Maintainer(s): [SonixQMK](https://github.com/SonixQMK), [IsaacDynamo](https://github.com/IsaacDynamo), [noldevin](https://github.com/noldevin), [vjdato21](https://github.com/vjdato21)
-* Hardware Supported: Keychron C1 RGB Hot-swappable
+* Hardware Supported: Keychron C1 RGB
 * Hardware Availability: [Keychron](https://www.keychron.com/products/keychron-c1-wired-mechanical-keyboard)
 
 Make example for this keyboard (after setting up your build environment):
@@ -17,11 +17,6 @@ Flashing example for this keyboard:
 1. In Sonix Flasher, select `SN32F24X` under 'Device'. And select `0x00` as the qmk offset.
 1. Lastly, click 'Flash QMK...' and find the compiled firmware.
 
-* * *
-# Firmware Details
-### Firmware Version:
-* Default - 0.7.101
-* VIA - EEPROM support currently unavailable for this keyboard/MCU.
 * * *
 # Keymapping
 ### Windows Mode
@@ -88,8 +83,6 @@ Page Down | Decrease RGB Hue
 
 In an occassion that the keyboard does not send keystrokes to your PC, press `Fn + B`. This will restart your keyboard and should resolve the problem.
 * * *
-
-In an occassion that the keyboard does not send keystrokes to your PC, press `Fn + B`. This will restart your keyboard and should resolve the problem.
 
 For more information and more detailed flashing instructions, please visit https://github.com/CanUnesi/QMK-on-K6#readme
 
