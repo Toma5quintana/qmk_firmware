@@ -10,7 +10,6 @@ A customizable TKL keyboard.
 
 Make example for this keyboard (after setting up your build environment):
 
-
     make keychron/c1/rgb:default | make keychron/c1/rgb:via
 
 ## How to Flash
