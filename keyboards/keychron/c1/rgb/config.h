@@ -52,4 +52,7 @@
 /* Enable NKRO by default*/
 #define FORCE_NKRO
 
+/* Polling Rate */
+#define USB_POLLING_INTERVAL_MS 1
+
 #include "config_led.h"
