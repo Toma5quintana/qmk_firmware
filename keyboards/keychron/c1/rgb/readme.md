@@ -39,7 +39,7 @@ F10 | Mute
 F11 | Decrease Volume
 F12 | Increase Volume
 Print Screen | Snip & Sketch
-Cortana | None
+Cortana / Microsoft Teams | None
 Change RGB | Toggle RGB
 Home | Increase RGB Saturation
 End | Decrease RGB Saturation

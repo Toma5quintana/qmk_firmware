@@ -29,7 +29,7 @@ enum layer_names {
 
 #define KC_TASK LGUI(KC_TAB)        // Task viewer
 #define KC_FLXP LGUI(KC_E)          // Windows file explorer
-#define KC_CRTN LGUI(KC_C)          // Cortana
+#define KC_CRTN LGUI(KC_C)          // Cortana | Microsoft Teams
 #define KC_SNIP LGUI(LSFT(KC_S))    // Windows snip tool
 
 #define KC_MSSN LGUI(KC_F3)         // Mission Control
