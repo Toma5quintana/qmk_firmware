@@ -40,7 +40,7 @@ OPT_DEFS = -Os
 #
 BACKLIGHT_ENABLE = no
 MAGIC_ENABLE = no
-BOOTMAGIC_ENABLE = yes 	# Virtual DIP switch configuration
+BOOTMAGIC_ENABLE = yes  # Virtual DIP switch configuration
 MOUSEKEY_ENABLE = no    # Mouse keys
 EXTRAKEY_ENABLE = yes   # Audio control and System control
 SLEEP_LED_ENABLE = no   # Breathing sleep LED during USB suspend
