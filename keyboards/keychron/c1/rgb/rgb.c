@@ -53,7 +53,7 @@ void suspend_power_down_user(void) {
     mode_leds_update();
 
     // Suspend RGB
-    rgb_matrix_set_suspend_state(true)
+    rgb_matrix_set_suspend_state(true);
 }
 
 /// TODO: Clean-up workaround
