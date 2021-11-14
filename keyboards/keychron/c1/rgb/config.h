@@ -55,4 +55,8 @@
 /* Polling Rate */
 #define USB_POLLING_INTERVAL_MS 1
 
+/* Disable RGB while USB is sleeping */
+#define RGB_DISABLE_WHEN_USB_SUSPENDED true
+
+
 #include "config_led.h"
