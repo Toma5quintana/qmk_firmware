@@ -91,4 +91,4 @@ See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_to
 
 * * *
 
-If ever the status LEDs of the keyboard are unresponsive, please check if you have any fast charge for iPhone/iPad/iPod utilities installed in your PC. Currently, ASUS USB Charger Plus is known for causing this misbehavior. There are two workarounds for this, either change your keyboard's VID in `config.h` or uninstall the aforementioned utility program.
+If ever the status LEDs of the keyboard are unresponsive, please check if you have any fast charge utility for iPhone/iPad/iPod installed in your PC. Currently, ASUS USB Charger Plus is known for causing this misbehavior. There are two workarounds for this, either change your keyboard's VID in `config.h` or uninstall the aforementioned utility program.
