@@ -19,6 +19,7 @@ A customizable TKL keyboard.
 # Keymapping
 ### Windows Mode
 <details>
+
 Without Fn | With Fn
 ---------- | -------
 ESC | Reset keyboard
@@ -41,10 +42,12 @@ Toggle backlight | -
 ← | Cycle through modes in reverse
 ↓ | Decrease effect speed
 → | Cycle through modes
+
 </details>
 
 ### Mac Mode
 <details>
+
 Without Fn | With Fn
 ---------- | -------
 ESC | Reset keyboard
@@ -67,6 +70,7 @@ Toggle backlight | -
 ← | Cycle through modes in reverse
 ↓ | Decrease effect speed
 → | Cycle through modes
+
 </details>
 
 # More Info
