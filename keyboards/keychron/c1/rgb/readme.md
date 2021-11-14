@@ -88,3 +88,7 @@ Page Down | Decrease RGB Hue
 For more information and more detailed flashing instructions, please visit https://github.com/CanUnesi/QMK-on-K6#readme
 
 See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).
+
+* * *
+
+If ever the status LEDs of the keyboard are unresponsive, please check if you have any fast charge for iPhone/iPad/iPod utilities installed in your PC. Currently, ASUS USB Charger Plus is known for causing this misbehavior. There are two workarounds for this, either change your keyboard's VID in `config.h` or uninstall the aforementioned utility program.
