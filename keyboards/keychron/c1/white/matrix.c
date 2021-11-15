@@ -21,6 +21,21 @@ Ported to QMK by Stephen Peery <https://github.com/smp4488/>
 // Key and LED matrix driver for SN32F260.
 // This driver will take full control of CT16B1 and GPIO in MATRIX_ROW_PINS, MATRIX_COL_PINS, LED_MATRIX_ROW_PINS and LED_MATRIX_COL_PINS.
 // This file implements a RGB matrix led driver but only the red channel is used. Because the RGB matrix is currently better supported then LED matrix.
+//
+// The CT16B1 on the SN32F260 can be used as a 22 channel PWM peripheral.
+// However PWM cannot be used naively, because a new PWM cycle is started when the previous one ends.
+// This is an issue because the key and led matrix is multiplexed and there is some GPIO row and PWM duty cycle reconfiguration needed between PWM cycles.
+// The PWM can be stoped and stated again but this has some overhead.
+// This driver uses a trick to keep PWM running and have some time in between PWM cycles for the reconfiguration.
+//
+// While the duty cycle values are between 0-255, the period is configured as 0xFFFF.
+// This way the timer period is divide into two phases. 0 to 255 is used as PWM phase, while 256 to 0xFFFF can be used for the reconfiguration.
+// The CT16B1 is configured to generate an interupt when the counter reaches 255. In this interrupt the reconfiguration is done.
+// The reconfiguration needs some time to execute but not the whole duration from 256 to 0xFFFF.
+// So when reconfiguration is done the timer is advanced forward to 0xFFFE.
+// One tick later 0xFFFF is reached and a new PWM cycle is started.
+//
+// The final behaviour is exactly what we want, a PWM cycle followed by a short reconfiguration and then the next PWM cycle.
 
 #include <stdint.h>
 #include <stdbool.h>
