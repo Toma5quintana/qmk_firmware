@@ -1,5 +1,6 @@
 # project specific files
-SRC = ../../../drivers/sn32/matrix_sn32f248b.c
+#SRC = ../../../drivers/sn32/matrix_sn32f248b.c
+SRC += matrix.c
 SRC += config_led.c
 
 ## chip/board settings
@@ -46,8 +47,8 @@ MAGIC_KEYCODE_ENABLE = yes
 BOOTMAGIC_ENABLE = full # Virtual DIP switch configuration
 MOUSEKEY_ENABLE = no    # Mouse keys
 EXTRAKEY_ENABLE = yes   # Audio control and System control
-CONSOLE_ENABLE = yes     # Console for debug
-COMMAND_ENABLE = yes     # Commands for debug and configuration
+CONSOLE_ENABLE = no     # Console for debug
+COMMAND_ENABLE = no     # Commands for debug and configuration
 SLEEP_LED_ENABLE = no   # Breathing sleep LED during USB suspend
 NKRO_ENABLE = yes        # USB Nkey Rollover
 AUDIO_ENABLE = no
@@ -60,3 +61,5 @@ KEYBOARD_SHARED_EP = yes
 # Custom RGB matrix handling
 RGB_MATRIX_ENABLE = yes
 RGB_MATRIX_DRIVER = SN32F248B
+
+OPENRGB_ENABLE = yes

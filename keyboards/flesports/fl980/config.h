@@ -39,9 +39,6 @@
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 5
 
-/* Per-key tapping term, for use with Magic FN */
-#define TAPPING_TERM_PER_KEY
-
 #undef FORCE_NKRO
 #define FORCE_NKRO
 
