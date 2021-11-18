@@ -1,4 +1,5 @@
 /*
+Copyright 2021 Alexey Zagorodnikov <xglooom@gmail.com>
 Copyright 2021 Adam Honse <calcprogrammer1@gmail.com>
 Copyright 2011 Jun Wako <wakojun@gmail.com>
 
@@ -285,18 +286,7 @@ void matrix_init(void) {
     SN_CT16B1->MR24 = 0xFF;
 
     // Set prescale value
-    if (SystemCoreClock > 24000000)
-    {
-        SN_CT16B1->PRE = 0x08;
-    }
-    else if (SystemCoreClock > 12000000)
-    {
-        SN_CT16B1->PRE = 0x04;
-    }
-    else
-    {
-        SN_CT16B1->PRE = 0x02;
-    }
+    SN_CT16B1->PRE = 0x02;
 
     SN_CT16B1->PWMCTRL = (mskCT16_PWM0MODE_2 |  \
                           mskCT16_PWM1MODE_2 |  \
