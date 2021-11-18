@@ -20,52 +20,43 @@
 #include "config_common.h"
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID               0x3434
-#define PRODUCT_ID              0xFE20
-#define DEVICE_VER              0x0001
+#define VENDOR_ID           0x05AC
+#define PRODUCT_ID          0x024F
+#define DEVICE_VER          0x0001
 
-#define MANUFACTURER            Keychron
-#define PRODUCT                 Keychron \x43\x31
-#define DESCRIPTION             \x43\x31 RGB
+#define MANUFACTURER        Keychron
+#define PRODUCT             Keychron \x43\x31
+#define DESCRIPTION         \x43\x31 RGB Hotswap
 
 /* key matrix size */
-#define MATRIX_ROWS             6
-#define MATRIX_COLS             17
+#define MATRIX_ROWS         6
+#define MATRIX_COLS         17
 
 #define DIODE_DIRECTION COL2ROW
 
-#define MATRIX_COL_PINS         { A8, A9, A10, A11, A12, A13, A14, A15, B0, B1, B2, B3, B4, B5, B6, B7, B8 }
-#define MATRIX_ROW_PINS         { C15, D11, D10, D9, D8, D7 }
+#define MATRIX_COL_PINS     { A8, A9, A10, A11, A12, A13, A14, A15, B0, B1, B2, B3, B4, B5, B6, B7, B8 }
+#define MATRIX_ROW_PINS     { C15, D11, D10, D9, D8, D7 }
 
 // Connects each switch in the dip switch to the GPIO pin of the MCU
-#define DIP_SWITCH_PINS         { D4 }
+#define DIP_SWITCH_PINS     { D4 }
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
-#define DEBOUNCE                0
+#define DEBOUNCE            0
 
 /* LED Status indicators */
-#define LED_CAPS_LOCK_PIN       B10
-#define LED_MAC_PIN             B11 //labeled Mac on KB since no Scroll Lock
-#define LED_WIN_PIN             B12 //labeled Windows on KB since no Numpad
-#define LED_PIN_ON_STATE        1
-
-/* LED Matrix */
-#define LED_MATRIX_ROWS         6
-#define LED_MATRIX_ROW_CHANNELS 3
-#define LED_MATRIX_ROWS_HW      (LED_MATRIX_ROWS * LED_MATRIX_ROW_CHANNELS)
-#define LED_MATRIX_ROW_PINS     { C0, C1, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, B13, D3, B15, B14 }
-
-#define LED_MATRIX_COLS         17
-#define LED_MATRIX_COL_PINS     { A8, A9, A10, A11, A12, A13, A14, A15, B0, B1, B2, B3, B4, B5, B6, B7, B8 }
-
-#define DRIVER_LED_TOTAL        (87)
-
-// Backlight configuration
-#define BACKLIGHT_LEVELS                8
-#define RGB_DISABLE_WHEN_USB_SUSPENDED  true
+#define LED_CAPS_LOCK_PIN   B10
+#define LED_MAC_PIN         B11 //labeled Mac on KB since no Scroll Lock
+#define LED_WIN_PIN         B12 //labeled Windows on KB since no Numpad
+#define LED_PIN_ON_STATE    1
 
 /* Enable NKRO by default*/
 #define FORCE_NKRO
 
 /* Polling Rate */
 #define USB_POLLING_INTERVAL_MS 1
+
+/* Disable RGB while USB is sleeping */
+#define RGB_DISABLE_WHEN_USB_SUSPENDED true
+
+
+#include "config_led.h"
