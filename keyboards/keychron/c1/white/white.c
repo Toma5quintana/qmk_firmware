@@ -47,6 +47,17 @@ void keyboard_pre_init_kb(void) {
     setPinOutput(LED_WIN_PIN);
     setPinOutput(LED_MAC_PIN);
 
+    // WORKAROUND: Mac & Windows LED flicker.
+    // Normally the GPIOs in DIP_SWITCH_PINS will be initialized by dip_switch_init().
+    // But during startup of the keyboard the Mac/Windows dip switch seems to jitter, causing the Mac and Windows LEDs to flicker.
+    // Maybe the internal pull-up of this chip is really weak, and needs some time to pullup the input voltage to the high level? Seems unlikely but cannot think of a better explanation.
+    // By doing the configuration of the GPIOs here the pullup is enabled earlier and the flicker is gone.
+    const pin_t dip_switch_pad[] = DIP_SWITCH_PINS;
+    const size_t size = sizeof(dip_switch_pad) / sizeof(dip_switch_pad[0]);
+    for (size_t i=0; i<size; i++) {
+        setPinInputHigh(dip_switch_pad[i]);
+    }
+
     keyboard_pre_init_user();
 }
 
