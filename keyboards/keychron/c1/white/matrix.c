@@ -53,6 +53,12 @@ Ported to QMK by Stephen Peery <https://github.com/smp4488/>
 #define SN32_CT16B1_IRQ_PRIORITY 0
 #endif
 
+// MATRIX_KEY_SAMPLE_DELAY is a delay in arbritray time units, that will delay the sampling of the column inputs, after a row is selected.
+#ifndef MATRIX_KEY_SAMPLE_DELAY
+// The default value is the result of some experimentation
+#define MATRIX_KEY_SAMPLE_DELAY 100
+#endif
+
 static const pin_t row_pins[MATRIX_ROWS] = MATRIX_ROW_PINS;
 static const pin_t col_pins[MATRIX_COLS] = MATRIX_COL_PINS;
 static const pin_t led_row_pins[LED_MATRIX_ROWS_HW] = LED_MATRIX_ROW_PINS;
@@ -260,7 +266,7 @@ OSAL_IRQ_HANDLER(SN32_CT16B1_HANDLER) {
             // NOTE: Small delay to let internal pull-up resitors pull-up the input pins.
             // The input pin can still been low when the previous row had a pressed button.
             // When transistors are replaced with FETs this is needed because thy have a high gate capacitance.
-            for(int i = 0; i < 100; i++){ __asm__ volatile("" ::: "memory");  }
+            for(int i = 0; i < MATRIX_KEY_SAMPLE_DELAY; i++){ __asm__ volatile("" ::: "memory");  }
 
             // When MATRIX_COL_PINS is ordered from MR0 to MRn, the following optimization is possible.
             // This if should be resolved at compile time.
@@ -271,11 +277,13 @@ OSAL_IRQ_HANDLER(SN32_CT16B1_HANDLER) {
                 // The bit position in col_pin_values matches MR numbering.
                 uint32_t col_pin_values = (pal_lld_readport(GPIOA) & 0xFFFF) | ((pal_lld_readport(GPIOD) & 0x3F) << 16);
 
+                // Invert because a pressed key will make a input pin low.
+                col_pin_values = ~col_pin_values;
+
                 // Keep bottom MATRIX_COLS bits.
                 col_pin_values &= ((1 << MATRIX_COLS) - 1);
 
-                // Invert because a keypress will make a pin low.
-                raw_matrix[row_index] = ~col_pin_values;
+                raw_matrix[row_index] = col_pin_values;
             } else {
                 // Slow fallback implementation
 
