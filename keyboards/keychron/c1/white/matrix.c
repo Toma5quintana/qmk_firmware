@@ -22,18 +22,18 @@ Ported to QMK by Stephen Peery <https://github.com/smp4488/>
 // This driver will take full control of CT16B1 and GPIO in MATRIX_ROW_PINS, MATRIX_COL_PINS, LED_MATRIX_ROW_PINS and LED_MATRIX_COL_PINS.
 // This file implements a RGB matrix led driver but only the red channel is used. Because the RGB matrix is currently better supported then LED matrix.
 //
-// The CT16B1 on the SN32F260 can be used as a 22 channel PWM peripheral.
+// The CT16B1 on the SN32F260 can be used as a 23 channel PWM peripheral.
 // However PWM cannot be used naively, because a new PWM cycle is started when the previous one ends.
 // This is an issue because the key and led matrix is multiplexed and there is some GPIO row and PWM duty cycle reconfiguration needed between PWM cycles.
 // The PWM can be stoped and stated again but this has some overhead.
 // This driver uses a trick to keep PWM running and have some time in between PWM cycles for the reconfiguration.
 //
-// While the duty cycle values are between 0-255, the period is configured as 0xFFFF.
-// This way the timer period is divide into two phases. 0 to 255 is used as PWM phase, while 256 to 0xFFFF can be used for the reconfiguration.
+// While the active duty cycle values are between 0-255, the period is not configured and the implicit wrap-around at 0xFFFF is used.
+// This way the timer period is divide into two phases. 0 to 255 is used as active PWM phase, while 256 to 0xFFFF can be used for the reconfiguration.
 // The CT16B1 is configured to generate an interupt when the counter reaches 255. In this interrupt the reconfiguration is done.
 // The reconfiguration needs some time to execute but not the whole duration from 256 to 0xFFFF.
-// So when reconfiguration is done the timer is advanced forward to 0xFFFE.
-// One tick later 0xFFFF is reached and a new PWM cycle is started.
+// So when reconfiguration is done the timer is advanced forward to 0xFFFF.
+// One tick later the timer will wrap-around and a new PWM cycle is started.
 //
 // The final behaviour is exactly what we want, a PWM cycle followed by a short reconfiguration and then the next PWM cycle.
 
@@ -54,6 +54,8 @@ Ported to QMK by Stephen Peery <https://github.com/smp4488/>
 #endif
 
 // MATRIX_KEY_SAMPLE_DELAY is a delay in arbritray time units, that will delay the sampling of the column inputs, after a row is selected.
+// This small delay to let internal pull-up resitors pull-up the input pins.
+// The input pin can still be low when the previous row had a pressed button.
 #ifndef MATRIX_KEY_SAMPLE_DELAY
 // The default value is the result of some experimentation
 #define MATRIX_KEY_SAMPLE_DELAY 100
@@ -167,13 +169,10 @@ void matrix_init(void) {
     SN_CT16B1->PWMENB = used_mrs_mask();
 
     // Set match interrupts and TC rest
-    SN_CT16B1->MCTRL3 = SN_CT16B1_MCTRL3_MR23IE_Msk |  SN_CT16B1_MCTRL3_MR22RST_Msk;
+    SN_CT16B1->MCTRL3 = SN_CT16B1_MCTRL3_MR23IE_Msk;
 
     // Match register used to generate interrupt.
     SN_CT16B1->MR23 = 0xFF;
-
-    // Match register used to trigger a reset, that will start a new PWM cycle
-    SN_CT16B1->MR22 = 0xFFFF;
 
     // Set prescale value, aim for 1.2kHz. Due to overhead the actual freq will be a bit lower, but should still be above 1kHz.
     // Tests with 12MHz and 6 rows, resulted in a scan frequency of 1.1kHz
@@ -220,7 +219,7 @@ OSAL_IRQ_HANDLER(SN32_CT16B1_HANDLER) {
     OSAL_IRQ_PROLOGUE();
 
     // Clear match interrupt status
-    SN_CT16B1->IC = SN_CT16B1_IC_MR22IC_Msk | SN_CT16B1_IC_MR23IC_Msk;
+    SN_CT16B1->IC = SN_CT16B1_IC_MR23IC_Msk;
 
     // Turn the selected row off
     writePinLow(led_row_pins[current_row]);
@@ -235,12 +234,13 @@ OSAL_IRQ_HANDLER(SN32_CT16B1_HANDLER) {
     if(current_row == 0) {
 
 #if(DIODE_DIRECTION == ROW2COL)
-        #warning "Untested, copied from 240 driver. Didn't have a board to test this on"
-
         // Read the key matrix
         for (uint8_t col_index = 0; col_index < MATRIX_COLS; col_index++) {
             // Enable the column
             writePinLow(col_pins[col_index]);
+
+            // Small delay to let internal pull-up resitors pull-up the input pins.
+            for(int i = 0; i < MATRIX_KEY_SAMPLE_DELAY; i++){ __asm__ volatile("" ::: "memory");  }
 
             for (uint8_t row_index = 0; row_index < MATRIX_ROWS; row_index++) {
                 // Check row pin state
@@ -263,9 +263,7 @@ OSAL_IRQ_HANDLER(SN32_CT16B1_HANDLER) {
             // Enable the row
             writePinLow(row_pins[row_index]);
 
-            // NOTE: Small delay to let internal pull-up resitors pull-up the input pins.
-            // The input pin can still been low when the previous row had a pressed button.
-            // When transistors are replaced with FETs this is needed because thy have a high gate capacitance.
+            // Small delay to let internal pull-up resitors pull-up the input pins.
             for(int i = 0; i < MATRIX_KEY_SAMPLE_DELAY; i++){ __asm__ volatile("" ::: "memory");  }
 
             // When MATRIX_COL_PINS is ordered from MR0 to MRn, the following optimization is possible.
@@ -316,8 +314,8 @@ OSAL_IRQ_HANDLER(SN32_CT16B1_HANDLER) {
     // Turn the current row on
     writePinHigh(led_row_pins[current_row]);
 
-    // Jump to just before MR22 match value, when it is reached it will trigger a reset, starting a new PWM cycle
-    SN_CT16B1->TC = 0xFFFE;
+    // Advance the timer to just before the wrap-around, that will start a new PWM cycle
+    SN_CT16B1->TC = 0xFFFF;
 
     OSAL_IRQ_EPILOGUE();
 }
@@ -347,6 +345,7 @@ static inline int8_t pin_to_mr(pin_t pin){
         case D3:  return 19;
         case D4:  return 20;
         case D5:  return 21;
+        case D8:  return 22;
     }
 
     // Should not happen!
@@ -383,13 +382,14 @@ static inline uint32_t used_mrs_mask(void) {
     MASK_MR(19);
     MASK_MR(20);
     MASK_MR(21);
+    MASK_MR(22);
     return mask;
 }
 
 // Given a row, load the MRs with led_state data
 static inline void load_mrs(int row) {
     // Convince compiler that MRs can be accesssed as an array. This is done to improve code gen.
-    volatile uint32_t (* const MRx)[22] = (volatile uint32_t (*)[22]) &SN_CT16B1->MR0;
+    volatile uint32_t (* const MRx)[23] = (volatile uint32_t (*)[23]) &SN_CT16B1->MR0;
 
     // Marco that load the MR for the given col.
     // It is a NOP if col >= LED_MATRIX_COLS
@@ -421,6 +421,7 @@ static inline void load_mrs(int row) {
     LOAD_MR(19);
     LOAD_MR(20);
     LOAD_MR(21);
+    LOAD_MR(22);
 }
 
 // Return true if MATRIX_COL_PINS is in MR0 to MRn order
@@ -452,5 +453,6 @@ static inline bool cols_ordered(void){
     TEST_ORDER(19);
     TEST_ORDER(20);
     TEST_ORDER(21);
+    TEST_ORDER(22);
     return true;
 }
