@@ -179,13 +179,13 @@ void matrix_init(void) {
     SN_CT16B1->PRE = SystemCoreClock / (256 * LED_MATRIX_ROWS_HW * 1200) - 1;
 
     //Set CT16B1 as the up-counting mode.
-	SN_CT16B1->TMRCTRL = SN_CT16B0_TMRCTRL_CRST_Msk;
+	SN_CT16B1->TMRCTRL = SN_CT16B1_TMRCTRL_CRST_Msk;
 
     // Wait until timer reset done.
-    while (SN_CT16B1->TMRCTRL & SN_CT16B0_TMRCTRL_CRST_Msk);
+    while (SN_CT16B1->TMRCTRL & SN_CT16B1_TMRCTRL_CRST_Msk);
 
     // Let TC start counting.
-    SN_CT16B1->TMRCTRL = SN_CT16B0_TMRCTRL_CEN_Msk;
+    SN_CT16B1->TMRCTRL = SN_CT16B1_TMRCTRL_CEN_Msk;
 
     NVIC_ClearPendingIRQ(CT16B1_IRQn);
     nvicEnableVector(CT16B1_IRQn, SN32_CT16B1_IRQ_PRIORITY);
