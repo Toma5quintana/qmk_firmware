@@ -167,7 +167,16 @@ static const uint8_t openrgb_rgb_matrix_effects_indexes[]           = {
 };
 static uint8_t raw_hid_buffer[RAW_EPSIZE];
 
+extern uint8_t is_orgb_mode;
+
+extern void via_raw_hid_receive(uint8_t *data, uint8_t length);
+
 void raw_hid_receive(uint8_t *data, uint8_t length) {
+    if (!is_orgb_mode) { 
+        via_raw_hid_receive(data, length); 
+        return;
+    }
+
     switch (*data) {
         case OPENRGB_GET_PROTOCOL_VERSION:
             openrgb_get_protocol_version();
