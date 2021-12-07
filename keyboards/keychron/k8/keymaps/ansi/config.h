@@ -20,13 +20,20 @@
 #include "config_common.h"
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID       0x05AC
-#define PRODUCT_ID      0x024F
+#define VENDOR_ID       0x3434
+#define PRODUCT_ID      0xFE0E
 #define DEVICE_VER      0x0001
 
 #define MANUFACTURER    Keychron
 #define PRODUCT         K8
+
+#ifdef OPTICAL_MATRIX
 #define DESCRIPTION     K8 RGB Hotswap
+#else
+#define DESCRIPTION     K8 RGB Optical
+#endif
+
+#define WAIT_FOR_USB
 
 /* key matrix size */
 #define MATRIX_ROWS 6
@@ -44,5 +51,11 @@
 #define DEBOUNCE 0
 
 //#define FORCE_NKRO
+
+#if defined(OPTICAL_MATRIX)
+#define PRESSED_KEY_PIN_STATE 1
+#define DELAY_ENABLE 1
+#define DELAY_LOOP 2000
+#endif
 
 #include "config_led.h"
