@@ -52,10 +52,4 @@
 
 //#define FORCE_NKRO
 
-#if defined(OPTICAL_MATRIX)
-#define PRESSED_KEY_PIN_STATE 1
-#define DELAY_ENABLE 1
-#define DELAY_LOOP 2000
-#endif
-
 #include "config_led.h"
