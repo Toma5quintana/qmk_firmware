@@ -1,4 +1,4 @@
-# Keychron K2
+# Keychron K14 RGB
 
 K14 Gateron RGB
 
