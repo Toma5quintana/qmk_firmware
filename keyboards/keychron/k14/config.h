@@ -20,8 +20,8 @@
 #include "config_common.h"
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID       0x05AC
-#define PRODUCT_ID      0x024F
+#define VENDOR_ID       0x3434
+#define PRODUCT_ID      0xFE1A
 #define DEVICE_VER      0x0001
 
 #define MANUFACTURER    Keychron
@@ -44,7 +44,7 @@
 #define DEBOUNCE 0
 
 /* LED Status indicators */
-//#define LED_CAPS_LOCK_PIN B9
+#define LED_CAPS_LOCK_PIN B9
 #define LED_PIN_ON_STATE  1
 
 #include "config_led.h"
