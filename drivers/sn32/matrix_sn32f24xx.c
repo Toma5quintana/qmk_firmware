@@ -31,8 +31,32 @@ Ported to QMK by Stephen Peery <https://github.com/smp4488/>
 #include "quantum.h"
 #include "rgb_matrix_sn32f24xx.h"
 
+#if defined(OPTICAL_MATRIX)
+#ifndef PRESSED_KEY_PIN_STATE
+#    define PRESSED_KEY_PIN_STATE 1
+#endif
+#ifndef MATRIX_KEY_SAMPLE_DELAY
+#    define MATRIX_KEY_SAMPLE_DELAY 2000
+#endif
+#endif
+
 #ifndef PRESSED_KEY_PIN_STATE
 #    define PRESSED_KEY_PIN_STATE 0
+#endif
+
+#ifndef MATRIX_KEY_SAMPLE_DELAY
+#    define MATRIX_KEY_SAMPLE_DELAY 100
+#endif
+
+#if defined(MATRIX_KEY_SAMPLE_DELAY)
+void sample_delay(void){
+    //should give 2000/48000000Mhz = 42us delay
+    //we want 42 micro thus to get value
+    for (int i = 0; i < MATRIX_KEY_SAMPLE_DELAY; ++i) {
+        __asm__ volatile("" ::: "memory");
+    }
+    //wait_us(73); //does not work
+}
 #endif
 
 static const pin_t row_pins[MATRIX_ROWS] = MATRIX_ROW_PINS;
@@ -120,6 +144,7 @@ void matrix_scan_keys(matrix_row_t raw_matrix[], uint8_t current_row){
                 for (uint8_t col_index = 0; col_index < MATRIX_COLS; col_index++) {
                     // Enable the column
                     writePinLow(col_pins[col_index]);
+                    sample_delay();
                     for (uint8_t row_index = 0; row_index < MATRIX_ROWS; row_index++) {
                         // Check row pin state
                         if (readPin(row_pins[row_index]) == PRESSED_KEY_PIN_STATE) {
@@ -132,6 +157,8 @@ void matrix_scan_keys(matrix_row_t raw_matrix[], uint8_t current_row){
                     }
                     // Disable the column
                     writePinHigh(col_pins[col_index]);
+                    //see https://github.com/SonixQMK/qmk_firmware/issues/157
+                    sample_delay();
                 }
             }
         #elif(DIODE_DIRECTION == COL2ROW)
@@ -144,6 +171,7 @@ void matrix_scan_keys(matrix_row_t raw_matrix[], uint8_t current_row){
                 for (uint8_t row_index = 0; row_index < MATRIX_ROWS; row_index++) {
                     // Enable the row
                     writePinLow(row_pins[row_index]);
+                    sample_delay();
                     for (uint8_t col_index = 0; col_index < MATRIX_COLS; col_index++) {
                         // Check row pin state
                         if (readPin(col_pins[col_index]) == PRESSED_KEY_PIN_STATE) {
@@ -156,6 +184,8 @@ void matrix_scan_keys(matrix_row_t raw_matrix[], uint8_t current_row){
                     }
                     // Disable the row
                     writePinHigh(row_pins[row_index]);
+                    //see https://github.com/SonixQMK/qmk_firmware/issues/157
+                    sample_delay();
                 }
             }
         #endif
