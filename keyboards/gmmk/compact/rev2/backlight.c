@@ -36,6 +36,9 @@
 
 static uint8_t sel_frame[2] = {0xFF, 0xFF};
 static uint8_t sel_frame_idx = 0;
+#ifdef VIA_OPENRGB_HYBRID
+uint8_t is_orgb_mode;
+#endif
 
 static void i2c_delay(uint32_t loop)
 {
@@ -233,7 +236,7 @@ static void set_pwm(uint8_t dev, uint8_t addr, uint8_t value)
     i2c_write_reg(dev, addr + 0x20, value);
 }
 
-void _set_color(int index, uint8_t r, uint8_t g, uint8_t b)
+static void _set_color_direct(int index, uint8_t r, uint8_t g, uint8_t b)
 {   
     uint8_t dev;
     int l = g_led_pos[index];
@@ -243,6 +246,16 @@ void _set_color(int index, uint8_t r, uint8_t g, uint8_t b)
     set_pwm(dev, l, r);
     set_pwm(dev, l + 0x10, g);
     set_pwm(dev, l + 0x20, b);
+}
+
+void _set_color(int index, uint8_t r, uint8_t g, uint8_t b)
+{
+#ifdef VIA_OPENRGB_HYBRID
+    if (!is_orgb_mode && (index == 15 || index == 35 || index == 49))
+        r = g = b = 255;
+#endif
+
+    _set_color_direct(index, r, g, b);
 }
 
 void _read_color(int index, uint8_t *r, uint8_t *g, uint8_t *b)

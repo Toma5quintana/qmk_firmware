@@ -15,6 +15,9 @@
 
 #define SDB     B0
 
+#ifdef VIA_OPENRGB_HYBRID
+uint8_t is_orgb_mode;
+#endif
 static int g_cs_pin = 0;
 
 void spi_init(void)
@@ -84,7 +87,7 @@ static const uint8_t g_led_pos[DRIVER_LED_TOTAL] = {
 /* 53 */ 114, 115, 130, 131, 146, 147, 162, 163
 };
 
-void _set_color(int index, uint8_t r, uint8_t g, uint8_t b)
+static void _set_color_direct(int index, uint8_t r, uint8_t g, uint8_t b)
 {
     int l = g_led_pos[index];
 
@@ -102,6 +105,16 @@ void _set_color(int index, uint8_t r, uint8_t g, uint8_t b)
     spi_w3(1, y * 48 + a, r);       // r
     spi_w3(1, y * 48 + a + 2*8, b); // b
     spi_w3(1, y * 48 + a + 4*8, g); // g  
+}
+
+void _set_color(int index, uint8_t r, uint8_t g, uint8_t b)
+{
+#ifdef VIA_OPENRGB_HYBRID
+    if (!is_orgb_mode && (index == 15 || index == 35 || index == 49))
+        r = g = b = 255;
+#endif
+
+    _set_color_direct(index, r, g, b);
 }
 
 void _read_color(int index, uint8_t *r, uint8_t *g, uint8_t *b)
@@ -159,7 +172,7 @@ void reset_rgb(int pin)
 }
 
 void process_backlight(uint8_t devid, volatile LED_TYPE* states)
-{    
+{
     static unsigned char state = 0;       
 
     switch (state)
