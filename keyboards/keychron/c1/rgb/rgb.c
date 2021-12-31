@@ -53,7 +53,7 @@ void suspend_power_down_user(void) {
     mode_leds_update();
 
     // Suspend RGB
-    rgb_matrix_set_suspend_state(true);
+    rgb_matrix_disable_noeeprom();
 }
 
 /// TODO: Clean-up workaround
@@ -65,5 +65,5 @@ void housekeeping_task_user(void) {
     mode_leds_update();
 
     // Turn on RGB
-    rgb_matrix_set_suspend_state(false);
+    rgb_matrix_enable_noeeprom();
 }
