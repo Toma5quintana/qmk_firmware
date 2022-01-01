@@ -67,7 +67,7 @@ void suspend_power_down_kb(void) {
     mode_leds_update();
 
     // Suspend backlight
-    rgb_matrix_set_suspend_state_noeeprom(true);
+    rgb_matrix_disable_noeeprom();
 
     suspend_power_down_user();
 }
@@ -81,7 +81,7 @@ void housekeeping_task_kb(void) {
     mode_leds_update();
 
     // Restore backlight
-    rgb_matrix_set_suspend_state_noeeprom(false);
+    rgb_matrix_enable_noeeprom();
 
     housekeeping_task_user();
 }
