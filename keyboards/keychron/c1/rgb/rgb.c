@@ -27,7 +27,7 @@ static void mode_leds_update(void){
     writePin(LED_MAC_PIN, mode_leds_show && !mode_leds_windows);
 }
 
-void dip_switch_update_user(uint8_t index, bool active){
+void dip_switch_update_kb(uint8_t index, bool active){
     if(index == 0) {
         if(active) { // Mac mode
             layer_move(2);
@@ -39,31 +39,50 @@ void dip_switch_update_user(uint8_t index, bool active){
         mode_leds_windows = !active;
         mode_leds_update();
     }
+
+    dip_switch_update_user(index, active);
 }
 
-void keyboard_pre_init_user(void) {
+void keyboard_pre_init_kb(void) {
     // Setup Win & Mac LED Pins as output
     setPinOutput(LED_WIN_PIN);
     setPinOutput(LED_MAC_PIN);
+
+    // WORKAROUND: Mac & Windows LED flicker.
+    // Normally the GPIOs in DIP_SWITCH_PINS will be initialized by dip_switch_init().
+    // But during startup of the keyboard the Mac/Windows dip switch seems to jitter, causing the Mac and Windows LEDs to flicker.
+    // Maybe the internal pull-up of this chip is really weak, and needs some time to pullup the input voltage to the high level? Seems unlikely but cannot think of a better explanation.
+    // By doing the configuration of the GPIOs here the pullup is enabled earlier and the flicker is gone.
+    const pin_t dip_switch_pad[] = DIP_SWITCH_PINS;
+    const size_t size = sizeof(dip_switch_pad) / sizeof(dip_switch_pad[0]);
+    for (size_t i=0; i<size; i++) {
+        setPinInputHigh(dip_switch_pad[i]);
+    }
+
+    keyboard_pre_init_user();
 }
 
-void suspend_power_down_user(void) {
+void suspend_power_down_kb(void) {
     // Turn leds off
     mode_leds_show = false;
     mode_leds_update();
 
     // Suspend RGB
-    rgb_matrix_disable_noeeprom();
+    rgb_matrix_set_suspend_state_noeeprom(true);
+
+    suspend_power_down_user();
 }
 
 /// TODO: Clean-up workaround
 /// Currently the suspend_wakeup_init_user() has issues. See https://github.com/SonixQMK/qmk_firmware/issues/80
 /// A workaround is to use housekeeping_task_user() instead.
-void housekeeping_task_user(void) {
+void housekeeping_task_kb(void) {
     // Turn on
     mode_leds_show = true;
     mode_leds_update();
 
     // Turn on RGB
-    rgb_matrix_enable_noeeprom();
+    rgb_matrix_set_suspend_state_noeeprom(false);
+
+    housekeeping_task_user();
 }
