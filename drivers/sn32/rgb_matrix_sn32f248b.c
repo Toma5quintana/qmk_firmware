@@ -19,7 +19,7 @@
 
 /*
     COLS key / led
-    Y2 transistors PNP driven high
+    SS8050 transistors NPN driven low
     base      - GPIO
     collector - LED Col pins
     emitter   - VDD
@@ -34,7 +34,7 @@
         LED
 
     ROWS RGB
-    Y1 transistors NPN driven low
+    SS8550 transistors PNP driven high
     base      - GPIO
     collector - LED RGB row pins
     emitter   - GND
@@ -52,11 +52,11 @@
 static uint8_t chan_col_order[LED_MATRIX_COLS] = {0}; // track the channel col order
 static uint8_t current_row = 0; // LED row scan counter
 static uint8_t row_idx = 0; // key row scan counter
-static const uint32_t freq = (RGB_MATRIX_HUE_STEP * RGB_MATRIX_SAT_STEP * RGB_MATRIX_VAL_STEP * RGB_MATRIX_SPD_STEP * RGB_MATRIX_LED_PROCESS_LIMIT);
-RGB led_state[DRIVER_LED_TOTAL]; // led state buffer
 extern matrix_row_t raw_matrix[MATRIX_ROWS]; //raw values
+static const uint32_t freq = (RGB_MATRIX_HUE_STEP * RGB_MATRIX_SAT_STEP * RGB_MATRIX_VAL_STEP * RGB_MATRIX_SPD_STEP * RGB_MATRIX_LED_PROCESS_LIMIT);
 static const pin_t led_row_pins[LED_MATRIX_ROWS_HW] = LED_MATRIX_ROW_PINS; // We expect a R,B,G order here
 static const pin_t led_col_pins[LED_MATRIX_COLS] = LED_MATRIX_COL_PINS;
+RGB led_state[DRIVER_LED_TOTAL]; // led state buffer
 bool enable_pwm = false;
 
 /* PWM configuration structure. We use timer CT16B1 with 24 channels. */
@@ -94,7 +94,6 @@ static PWMConfig pwmcfg = {
 };
 
 void rgb_ch_ctrl(PWMConfig *cfg) {
-
     /* Enable PWM function, IOs and select the PWM modes for the LED column pins */
     for(uint8_t i = 0; i < LED_MATRIX_COLS; i++) {
         switch(led_col_pins[i]) {
@@ -284,7 +283,7 @@ void shared_matrix_rgb_disable_pwm(void) {
 }
 
 void shared_matrix_rgb_disable_leds(void) {
-    // Disable LED outputs on row pins
+    // Disable LED outputs on RGB channel pins
     for (uint8_t x = 0; x < LED_MATRIX_ROWS_HW; x++) {
         writePinLow(led_row_pins[x]);
     }
@@ -292,8 +291,8 @@ void shared_matrix_rgb_disable_leds(void) {
 
 void update_pwm_channels(PWMDriver *pwmp) {
     for(uint8_t col_idx = 0; col_idx < LED_MATRIX_COLS; col_idx++) {
-        // Scan the key matrix
         #if(DIODE_DIRECTION == ROW2COL)
+            // Scan the key matrix column
             matrix_scan_keys(raw_matrix,col_idx);
         #endif
         uint8_t led_index = g_led_config.matrix_co[row_idx][col_idx];
@@ -301,6 +300,7 @@ void update_pwm_channels(PWMDriver *pwmp) {
         if (led_state[led_index].b != 0) enable_pwm |= true;
         if (led_state[led_index].g != 0) enable_pwm |= true;
         if (led_state[led_index].r != 0) enable_pwm |= true;
+        // Update matching RGB channel PWM configuration
         switch(current_row % LED_MATRIX_ROW_CHANNELS) {
         case 0:
                 if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],led_state[led_index].b);
@@ -319,16 +319,18 @@ void update_pwm_channels(PWMDriver *pwmp) {
 void rgb_callback(PWMDriver *pwmp) {
     // Disable the interrupt
     pwmDisablePeriodicNotification(pwmp);
-    // Advance to the next led row
+    // Advance to the next LED RGB channel
     current_row++;
     if(current_row >= LED_MATRIX_ROWS_HW) current_row = 0;
-    // Advance to the next key row
+    // Advance to the next key matrix row
     if(current_row % LED_MATRIX_ROW_CHANNELS == 2) row_idx++;
     if(row_idx >= LED_MATRIX_ROWS) row_idx = 0;
     chSysLockFromISR();
+    // Disable LED output before scanning the key matrix
     shared_matrix_rgb_disable_leds();
     shared_matrix_rgb_disable_pwm();
     #if(DIODE_DIRECTION == COL2ROW)
+        // Scan the key matrix row
         matrix_scan_keys(raw_matrix, row_idx);
     #endif
     update_pwm_channels(pwmp);
@@ -345,6 +347,7 @@ void SN32F24XX_init(void) {
         setPinOutput(led_row_pins[x]);
         writePinLow(led_row_pins[x]);
     }
+    // Determine which PWM channels we need to control
     rgb_ch_ctrl(&pwmcfg);
     pwmStart(&PWMD1, &pwmcfg);
     shared_matrix_rgb_enable();
