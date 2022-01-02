@@ -17,6 +17,10 @@
 #    define RGB_MATRIX_SPD_STEP 16
 #endif
 
+#if !defined(RGB_MATRIX_LED_PROCESS_LIMIT)
+#    define RGB_MATRIX_LED_PROCESS_LIMIT (LED_MATRIX_COLS + LED_MATRIX_ROW_CHANNELS)
+#endif
+
 /*
     COLS key / led
     SS8050 transistors NPN driven low

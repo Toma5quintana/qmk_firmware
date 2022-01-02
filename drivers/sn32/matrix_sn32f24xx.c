@@ -45,7 +45,7 @@ Ported to QMK by Stephen Peery <https://github.com/smp4488/>
 #endif
 
 #ifndef MATRIX_KEY_SAMPLE_DELAY
-#    define MATRIX_KEY_SAMPLE_DELAY 100
+#    define MATRIX_KEY_SAMPLE_DELAY 150
 #endif
 
 #if defined(MATRIX_KEY_SAMPLE_DELAY)
