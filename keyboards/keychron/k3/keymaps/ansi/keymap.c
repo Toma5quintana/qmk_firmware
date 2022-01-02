@@ -69,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   */
   [_FN] = {
   /*  0           1           2           3           4           5           6           7           8           9           10          11          12          13          14          15         */
-    { RESET,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      RGB_VAD,    RGB_VAI,    KC_MPRV,    KC_MPLY,    KC_MNXT,    KC_MUTE,    KC_VOLD,    KC_VOLU,    KC_NO,      KC_NO,      RGB_TOG    },
+    { RESET,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      RGB_VAD,    RGB_VAI,    KC_MPRV,    KC_MPLY,    KC_MNXT,    KC_MUTE,    KC_VOLD,    KC_VOLU,    KC_NO,      KC_INS,     RGB_TOG    },
     { KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      XXXXXXX,    RGB_M_P    },
     { KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      XXXXXXX,    KC_NO      },
     { KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      XXXXXXX,    KC_NO,      XXXXXXX,    KC_NO      },
@@ -80,21 +80,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 void dip_switch_update_user(uint8_t index, bool active) {
   switch(index) {
-    case 0: // OS switch
-      if (active) { // Win/Android mode
-        // do stuff
+    case 0: // Connection switch
+      if (active) {
+        print("Bluetooth enabled\n");
       }
-      else { // Mac/iOS mode
-        // do stuff
+      else {
+        print("Bluetooth disabled\n");
       }
       break;
-    case 1: // Connection switch
-      // Probably it's not possible to do anything sensible here as switching from Cable to BT requires turning off the board. (BT / OFF / Cable)
-      if (active) { // BT mode
-        // do stuff
+      
+    case 1: // OS switch
+      if (active) { // Win/Android mode
+        print("OS switch: Windows/Android selected\n");
       }
-      else { //Cable mode
-        // do stuff
+      else { // Mac/iOS mode
+        print("OS switch: Mac/iOS selected\n");
       }
       break;
   }

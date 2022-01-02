@@ -37,8 +37,14 @@
 #define MATRIX_COL_PINS { A8, A9, A10, A11, A12, A13, A14, A15, B0, B1, B2, B3, B4, B5, B6, B7 }
 #define MATRIX_ROW_PINS { C15, D11, D10, D9, D8, D7 }
 
+#define LED_CAPS_LOCK_PIN D4
+
 // Connects each switch in the dip switch to the GPIO pin of the MCU
-#define DIP_SWITCH_PINS { D4, D5 }
+/*
+ * D5: BT / USB switch. Pulled low in USB stand. Also connected to pin 4 of P3.
+ * D6: Win/Android - Mac/iOS switch. Pulled low in Mac stand. Also connected to pin 3 of P3.
+ */
+#define DIP_SWITCH_PINS { D5, D6 }
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 0
