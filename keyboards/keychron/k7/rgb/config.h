@@ -20,14 +20,9 @@
 #include "config_common.h"
 #include "config_led.h"
 
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0x0C45
-#define PRODUCT_ID      0x5004
-#define DEVICE_VER      0x0001
-
 #define MANUFACTURER    Keychron
-#define PRODUCT         K7
-#define DESCRIPTION     K7RGB
+#define PRODUCT         K7 RGB
+#define DEVICE_VER          0x0001
 
 /* key matrix size */
 #define MATRIX_ROWS 5
