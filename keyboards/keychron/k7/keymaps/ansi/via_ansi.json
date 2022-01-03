@@ -1,7 +1,7 @@
 {
-    "name": "Keychron K6 ANSI",
+    "name": "Keychron K7 ANSI",
     "vendorId": "0x3434",
-    "productId": "0xFE0A",
+    "productId": "0xFE0C",
     "lighting": "none",
     "matrix": {"rows": 5, "cols": 16},
     "layouts": {
