@@ -1,7 +1,7 @@
 {
-    "name": "K6 RGB",
-    "vendorId": "0x0C45",
-    "productId": "0x5004",
+    "name": "K6 ISO",
+    "vendorId": "0x3434",
+    "productId": "0xFE0B",
     "lighting": "none",
     "matrix": {"rows": 5, "cols": 16},
     "layouts": {
