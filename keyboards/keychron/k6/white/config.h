@@ -22,7 +22,6 @@
 
 #define MANUFACTURER                Keychron
 #define PRODUCT                     Keychron K6 White
-#define DEVICE_VER                  0x0001
 
 #define WAIT_FOR_USB
 #define USB_MAX_POWER_CONSUMPTION   100

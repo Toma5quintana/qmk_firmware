@@ -18,10 +18,10 @@
 #pragma once
 
 #include "config_common.h"
+#include "config_led.h"
 
 #define MANUFACTURER    Keychron
 #define PRODUCT         K14 RGB
-#define DEVICE_VER          0x0001
 
 /* key matrix size */
 #define MATRIX_ROWS 5
@@ -41,5 +41,3 @@
 /* LED Status indicators */
 #define LED_CAPS_LOCK_PIN B9
 #define LED_PIN_ON_STATE  1
-
-#include "config_led.h"

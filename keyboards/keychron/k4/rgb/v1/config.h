@@ -16,4 +16,3 @@
 
 #define MANUFACTURER    Keychron
 #define PRODUCT         K4v1 RGB
-#define DEVICE_VER          0x0001
