@@ -328,7 +328,7 @@ void rgb_callback(PWMDriver *pwmp) {
     current_led_row = (current_led_row + LED_MATRIX_ROW_CHANNELS);
     if(current_led_row >= LED_MATRIX_ROWS_HW) current_led_row = 0;
     // Advance to the next key matrix row
-    if(current_led_row % LED_MATRIX_ROW_CHANNELS == 2) row_idx++;
+    if(current_led_row % LED_MATRIX_ROW_CHANNELS == 0) row_idx++;
     if(row_idx >= LED_MATRIX_ROWS) row_idx = 0;
     chSysLockFromISR();
     // Disable LED output before scanning the key matrix
