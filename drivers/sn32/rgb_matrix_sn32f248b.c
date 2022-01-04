@@ -50,7 +50,7 @@
     GPIO    GND
 */
 static uint8_t chan_col_order[LED_MATRIX_COLS] = {0}; // track the channel col order
-static uint8_t current_row = 0; // LED row scan counter
+static uint8_t current_led_row = 0; // LED row scan counter
 static uint8_t row_idx = 0; // key row scan counter
 extern matrix_row_t raw_matrix[MATRIX_ROWS]; //raw values
 static const uint32_t freq = (RGB_MATRIX_HUE_STEP * RGB_MATRIX_SAT_STEP * RGB_MATRIX_VAL_STEP * RGB_MATRIX_SPD_STEP * RGB_MATRIX_LED_PROCESS_LIMIT);
@@ -301,29 +301,34 @@ void update_pwm_channels(PWMDriver *pwmp) {
         if (led_state[led_index].g != 0) enable_pwm |= true;
         if (led_state[led_index].r != 0) enable_pwm |= true;
         // Update matching RGB channel PWM configuration
-        switch(current_row % LED_MATRIX_ROW_CHANNELS) {
-        case 0:
-                if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],led_state[led_index].b);
-            break;
-        case 1:
-                if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],led_state[led_index].g);
-            break;
-        case 2:
-                if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],led_state[led_index].r);
-            break;
-        default:
-            ;
+        for(uint8_t led_row_channel = current_led_row; led_row_channel < (current_led_row + LED_MATRIX_ROW_CHANNELS); led_row_channel++) {
+            switch(led_row_channel % LED_MATRIX_ROW_CHANNELS) {
+            case 0:
+                    if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],led_state[led_index].b);
+                break;
+            case 1:
+                    if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],led_state[led_index].g);
+                break;
+            case 2:
+                    if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],led_state[led_index].r);
+                break;
+            default:
+                ;
+            }
         }
+    }
+    for(uint8_t led_row_channel = current_led_row; led_row_channel < (current_led_row + LED_MATRIX_ROW_CHANNELS); led_row_channel++) {
+        if(enable_pwm) writePinHigh(led_row_pins[led_row_channel]);
     }
 }
 void rgb_callback(PWMDriver *pwmp) {
     // Disable the interrupt
     pwmDisablePeriodicNotification(pwmp);
     // Advance to the next LED RGB channel
-    current_row++;
-    if(current_row >= LED_MATRIX_ROWS_HW) current_row = 0;
+    current_led_row = (current_led_row + LED_MATRIX_ROW_CHANNELS);
+    if(current_led_row >= LED_MATRIX_ROWS_HW) current_led_row = 0;
     // Advance to the next key matrix row
-    if(current_row % LED_MATRIX_ROW_CHANNELS == 2) row_idx++;
+    if(current_led_row % LED_MATRIX_ROW_CHANNELS == 2) row_idx++;
     if(row_idx >= LED_MATRIX_ROWS) row_idx = 0;
     chSysLockFromISR();
     // Disable LED output before scanning the key matrix
@@ -334,7 +339,6 @@ void rgb_callback(PWMDriver *pwmp) {
         matrix_scan_keys(raw_matrix, row_idx);
     #endif
     update_pwm_channels(pwmp);
-    if(enable_pwm) writePinHigh(led_row_pins[current_row]);
     chSysUnlockFromISR();
     // Advance the timer to just before the wrap-around, that will start a new PWM cycle
     pwm_lld_change_counter(pwmp, 0xFFFF);
