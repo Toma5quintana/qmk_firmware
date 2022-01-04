@@ -23,12 +23,6 @@
 
 #pragma once
 
-#include <stdint.h>
-#include <stdbool.h>
-
-#ifndef __EEPROM_H
-#define __EEPROM_H
-
 #include "ch.h"
 #include "hal.h"
 #include "Flash.h"
@@ -80,5 +74,3 @@ uint16_t EEPROM_Init(void);
 void     EEPROM_Erase(void);
 uint16_t EEPROM_WriteDataByte(uint16_t Address, uint8_t DataByte);
 uint8_t  EEPROM_ReadDataByte(uint16_t Address);
-
-#endif /* __EEPROM_H */
