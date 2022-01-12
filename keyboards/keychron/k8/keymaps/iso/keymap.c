@@ -43,7 +43,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
               },
 
     /*  Row:       0        1                   2                 3        4               5        6        7        8        9        10        11       12         13         14                15        16        */
-    [1] =   {   {    RESET, KC_BRIGHTNESS_DOWN, KC_BRIGHTNESS_UP, KC_APP,  KC_MY_COMPUTER, RGB_VAD, RGB_VAI, KC_MPRV, KC_MPLY, KC_MNXT, KC__MUTE, KC_VOLD, KC_VOLU, KC_NO,   _______, KC_SLEP, RGB_TOG },
+    [1] =   {   {    RESET, KC_BRIGHTNESS_DOWN, KC_BRIGHTNESS_UP, KC_APP,  KC_MY_COMPUTER, RGB_VAD, RGB_VAI, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, KC_NO,   _______, KC_SLEP, RGB_TOG },
                 {  _______, _______,            _______,          _______, _______,        _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, _______ },
                 {  _______, _______,            _______,          _______, _______,        _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, _______ },
                 {  _______, _______,            _______,          _______, _______,        _______, _______, _______, _______, _______, _______,  _______, _______, _______, KC_NO,   KC_NO,   KC_NO },
