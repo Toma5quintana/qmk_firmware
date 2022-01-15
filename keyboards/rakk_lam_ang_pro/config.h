@@ -1,5 +1,4 @@
-/* Copyright 2020 Adam Honse <calcprogrammer1@gmail.com>
- * Copyright 2020 Dimitris Mantzouranis <d3xter93@gmail.com>
+/* Copyright 2021 Harrison Chan (Xelus)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +16,10 @@
 
 #pragma once
 
-#include "config_common.h"
-#include "config_led.h"
-
+/* USB Device descriptor parameter */
+#define VENDOR_ID       0x3434
+#define PRODUCT_ID      0xFE0E
+#define DEVICE_VER		0x0001
 #define MANUFACTURER    RAKK LAM ANG
 #define PRODUCT         RAKK LAM ANG PRO
 
@@ -32,12 +32,12 @@
 #define MATRIX_COL_PINS { A8, A9, A10, A11, A12, A13, A14, A15, B0, B1, B2, B3, B4, B5, B6, B7, B8 }
 #define MATRIX_ROW_PINS { C15, D11, D10, D9, D8, D7 }
 
-// Connects each switch in the dip switch to the GPIO pin of the MCU
+// Encoder Config
 #define ENCODERS_PAD_A { B10 }
 #define ENCODERS_PAD_B { B9 }
 #define ENCODER_RESOLUTION 2
 
-/* LED Status indicators */
+// LED Status Indicators
 #define LED_CAPS_LOCK_PIN D6
 #define LED_NUM_LOCK_PIN A6
 #define LED_SCROLL_LOCK_PIN A7
@@ -46,7 +46,18 @@
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 5
 
-//#define FORCE_NKRO
+// RGB Matrix Config
+#define LED_MATRIX_ROWS MATRIX_ROWS
+#define LED_MATRIX_ROW_CHANNELS 3
+#define LED_MATRIX_ROWS_HW (LED_MATRIX_ROWS * LED_MATRIX_ROW_CHANNELS)
+#define LED_MATRIX_ROW_PINS { C3, C1, C0, C6, C5, C4, C9, C8, C7, C12, C11, C10, B13, C14, C13, B14, B15, D3 }
+
+#define LED_MATRIX_COLS MATRIX_COLS
+#define LED_MATRIX_COL_PINS MATRIX_COL_PINS
+
+#define DRIVER_LED_TOTAL 87
+
+// RGB Matrix Effects
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 #define RGB_MATRIX_KEYPRESSES
 
