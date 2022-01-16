@@ -36,6 +36,12 @@ enum layer_names {
 #define KC_MSCR LSFT(LGUI(KC_3))    // Mac screenshot
 #define KC_MSNP LSFT(LGUI(KC_4))    // Mac snip tool
 
+// RGB sleep feature
+#define RGB_TIMEOUT 10    // in minutes
+static uint16_t idle_timer = 0;
+static uint8_t halfmin_counter = 0;
+static bool rgb_on = true;
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /*  Mac base layout
@@ -168,4 +174,31 @@ void keyboard_post_init_user(void) {
   // debug_matrix = true;
   // debug_keyboard = true;
   // debug_mouse = true;
+}
+
+void matrix_scan_user(void) {
+  if (idle_timer == 0) {
+    idle_timer = timer_read();
+  }
+  if (rgb_on && timer_elapsed(idle_timer) > 30000) {
+    halfmin_counter++;
+    idle_timer = timer_read();
+  }
+  if (rgb_on && halfmin_counter >= RGB_TIMEOUT * 2) {
+    halfmin_counter = 0;
+    rgblight_disable();
+    rgb_on = false;
+  }
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  if (record->event.pressed) {
+    if (rgb_on == false) {
+      rgblight_enable();
+      rgb_on = true;
+    }
+    idle_timer = timer_read();
+    halfmin_counter = 0;
+  }
+  return true;
 }
