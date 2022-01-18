@@ -303,13 +303,13 @@ void update_pwm_channels(PWMDriver *pwmp) {
         // Update matching RGB channel PWM configuration
         switch(current_row % LED_MATRIX_ROW_CHANNELS) {
         case 0:
-                if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],(led_state[led_index].b * UINT8_MAX));
+                if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],(led_state[led_index].b));
             break;
         case 1:
-                if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],(led_state[led_index].g * UINT8_MAX));
+                if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],(led_state[led_index].g));
             break;
         case 2:
-                if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],(led_state[led_index].r * UINT8_MAX));
+                if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],(led_state[led_index].r));
             break;
         default:
             ;
