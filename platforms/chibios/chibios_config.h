@@ -91,4 +91,4 @@
 
 #if defined(SN32F2)
 #    define CPU_CLOCK SN32_HCLK
-#endif 
+#endif
