@@ -62,7 +62,7 @@ bool enable_pwm = false;
 /* PWM configuration structure. We use timer CT16B1 with 24 channels. */
 static PWMConfig pwmcfg = {
     freq,          /* PWM clock frequency. */
-    256,           /* PWM period (in ticks) 1S (1/10kHz=0.1mS 0.1ms*10000 ticks=1S) */
+    (256 * 20),    /* PWM period (in ticks) 1S (1/10kHz=0.1mS 0.1ms*10000 ticks=1S) */
     NULL,          /* RGB Callback */
     {              /* Default all channels to disabled - Channels will be configured durring init */
         {PWM_OUTPUT_DISABLED, NULL, 0},
@@ -303,13 +303,13 @@ void update_pwm_channels(PWMDriver *pwmp) {
         // Update matching RGB channel PWM configuration
         switch(current_row % LED_MATRIX_ROW_CHANNELS) {
         case 0:
-                if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],led_state[led_index].b);
+                if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],(led_state[led_index].b * 20));
             break;
         case 1:
-                if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],led_state[led_index].g);
+                if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],(led_state[led_index].g * 20));
             break;
         case 2:
-                if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],led_state[led_index].r);
+                if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],(led_state[led_index].r * 20));
             break;
         default:
             ;
