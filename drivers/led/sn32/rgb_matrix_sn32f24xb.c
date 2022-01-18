@@ -62,7 +62,7 @@ bool enable_pwm = false;
 /* PWM configuration structure. We use timer CT16B1 with 24 channels. */
 static PWMConfig pwmcfg = {
     freq,            /* PWM clock frequency. */
-    (UINT8_MAX * 3), /* PWM period (in ticks) 1S (1/10kHz=0.1mS 0.1ms*10000 ticks=1S) */
+    (UINT16_MAX +1), /* PWM period (in ticks) 1S (1/10kHz=0.1mS 0.1ms*10000 ticks=1S) */
     NULL,            /* RGB Callback */
     {                /* Default all channels to disabled - Channels will be configured durring init */
         {PWM_OUTPUT_DISABLED, NULL, 0},
