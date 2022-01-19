@@ -337,8 +337,6 @@ void rgb_callback(PWMDriver *pwmp) {
     update_pwm_channels(pwmp);
     if(enable_pwm) writePinHigh(led_row_pins[current_row]);
     chSysUnlockFromISR();
-    // Advance the timer to just before the wrap-around, that will start a new PWM cycle
-    pwm_lld_change_counter(pwmp, 0xFFFF);
     // Enable the interrupt
     pwmEnablePeriodicNotification(pwmp);
 }
