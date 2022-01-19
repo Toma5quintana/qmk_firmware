@@ -53,8 +53,8 @@ static uint8_t chan_col_order[LED_MATRIX_COLS] = {0}; // track the channel col o
 static uint8_t current_row = 0; // LED row scan counter
 static uint8_t row_idx = 0; // key row scan counter
 extern matrix_row_t raw_matrix[MATRIX_ROWS]; //raw values
-static const uint32_t freq = 0xFFFF;
-static const uint32_t periodticks = 0x200;
+static const uint32_t freq = (0xFFFF / 3);
+static const uint32_t periodticks = 256;
 static const pin_t led_row_pins[LED_MATRIX_ROWS_HW] = LED_MATRIX_ROW_PINS; // We expect a R,B,G order here
 static const pin_t led_col_pins[LED_MATRIX_COLS] = LED_MATRIX_COL_PINS;
 RGB led_state[DRIVER_LED_TOTAL]; // led state buffer
