@@ -1,6 +1,5 @@
 #include "rgb_matrix.h"
 #include "sn32f24xb.h"
-#include "chtime.h"
 
 #if !defined(RGB_MATRIX_HUE_STEP)
 #    define RGB_MATRIX_HUE_STEP 8
