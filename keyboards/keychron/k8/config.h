@@ -1,6 +1,4 @@
-/* Copyright 2020 Adam Honse <calcprogrammer1@gmail.com>
- * Copyright 2020 Dimitris Mantzouranis <d3xter93@gmail.com>
- * Copyright 2022 Harrison Chan (Xelus)
+/* Copyright 2021 Harrison Chan (Xelus)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,4 +16,8 @@
 
 #pragma once
 
-#include "config_common.h"
+// Enable RGB Matrix
+#define VIA_QMK_RGBLIGHT_ENABLE
+
+#define USB_POLLING_INTERVAL_MS 1
+#define QMK_KEYS_PER_SCAN 4
