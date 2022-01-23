@@ -28,13 +28,13 @@
 #define DESCRIPTION     K580 VATA
 
 /* key matrix size */
-#define MATRIX_ROWS 6
+#define MATRIX_ROWS 8
 #define MATRIX_COLS 21
 
 #define DIODE_DIRECTION ROW2COL
 
 #define MATRIX_COL_PINS { A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, B0, B1, B2, B3, B4, B5 }
-#define MATRIX_ROW_PINS { C15, D11, D10, D9, D8, D7 }
+#define MATRIX_ROW_PINS { C15, D11, D10, D9, D8, D7, 0, 0 } //had to use 8 row to map the underglow
 
 /*Encoder support with correct pins*/
 #define ENCODERS_PAD_A { D4 }
