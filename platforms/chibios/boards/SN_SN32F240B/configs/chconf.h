@@ -178,7 +178,7 @@
  * @note    The default is @p TRUE.
  */
 #if !defined(CH_CFG_USE_WAITEXIT)
-#define CH_CFG_USE_WAITEXIT                 FALSE
+#define CH_CFG_USE_WAITEXIT                 TRUE
 #endif
 
 /**
