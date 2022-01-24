@@ -28,4 +28,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define LED_MATRIX_COLS MATRIX_COLS
 #define LED_MATRIX_COL_PINS MATRIX_COL_PINS
 
-#define DRIVER_LED_TOTAL (124)
+#define DRIVER_LED_TOTAL (118)
