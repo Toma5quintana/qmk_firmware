@@ -39,6 +39,9 @@ bool dip_switch_update_user(uint8_t index, bool active){
         mode_leds_windows = !active;
         mode_leds_update();
     }
+
+    dip_switch_update_user(index, active);
+    return true;
 }
 
 void keyboard_pre_init_kb(void) {
