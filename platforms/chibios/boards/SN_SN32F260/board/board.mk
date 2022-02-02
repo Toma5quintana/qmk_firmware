@@ -7,10 +7,8 @@ BOARDINC = $(CHIBIOS_CONTRIB)/os/hal/boards/SN_SN32F260
 # Optimize for size
 # OPT = s /set by default
 
-# Enter lower-power sleep mode when on the ChibiOS idle thread
-OPT_DEFS += -DCORTEX_ENABLE_WFI_IDLE=TRUE
-
 # Some options to reduce RAM usage
+OPT_DEFS += -DCORTEX_ENABLE_WFI_IDLE=TRUE
 USE_LINK_GC = yes
 LTO_ENABLE = yes
 
