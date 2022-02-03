@@ -2,7 +2,26 @@
     "name": "Redragon K580 VATA",
     "vendorId": "0x0C45",
     "productId": "0x5004",
-    "lighting": "none",
+    "lighting": {
+      "extends": "qmk_rgblight",
+      "underglowEffects": [
+        ["None", 0],
+        ["SOLID_COLOR", 1],
+        ["BREATHING", 1],
+        ["CYCLE_ALL", 1],
+        ["RAINBOW_MOVING_CHEVRON", 1],
+        ["HUE_WAVE", 1],
+        ["PIXEL_RAIN", 1],
+        ["TYPING_HEATMAP", 1],
+        ["DIGITAL_RAIN", 1],
+        ["SOLID_REACTIVE_SIMPLE", 1]
+      ],
+      "supportedLightingValues": [
+        128,
+        129,
+        131
+      ]
+    },
     "matrix": {
       "rows": 6,
       "cols": 21
