@@ -707,7 +707,7 @@
  * @note    This macro can be used to deactivate a power saving mode.
  */
 #define CH_CFG_IDLE_LEAVE_HOOK() {                                          \
-  /* Idle-leave code here.*/                                                \
+    SN_PMU->CTRL = 0;                                                       \
 }
 
 /**
