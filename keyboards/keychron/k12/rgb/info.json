@@ -1,8 +1,8 @@
 {
-    "keyboard_name": "K12 Gateron RGB", 
+    "keyboard_name": "K12 RGB", 
     "url": "https://www.keychron.com/products/keychron-k12-wireless-mechanical-keyboard", 
     "maintainer": "dexter93", 
-    "width": 15, 
+    "width": 14, 
     "height": 5, 
     "layouts": {
         "LAYOUT": {
