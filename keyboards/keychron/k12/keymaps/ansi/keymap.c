@@ -72,7 +72,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, KC_BRIU, KC_BRID, KC_TASK, KC_FLXP, RGB_VAD, RGB_VAI, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, RGB_MOD,
         _______, _______, _______, _______, _______, _______, _______, _______, KC_APP,  KC_SLCK, KC_INS,  KC_PGUP, KC_HOME, _______, 
         _______, _______, _______, _______, _______, _______, _______, _______, KC_UP,   KC_PSCR, KC_PGDN, KC_END,           _______,
-        _______,          _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,  _______,          _______, 
+        _______,          _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,           _______,
         _______, _______, _______,                            _______,                            _______, _______, _______, _______ 
     ),
     /*
@@ -112,7 +112,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, KC_BRIU, KC_BRID, KC_MSSN, KC_FIND, RGB_VAD, RGB_VAI, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, RGB_MOD,
         _______, _______, _______, _______, _______, _______, _______, _______, KC_APP,  KC_SLCK, KC_INS,  KC_PGUP, KC_HOME, _______, 
         _______, _______, _______, _______, _______, _______, _______, _______, KC_UP,   KC_MSNP, KC_PGDN, KC_END,           _______,
-        _______,          _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,  _______,          _______, 
+        _______,          _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,           _______,
         _______, _______, _______,                            _______,                            _______, _______, _______, _______ 
     ),
     /*
