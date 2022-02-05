@@ -140,11 +140,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 bool dip_switch_update_user(uint8_t index, bool active){
   switch(index){
     case 0:
-        if(active){ // Win/Android mode
-        layer_move(WIN_BASE);
+        if(active){ // Mac/iOS mode
+            layer_move(MAC_BASE);
         }
-        else{ // Mac/iOS mode
-        layer_move(MAC_BASE);
+        else{ // Win/Android mode
+            layer_move(WIN_BASE);
         }
         break;
     case 1:
