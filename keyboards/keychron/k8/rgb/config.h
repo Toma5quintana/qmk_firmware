@@ -18,6 +18,13 @@
 
 #pragma once
 
+/* USB Device descriptor parameter */
+#define VENDOR_ID       0x3434
+// PRODUCT_ID is specified separately for ISO / ANSI models
+#define DEVICE_VER		0x0001
+#define MANUFACTURER    Keychron
+#define PRODUCT         K8 RGB
+
 #include "config_common.h"
 
 /* key matrix size */
