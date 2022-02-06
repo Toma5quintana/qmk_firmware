@@ -18,3 +18,10 @@
 
 // RGB Matrix Config
 #define DRIVER_LED_TOTAL 89
+
+/* USB Device descriptor parameter */
+#define VENDOR_ID       0x3434
+#define PRODUCT_ID      0xFE0F
+#define DEVICE_VER		0x0001
+#define MANUFACTURER    Keychron
+#define PRODUCT         K8 RGB
