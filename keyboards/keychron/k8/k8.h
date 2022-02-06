@@ -25,3 +25,19 @@
 #elif defined(KEYBOARD_keychron_k8_white)
     #include "white.h"
 #endif
+
+enum layer_names {
+    WIN_BASE    = 0,
+    WIN_FN      = 1,
+    MAC_BASE    = 2,
+    MAC_FN      = 3,
+};
+
+#define KC_TASK LGUI(KC_TAB)        // Task viewer
+#define KC_FLXP LGUI(KC_E)          // Windows file explorer
+#define KC_CRTN LGUI(KC_C)          // Cortana | Microsoft Teams
+
+#define KC_MSSN LGUI(KC_F3)         // Mission Control
+#define KC_FIND LALT(LGUI(KC_SPC))  // Finder
+#define KC_SIRI LGUI(KC_SPC)        // Siri
+#define KC_MSNP LSFT(LGUI(KC_4))    // Mac snip tool

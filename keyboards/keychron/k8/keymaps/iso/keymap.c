@@ -19,22 +19,6 @@
 
 #include QMK_KEYBOARD_H
 
-enum layer_names {
-    WIN_BASE    = 0,
-    WIN_FN      = 1,
-    MAC_BASE    = 2,
-    MAC_FN      = 3,
-};
-
-#define KC_TASK LGUI(KC_TAB)        // Task viewer
-#define KC_FLXP LGUI(KC_E)          // Windows file explorer
-#define KC_CRTN LGUI(KC_C)          // Cortana | Microsoft Teams
-
-#define KC_MSSN LGUI(KC_F3)         // Mission Control
-#define KC_FIND LALT(LGUI(KC_SPC))  // Finder
-#define KC_SIRI LGUI(KC_SPC)        // Siri
-#define KC_MSNP LSFT(LGUI(KC_4))    // Mac snip tool
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*			+--------------------------------------------------------------------------+----------------+
 				| ESC |  | F1 | F2 | F3 | F4 | | F5 | F6 | F7 | F8 | | F9| F10| F11| F12|  | |PSCR|????|PAUS|
@@ -102,27 +86,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______,                   _______,                                     _______, _______, _______,   _______,     RGB_SAD, _______, RGB_SAI
     )
 };
-
-bool dip_switch_update_user(uint8_t index, bool active){
-  switch(index){
-    case 0:
-      if(active){ //BT mode
-        // do stuff
-      }
-      else{ //Cable mode
-        // do stuff
-      }
-      break;
-    case 1:
-      if(active) { // Mac mode
-          layer_move(MAC_BASE);
-      } else { // Windows mode
-          layer_move(WIN_BASE);
-      }
-      break;
-  }
-  return true;
-}
 
 void keyboard_post_init_user(void) {
   // Customise these values to desired behaviour

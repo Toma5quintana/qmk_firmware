@@ -17,3 +17,27 @@
  */
 
 #include "k8.h"
+
+bool dip_switch_update_kb(uint8_t index, bool active){
+  if (!dip_switch_update_user(index, active)) { return false; }
+
+  switch(index){
+    case 0:
+      if(active){ //BT mode
+        // do stuff
+      }
+      else{ //Cable mode
+        // do stuff
+      }
+      break;
+    case 1:
+      if(active) { // Mac mode
+          layer_move(MAC_BASE);
+      } else { // Windows mode
+          layer_move(WIN_BASE);
+      }
+      return false;
+  }
+
+  return true;
+}
