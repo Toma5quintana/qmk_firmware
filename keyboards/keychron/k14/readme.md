@@ -1,6 +1,6 @@
 # Keychron K14
 
-![Keychron K14](https://cdn.shopify.com/s/files/1/0059/0630/1017/products/Keychron-K14-70-percent-layout-wireless-mechanical-keyboard-for-Mac-Windows-with-hot-swappable-Gateron-red-blue-brown-switches_1800x1800.jpg?v=1635766619)
+![Keychron K14](https://cdn.shopify.com/s/files/1/0059/0630/1017/products/Keychron-K14-70-percent-layout-wireless-mechanical-keyboard-for-Mac-Windows-with-hot-swappable-Gateron-red-blue-brown-switches_1800x1800.jpg)
 
 A 70% layout mechanical keyboard.
 

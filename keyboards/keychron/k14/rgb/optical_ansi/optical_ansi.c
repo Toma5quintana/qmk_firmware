@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ansi.h"
+#include "optical_ansi.h"
 
 // readability
 #define NA NO_LED
