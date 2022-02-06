@@ -37,12 +37,6 @@ enum layer_names {
 #define KC_MSCR LSFT(LGUI(KC_3))    // Mac screenshot
 #define KC_MSNP LSFT(LGUI(KC_4))    // Mac snip tool
 
-// RGB sleep feature
-#define RGB_TIMEOUT 10    // in minutes
-static uint16_t idle_timer = 0;
-static uint8_t halfmin_counter = 0;
-static bool rgb_on = true;
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /*  Mac base layout
@@ -72,7 +66,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /*  Mac Fn overlay
     +------------------------------------------------------------------------------+
-    | RST|BRID|BRIU|MCTL|LPAD|RVAD|RVAI|MPRV|MPLY|MNXT|MUTE|VOLD|VOLU|MSNP|   |RTOG|
+    | RST|BRID|BRIU|MCTL|LPAD|RVAD|RVAI|MPRV|MPLY|MNXT|MUTE|VOLD|VOLU|MSNP|INS|RTOG|
     +------------------------------------------------------------------------------+
     |    |    |    |    |    |    |    |    |    |    |    |    |    |        |RM_P|
     +------------------------------------------------------------------------------+
@@ -87,7 +81,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 */
   [MAC_FN] = LAYOUT_75_iso(
   /*  0           1           2           3           4           5           6           7           8           9           10          11          12          13          14          15         */
-      RESET,      KC_BRID,    KC_BRIU,    KC_MSSN,    KC_FIND,    RGB_VAD,    RGB_VAI,    KC_MPRV,    KC_MPLY,    KC_MNXT,    KC_MUTE,    KC_VOLD,    KC_VOLU,    KC_MSNP,    _______,    RGB_TOG    ,
+      RESET,      KC_BRID,    KC_BRIU,    KC_MSSN,    KC_FIND,    RGB_VAD,    RGB_VAI,    KC_MPRV,    KC_MPLY,    KC_MNXT,    KC_MUTE,    KC_VOLD,    KC_VOLU,    KC_MSNP,    KC_INS,     RGB_TOG    ,
       _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,                RGB_M_P    ,
       _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,                            _______    ,
       _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,                _______    ,
@@ -122,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /*  Windows Fn overlay
     +------------------------------------------------------------------------------+
-    | RST|BRID|BRIU|TASK|FLXP|RVAD|RVAI|MPRV|MPLY|MNXT|MUTE|VOLD|VOLU|SNIP|   |RTOG|
+    | RST|BRID|BRIU|TASK|FLXP|RVAD|RVAI|MPRV|MPLY|MNXT|MUTE|VOLD|VOLU|    |INS|RTOG|
     +------------------------------------------------------------------------------+
     |    |    |    |    |    |    |    |    |    |    |    |    |    |        |RM_P|
     +------------------------------------------------------------------------------+
@@ -137,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 */
   [WIN_FN] = LAYOUT_75_iso(
   /*  0           1           2           3           4           5           6           7           8           9           10          11          12          13          14          15         */
-      RESET,      KC_BRID,    KC_BRIU,    KC_TASK,    KC_FLXP,    RGB_VAD,    RGB_VAI,    KC_MPRV,    KC_MPLY,    KC_MNXT,    KC_MUTE,    KC_VOLD,    KC_VOLU,    KC_SNIP,    _______,    RGB_TOG    ,
+      RESET,      KC_BRID,    KC_BRIU,    KC_TASK,    KC_FLXP,    RGB_VAD,    RGB_VAI,    KC_MPRV,    KC_MPLY,    KC_MNXT,    KC_MUTE,    KC_VOLD,    KC_VOLU,    _______,    KC_INS,     RGB_TOG    ,
       _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,                RGB_M_P    ,
       _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,                            _______    ,
       _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,                _______    ,
@@ -148,21 +142,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool dip_switch_update_user(uint8_t index, bool active) {
   switch(index) {
-    case 0: // Connection switch
+    case 0: // OS switch
+      if (active) { // Mac/iOS mode
+        layer_move(MAC_BASE);
+      }
+      else { // Windows/Android mode
+        layer_move(WIN_BASE);
+      }
+      break;
+    case 1: // Connection switch
       // Probably it's not possible to do anything sensible here as switching from Cable to BT requires turning off the board. (BT / OFF / Cable)
       if (active) { // BT mode
         // do stuff
       }
       else { //Cable mode
         // do stuff
-      }
-      break;
-    case 1: // OS switch
-      if (active) { // Mac/iOS mode
-        layer_move(MAC_BASE);
-      }
-      else { // Windows/Android mode
-        layer_move(WIN_BASE);
       }
       break;
   }
@@ -175,31 +169,4 @@ void keyboard_post_init_user(void) {
   // debug_matrix = true;
   // debug_keyboard = true;
   // debug_mouse = true;
-}
-
-void matrix_scan_user(void) {
-  if (idle_timer == 0) {
-    idle_timer = timer_read();
-  }
-  if (rgb_on && timer_elapsed(idle_timer) > 30000) {
-    halfmin_counter++;
-    idle_timer = timer_read();
-  }
-  if (rgb_on && halfmin_counter >= RGB_TIMEOUT * 2) {
-    halfmin_counter = 0;
-    rgblight_disable();
-    rgb_on = false;
-  }
-}
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (record->event.pressed) {
-    if (rgb_on == false) {
-      rgblight_enable();
-      rgb_on = true;
-    }
-    idle_timer = timer_read();
-    halfmin_counter = 0;
-  }
-  return true;
 }
