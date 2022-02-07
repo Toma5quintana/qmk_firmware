@@ -1,6 +1,4 @@
-/* Copyright 2020 Adam Honse <calcprogrammer1@gmail.com>
- * Copyright 2020 Dimitris Mantzouranis <d3xter93@gmail.com>
- * Copyright 2022 Harrison Chan (Xelus)
+/* Copyright 2022 Dimitris Mantzouranis <d3xter93@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,44 +16,41 @@
 
 #pragma once
 
-#include "config_common.h"
-
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0x3434
-#define PRODUCT_ID      0xFE0E
-#define DEVICE_VER		0x0001
+
 #define MANUFACTURER    Keychron
-#define PRODUCT         K8 RGB
+#define PRODUCT         K12 RGB
 
 /* key matrix size */
-#define MATRIX_ROWS 6
-#define MATRIX_COLS 17
+#define MATRIX_ROWS 5
+#define MATRIX_COLS 14
 
 #define DIODE_DIRECTION COL2ROW
 
-#define MATRIX_COL_PINS { A8, A9, A10, A11, A12, A13, A14, A15, B0, B1, B2, B3, B4, B5, B6, B7, B8 }
-#define MATRIX_ROW_PINS { C15, D11, D10, D9, D8, D7 }
+#define MATRIX_COL_PINS { A8, A9, A10, A11, A12, A13, A14, A15, B0, B1, B2, B3, B4, B5 }
+#define MATRIX_ROW_PINS { D11, D10, D9, D8, D7 }
 
 // Connects each switch in the dip switch to the GPIO pin of the MCU
-#define DIP_SWITCH_PINS { D5, D6 }
-
-/* LED Status indicators */
-#define LED_CAPS_LOCK_PIN B12
-#define LED_PIN_ON_STATE  1
+#define DIP_SWITCH_PINS { B6, D4 }
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 5
 
-// RGB LED Config
+/* LED Status indicators */
+#define LED_CAPS_LOCK_PIN D6
+#define LED_PIN_ON_STATE  1
+
+/* RGB LED Config */
 #define LED_MATRIX_ROWS MATRIX_ROWS
 #define LED_MATRIX_ROW_CHANNELS 3
 #define LED_MATRIX_ROWS_HW (LED_MATRIX_ROWS * LED_MATRIX_ROW_CHANNELS)
-#define LED_MATRIX_ROW_PINS { C3, C1, C0, C6, C5, C4, C9, C8, C7, C12, C11, C10, B13, C14, C13, B14, B15, D3 }
+#define LED_MATRIX_ROW_PINS { C6, C5, C4, C9, C8, C7, C12, C11, C10, B13, C14, C13, B14, B15, D3 }
 
 #define LED_MATRIX_COLS MATRIX_COLS
 #define LED_MATRIX_COL_PINS MATRIX_COL_PINS
 
-// RGB Matrix Effects
+/* RGB Matrix Effects */
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 #define RGB_MATRIX_KEYPRESSES
 
@@ -80,8 +75,8 @@
 #define ENABLE_RGB_MATRIX_DUAL_BEACON
 #define ENABLE_RGB_MATRIX_RAINBOW_BEACON
 #define ENABLE_RGB_MATRIX_RAINBOW_PINWHEELS
-// #define ENABLE_RGB_MATRIX_RAINDROPS   - BROKEN
-// #define ENABLE_RGB_MATRIX_JELLYBEAN_RAINDROPS - BROKEN
+#define ENABLE_RGB_MATRIX_RAINDROPS
+#define ENABLE_RGB_MATRIX_JELLYBEAN_RAINDROPS
 #define ENABLE_RGB_MATRIX_HUE_BREATHING
 #define ENABLE_RGB_MATRIX_HUE_PENDULUM
 #define ENABLE_RGB_MATRIX_HUE_WAVE
@@ -89,7 +84,7 @@
 #define ENABLE_RGB_MATRIX_PIXEL_FRACTAL
 
 #define ENABLE_RGB_MATRIX_TYPING_HEATMAP
-// #define ENABLE_RGB_MATRIX_DIGITAL_RAIN - BROKEN
+#define ENABLE_RGB_MATRIX_DIGITAL_RAIN
 
 #define ENABLE_RGB_MATRIX_SOLID_REACTIVE_SIMPLE
 #define ENABLE_RGB_MATRIX_SOLID_REACTIVE
