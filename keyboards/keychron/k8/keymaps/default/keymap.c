@@ -1,7 +1,8 @@
 /* Copyright 2020 Adam Honse <calcprogrammer1@gmail.com>
  * Copyright 2020 Dimitris Mantzouranis <d3xter93@gmail.com>
  * Copyright 2022 Harrison Chan (Xelus)
- *
+ * Copyright 2022 Thomas Bowman Mørch (tbowmo)
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
@@ -22,18 +23,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 /*				+--------------------------------------------------------------------------+----------------+
-				| ESC |  | F1 | F2 | F3 | F4 | | F5 | F6 | F7 | F8 | | F9| F10| F11| F12|  | |PSCR|????|PAUS|
-				+--------------------------------------------------------------------------+------|----|----|
- 				|  ~  |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 |  0 |  - |  = | BACKSP | |INS |SCRL|PGUP|
- 				+--------------------------------------------------------------------------+------|----|----|
- 				|  TAB  |  Q |  W |  E |  R |  T |  Y |  U |  I |  O |  P |  [ |  ] |   \  | |DEL |END |PGDN|
- 				+--------------------------------------------------------------------------+------|----|----|
- 				| CAPSLCK  |  A |  S |  D |  F |  G |  H |  J |  K |  L | ; | ' |  RETURN  |                |
- 				+--------------------------------------------------------------------------+      |----|    |
- 				| LSHIFT     |  Z |  X |  C |  V |  B |  N |  M | , | . |  / |   RSHIFT    |      | UP |    |
- 				+--------------------------------------------------------------------------+------|----|----|
- 				|LCTRL| LGUI| LALT |            SPACE            | RALT| RGUI | FN | RCTRL | |LFT |DWN |RGT |
- 				+--------------------------------------------------------------------------+----------------+
+        | ESC |  | F1 | F2 | F3 | F4 | | F5 | F6 | F7 | F8 | | F9| F10| F11| F12|  | |PSCR|????|PAUS|
+        +--------------------------------------------------------------------------+------|----|----|
+         |  ~  |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 |  0 |  - |  = | BACKSP | |INS |SCRL|PGUP|
+         +--------------------------------------------------------------------------+------|----|----|
+         |  TAB  |  Q |  W |  E |  R |  T |  Y |  U |  I |  O |  P |  [ |  ] |   \  | |DEL |END |PGDN|
+         +--------------------------------------------------------------------------+------|----|----|
+         | CAPSLCK  |  A |  S |  D |  F |  G |  H |  J |  K |  L | ; | ' |  RETURN  |                |
+         +--------------------------------------------------------------------------+      |----|    |
+         | LSHIFT     |  Z |  X |  C |  V |  B |  N |  M | , | . |  / |   RSHIFT    |      | UP |    |
+         +--------------------------------------------------------------------------+------|----|----|
+         |LCTRL| LGUI| LALT |            SPACE            | RALT| RGUI | FN | RCTRL | |LFT |DWN |RGT |
+         +--------------------------------------------------------------------------+----------------+
 */
     [0] = LAYOUT_tkl_ansi(
         KC_ESC,           KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,      KC_PSCR, KC_SLCK, KC_PAUS,
@@ -86,7 +87,8 @@ bool dip_switch_update_user(uint8_t index, bool active){
       else{ //BT mode
         // do stuff
       }
-      break;  }
+      break; 
+  }
   return true;
 }
 
