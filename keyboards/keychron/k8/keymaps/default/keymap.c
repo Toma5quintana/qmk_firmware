@@ -72,14 +72,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 bool dip_switch_update_user(uint8_t index, bool active){
   switch(index){
     case 0:
-      if(active){ //BT mode
-        // do stuff
-      }
-      else{ //Cable mode
-        // do stuff
-      }
-      break;
-    case 1:
       if(active){ // Win/Android mode
         // do stuff
       }
@@ -87,7 +79,14 @@ bool dip_switch_update_user(uint8_t index, bool active){
         // do stuff
       }
       break;
-  }
+    case 1:
+      if(active){ //Cable mode
+        // do stuff
+      }
+      else{ //BT mode
+        // do stuff
+      }
+      break;  }
   return true;
 }
 
