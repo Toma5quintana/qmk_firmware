@@ -56,160 +56,250 @@ static const pin_t led_col_pins[LED_MATRIX_COLS] = LED_MATRIX_COL_PINS;
 uint8_t led_state[DRIVER_LED_TOTAL]; // led state buffer
 bool enable_pwm = false;
 
-/* PWM configuration structure. We use timer CT16B1 with 23 channels. */
-static PWMConfig pwmcfg = {
-    freq,            /* PWM clock frequency. */
-    periodticks,     /* PWM period (in ticks) 1S (1/10kHz=0.1mS 0.1ms*10000 ticks=1S) */
-    NULL,            /* led Callback */
-    {                /* Default all channels to disabled - Channels will be configured durring init */
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0}, // dummy, we have no access to channel 20
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0},
-        {PWM_OUTPUT_DISABLED, NULL, 0}
-    },
-    0/* HW dependent part.*/
-};
-
-void led_ch_ctrl(PWMConfig *cfg) {
+void led_ch_ctrl(void) {
     /* Enable PWM function, IOs and select the PWM modes for the LED column pins */
     for(uint8_t i = 0; i < LED_MATRIX_COLS; i++) {
         switch(led_col_pins[i]) {
             // Intentional fall-through for the PWM B-pin mapping
             case A0:
-                cfg->channels[0].mode = PWM_OUTPUT_ACTIVE_LOW;
+//                cfg->channels[0].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_0
                 chan_col_order[i] = 0;
                 break;
 
             case A1:
-                cfg->channels[1].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_1
                 chan_col_order[i] = 1;
                 break;
             
             case A2:
-                cfg->channels[2].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_2
                 chan_col_order[i] = 2;
                 break;
 
             case A3:
-                cfg->channels[3].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_3
                 chan_col_order[i] = 3;
                 break;
 
             case A4:
-                cfg->channels[4].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_4
                 chan_col_order[i] = 4;
                 break;
 
             case A5:
-                cfg->channels[5].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_5
                 chan_col_order[i] = 5;
                 break;
 
             case A6:
-                cfg->channels[6].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_6
                 chan_col_order[i] = 6;
                 break;
 
             case A7:
-                cfg->channels[7].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_7
                 chan_col_order[i] = 7;
                 break;
 
             case A8:
-                cfg->channels[8].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_8
                 chan_col_order[i] = 8;
                 break;
 
             case A9:
-                cfg->channels[9].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_9
                 chan_col_order[i] = 9;
                 break;
 
             case A10:
-                cfg->channels[10].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_10
                 chan_col_order[i] = 10;
                 break;
 
             case A11:
-                cfg->channels[11].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_11
                 chan_col_order[i] = 11;
                 break;
 
             case A12:
-                cfg->channels[12].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_12
                 chan_col_order[i] = 12;
                 break;
 
             case A13:
-                cfg->channels[13].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_13
                 chan_col_order[i] = 13;
                 break;
 
             case A14:
-                cfg->channels[14].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_14
                 chan_col_order[i] = 14;
                 break;
 
             case A15:
-                cfg->channels[15].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_15
                 chan_col_order[i] = 15;
                 break;
 
             case D0:
-                cfg->channels[16].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_16
                 chan_col_order[i] = 16;
                 break;
 
             case D1:
-                cfg->channels[17].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_17
                 chan_col_order[i] = 17;
                 break;
 
             case D2:
-                cfg->channels[18].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_18
                 chan_col_order[i] = 18;
                 break;
 
             case D3:
-                cfg->channels[19].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_19
                 chan_col_order[i] = 19;
                 break;
 
             case D5:
-                cfg->channels[21].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_21
                 chan_col_order[i] = 21;
                 break;
 
             case D8:
-                cfg->channels[22].mode = PWM_OUTPUT_ACTIVE_LOW;
+                #define ACTIVATE_PWM_CHAN_22
                 chan_col_order[i] = 22;
                 break;
         }
     }
 }
+
 void led_callback(PWMDriver *pwmp);
 
+/* PWM configuration structure. We use timer CT16B1 with 23 channels. */
+static const PWMConfig pwmcfg = {
+    freq,            /* PWM clock frequency. */
+    periodticks,     /* PWM period (in ticks) 1S (1/10kHz=0.1mS 0.1ms*10000 ticks=1S) */
+    led_callback,    /* led Callback */
+    .channels = {
+                /* Default all channels to disabled - Channels will be configured durring init */
+#ifdef ACTIVATE_PWM_CHAN_0
+        [0] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [0] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_1
+        [1] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [1] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_2
+        [2] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [2] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_3
+        [3] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [3] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_4
+        [4] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [4] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_5
+        [5] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [5] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_6
+        [6] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [6] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_7
+        [7] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [7] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_8
+        [8] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [8] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_9
+        [9] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [9] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_10
+        [10] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [10] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_11
+        [11] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [11] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_12
+        [12] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [12] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_13
+        [13] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [13] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_14
+        [14] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [14] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_15
+        [15] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [15] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_16
+        [16] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [16] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_17
+        [17] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [17] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_18
+        [18] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [18] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_19
+        [19] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [19] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+        [20] = {.mode = PWM_OUTPUT_DISABLED },
+#ifdef ACTIVATE_PWM_CHAN_21
+        [21] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [21] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+#ifdef ACTIVATE_PWM_CHAN_22
+        [22] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
+#else
+        [22] = {.mode = PWM_OUTPUT_DISABLED },
+#endif
+    },
+    0/* HW dependent part.*/
+};
+
 void shared_matrix_led_enable(void) {
-    pwmcfg.callback = led_callback;
     pwmEnablePeriodicNotification(&PWMD1);
 }
 
@@ -278,7 +368,7 @@ void SN32F26x_init(void) {
         writePinLow(led_row_pins[x]);
     }
     // Determine which PWM channels we need to control
-    led_ch_ctrl(&pwmcfg);
+    led_ch_ctrl();
     pwmStart(&PWMD1, &pwmcfg);
     shared_matrix_led_enable();
 }
