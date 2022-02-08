@@ -62,113 +62,90 @@ void led_ch_ctrl(void) {
         switch(led_col_pins[i]) {
             // Intentional fall-through for the PWM B-pin mapping
             case A0:
-//                cfg->channels[0].mode = PWM_OUTPUT_ACTIVE_LOW;
-                #define ACTIVATE_PWM_CHAN_0
                 chan_col_order[i] = 0;
                 break;
 
             case A1:
-                #define ACTIVATE_PWM_CHAN_1
                 chan_col_order[i] = 1;
                 break;
             
             case A2:
-                #define ACTIVATE_PWM_CHAN_2
                 chan_col_order[i] = 2;
                 break;
 
             case A3:
-                #define ACTIVATE_PWM_CHAN_3
                 chan_col_order[i] = 3;
                 break;
 
             case A4:
-                #define ACTIVATE_PWM_CHAN_4
                 chan_col_order[i] = 4;
                 break;
 
             case A5:
-                #define ACTIVATE_PWM_CHAN_5
                 chan_col_order[i] = 5;
                 break;
 
             case A6:
-                #define ACTIVATE_PWM_CHAN_6
                 chan_col_order[i] = 6;
                 break;
 
             case A7:
-                #define ACTIVATE_PWM_CHAN_7
                 chan_col_order[i] = 7;
                 break;
 
             case A8:
-                #define ACTIVATE_PWM_CHAN_8
                 chan_col_order[i] = 8;
                 break;
 
             case A9:
-                #define ACTIVATE_PWM_CHAN_9
                 chan_col_order[i] = 9;
                 break;
 
             case A10:
-                #define ACTIVATE_PWM_CHAN_10
                 chan_col_order[i] = 10;
                 break;
 
             case A11:
-                #define ACTIVATE_PWM_CHAN_11
                 chan_col_order[i] = 11;
                 break;
 
             case A12:
-                #define ACTIVATE_PWM_CHAN_12
                 chan_col_order[i] = 12;
                 break;
 
             case A13:
-                #define ACTIVATE_PWM_CHAN_13
                 chan_col_order[i] = 13;
                 break;
 
             case A14:
-                #define ACTIVATE_PWM_CHAN_14
                 chan_col_order[i] = 14;
                 break;
 
             case A15:
-                #define ACTIVATE_PWM_CHAN_15
                 chan_col_order[i] = 15;
                 break;
 
             case D0:
-                #define ACTIVATE_PWM_CHAN_16
                 chan_col_order[i] = 16;
                 break;
 
             case D1:
-                #define ACTIVATE_PWM_CHAN_17
                 chan_col_order[i] = 17;
                 break;
 
             case D2:
-                #define ACTIVATE_PWM_CHAN_18
                 chan_col_order[i] = 18;
                 break;
 
             case D3:
-                #define ACTIVATE_PWM_CHAN_19
                 chan_col_order[i] = 19;
                 break;
 
             case D5:
-                #define ACTIVATE_PWM_CHAN_21
                 chan_col_order[i] = 21;
                 break;
 
             case D8:
-                #define ACTIVATE_PWM_CHAN_22
                 chan_col_order[i] = 22;
                 break;
         }
