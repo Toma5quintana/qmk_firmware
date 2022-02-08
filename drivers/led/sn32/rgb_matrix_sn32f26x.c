@@ -1,443 +1,294 @@
+#include "led_matrix.h"
+#include "sn32f26x.h"
+
+#if !defined(LED_MATRIX_LED_FLUSH_LIMIT)
+#    define LED_MATRIX_LED_FLUSH_LIMIT 16
+#endif
+
+#if !defined(LED_MATRIX_VAL_STEP)
+#    define LED_MATRIX_VAL_STEP 16
+#endif
+
+#if !defined(LED_MATRIX_SPD_STEP)
+#    define LED_MATRIX_SPD_STEP 16
+#endif
+
 /*
-Copyright 2021 Adam Honse <calcprogrammer1@gmail.com>
-Copyright 2011 Jun Wako <wakojun@gmail.com>
+    COLS key / led
+    SS8050 transistors NPN driven low
+    base      - GPIO
+    collector - LED Col pins
+    emitter   - VDD
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or
-(at your option) any later version.
+    VDD     GPIO
+    (E)     (B)
+     |  PNP  |
+     |_______|
+         |
+         |
+        (C)
+        LED
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+    ROWS LED
+    SS8550 transistors PNP driven high
+    base      - GPIO
+    collector - LED row pins
+    emitter   - GND
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-Ported to QMK by Stephen Peery <https://github.com/smp4488/>
+        LED
+        (C)
+         |
+         |
+      _______
+     |  NPN  |
+     |       |
+    (B)     (E)
+    GPIO    GND
 */
-
-// Key and LED matrix driver for SN32F260.
-// This driver will take full control of CT16B1 and GPIO in MATRIX_ROW_PINS, MATRIX_COL_PINS, LED_MATRIX_ROW_PINS and LED_MATRIX_COL_PINS.
-// This file implements a RGB matrix led driver but only the red channel is used. Because the RGB matrix is currently better supported then LED matrix.
-//
-// The CT16B1 on the SN32F260 can be used as a 23 channel PWM peripheral.
-// However PWM cannot be used naively, because a new PWM cycle is started when the previous one ends.
-// This is an issue because the key and led matrix is multiplexed and there is some GPIO row and PWM duty cycle reconfiguration needed between PWM cycles.
-// The PWM can be stoped and stated again but this has some overhead.
-// This driver uses a trick to keep PWM running and have some time in between PWM cycles for the reconfiguration.
-//
-// While the active duty cycle values are between 0-255, the period is not configured and the implicit wrap-around at 0xFFFF is used.
-// This way the timer period is divide into two phases. 0 to 255 is used as active PWM phase, while 256 to 0xFFFF can be used for the reconfiguration.
-// The CT16B1 is configured to generate an interupt when the counter reaches 255. In this interrupt the reconfiguration is done.
-// The reconfiguration needs some time to execute but not the whole duration from 256 to 0xFFFF.
-// So when reconfiguration is done the timer is advanced forward to 0xFFFF.
-// One tick later the timer will wrap-around and a new PWM cycle is started.
-//
-// The final behaviour is exactly what we want, a PWM cycle followed by a short reconfiguration and then the next PWM cycle.
-
-#include <stdint.h>
-#include <stdbool.h>
-#include <string.h> // memset()
-#include <SN32F260.h>
-#include "SN32F260_defines.h"
-#include "ch.h"
-#include "hal.h"
-#include "quantum.h"
-#include "matrix.h"
-#include "debounce.h"
-#include "rgb_matrix.h"
-
-#ifndef SN32_CT16B1_IRQ_PRIORITY
-#define SN32_CT16B1_IRQ_PRIORITY 0
-#endif
-
-// MATRIX_KEY_SAMPLE_DELAY is a delay in arbritray time units, that will delay the sampling of the column inputs, after a row is selected.
-// This small delay to let internal pull-up resitors pull-up the input pins.
-// The input pin can still be low when the previous row had a pressed button.
-#ifndef MATRIX_KEY_SAMPLE_DELAY
-// The default value is the result of some experimentation
-#define MATRIX_KEY_SAMPLE_DELAY 100
-#endif
-
-static const pin_t row_pins[MATRIX_ROWS] = MATRIX_ROW_PINS;
-static const pin_t col_pins[MATRIX_COLS] = MATRIX_COL_PINS;
-static const pin_t led_row_pins[LED_MATRIX_ROWS_HW] = LED_MATRIX_ROW_PINS;
+static uint8_t chan_col_order[LED_MATRIX_COLS] = {0}; // track the channel col order
+static uint8_t current_row = 0; // LED row scan counter
+static uint8_t row_idx = 0; // key row scan counter
+extern matrix_row_t raw_matrix[MATRIX_ROWS]; //raw values
+static const uint32_t periodticks = 256;
+static const uint32_t freq = (LED_MATRIX_LED_FLUSH_LIMIT * LED_MATRIX_VAL_STEP * LED_MATRIX_SPD_STEP * LED_MATRIX_LED_PROCESS_LIMIT);
+static const pin_t led_row_pins[LED_MATRIX_ROWS] = LED_MATRIX_ROW_PINS; // We expect a R,B,G order here
 static const pin_t led_col_pins[LED_MATRIX_COLS] = LED_MATRIX_COL_PINS;
+uint8_t led_state[DRIVER_LED_TOTAL]; // led state buffer
+bool enable_pwm = false;
 
-static matrix_row_t raw_matrix[MATRIX_ROWS]; //raw values
-static matrix_row_t last_matrix[MATRIX_ROWS] = {0};  // raw values
-static matrix_row_t matrix[MATRIX_ROWS]; //debounced values
+/* PWM configuration structure. We use timer CT16B1 with 23 channels. */
+static PWMConfig pwmcfg = {
+    freq,            /* PWM clock frequency. */
+    periodticks,     /* PWM period (in ticks) 1S (1/10kHz=0.1mS 0.1ms*10000 ticks=1S) */
+    NULL,            /* led Callback */
+    {                /* Default all channels to disabled - Channels will be configured durring init */
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0}, // dummy, we have no access to channel 20
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0},
+        {PWM_OUTPUT_DISABLED, NULL, 0}
+    },
+    0/* HW dependent part.*/
+};
 
-static uint8_t current_row = 0;
-static uint8_t led_state[DRIVER_LED_TOTAL];
+void led_ch_ctrl(PWMConfig *cfg) {
+    /* Enable PWM function, IOs and select the PWM modes for the LED column pins */
+    for(uint8_t i = 0; i < LED_MATRIX_COLS; i++) {
+        switch(led_col_pins[i]) {
+            // Intentional fall-through for the PWM B-pin mapping
+            case A0:
+                cfg->channels[0].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 0;
+                break;
 
-static inline bool cols_ordered(void);
-static inline void load_mrs(int row);
-static inline uint32_t used_mrs_mask(void);
+            case A1:
+                cfg->channels[1].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 1;
+                break;
+            
+            case A2:
+                cfg->channels[2].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 2;
+                break;
 
+            case A3:
+                cfg->channels[3].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 3;
+                break;
 
-void SN32F26x_set_color(int index, uint8_t r, uint8_t g, uint8_t b) {
-    led_state[index] = r;
+            case A4:
+                cfg->channels[4].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 4;
+                break;
+
+            case A5:
+                cfg->channels[5].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 5;
+                break;
+
+            case A6:
+                cfg->channels[6].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 6;
+                break;
+
+            case A7:
+                cfg->channels[7].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 7;
+                break;
+
+            case A8:
+                cfg->channels[8].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 8;
+                break;
+
+            case A9:
+                cfg->channels[9].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 9;
+                break;
+
+            case A10:
+                cfg->channels[10].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 10;
+                break;
+
+            case A11:
+                cfg->channels[11].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 11;
+                break;
+
+            case A12:
+                cfg->channels[12].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 12;
+                break;
+
+            case A13:
+                cfg->channels[13].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 13;
+                break;
+
+            case A14:
+                cfg->channels[14].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 14;
+                break;
+
+            case A15:
+                cfg->channels[15].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 15;
+                break;
+
+            case C0:
+                cfg->channels[16].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 16;
+                break;
+
+            case C1:
+                cfg->channels[17].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 17;
+                break;
+
+            case C2:
+                cfg->channels[18].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 18;
+                break;
+
+            case C3:
+                cfg->channels[19].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 19;
+                break;
+
+            case C5:
+                cfg->channels[21].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 20;
+                break;
+
+            case C8:
+                cfg->channels[22].mode = PWM_OUTPUT_ACTIVE_LOW;
+                chan_col_order[i] = 21;
+                break;
+        }
+    }
+}
+void led_callback(PWMDriver *pwmp);
+
+void shared_matrix_led_enable(void) {
+    pwmcfg.callback = led_callback;
+    pwmEnablePeriodicNotification(&PWMD1);
 }
 
-void SN32F26x_set_color_all(uint8_t r, uint8_t g, uint8_t b) {
-    memset(led_state, r, sizeof(led_state));
+void shared_matrix_led_disable_pwm(void) {
+    // Disable PWM outputs on column pins
+    for(uint8_t y = 0; y < LED_MATRIX_COLS; y++) {
+        pwmDisableChannel(&PWMD1,chan_col_order[y]);
+    }
 }
 
-__attribute__((weak)) void matrix_init_kb(void) { matrix_init_user(); }
-
-__attribute__((weak)) void matrix_scan_kb(void) { matrix_scan_user(); }
-
-__attribute__((weak)) void matrix_init_user(void) {}
-
-__attribute__((weak)) void matrix_scan_user(void) {}
-
-matrix_row_t matrix_get_row(uint8_t row) { return matrix[row]; }
-
-void matrix_print(void) {}
-
-static void init_pins(void) {
-
-#if(DIODE_DIRECTION == ROW2COL)
-    //  Unselect ROWs
-    for (uint8_t x = 0; x < MATRIX_ROWS; x++) {
-        setPinInputHigh(row_pins[x]);
-    }
-
-    // Unselect COLs
-    for (uint8_t x = 0; x < MATRIX_COLS; x++) {
-        setPinOutput(col_pins[x]);
-        writePinHigh(col_pins[x]);
-    }
-
-#elif(DIODE_DIRECTION == COL2ROW)
-    //  Unselect ROWs
-    for (uint8_t x = 0; x < MATRIX_ROWS; x++) {
-        setPinOutput(row_pins[x]);
-        writePinHigh(row_pins[x]);
-    }
-
-    // Unselect COLs
-    for (uint8_t x = 0; x < MATRIX_COLS; x++) {
-        setPinInputHigh(col_pins[x]);
-    }
-#else
-#error DIODE_DIRECTION must be one of COL2ROW or ROW2COL!
-#endif
-
-    for (uint8_t x = 0; x < LED_MATRIX_ROWS_HW; x++) {
-        setPinOutput(led_row_pins[x]);
+void shared_matrix_led_disable_leds(void) {
+    // Disable LED outputs on channel pins
+    for (uint8_t x = 0; x < LED_MATRIX_ROWS; x++) {
         writePinLow(led_row_pins[x]);
     }
 }
 
-void matrix_init(void) {
-    // initialize key pins
-    init_pins();
-
-    // initialize matrix state: all keys off
-    for (uint8_t i = 0; i < MATRIX_ROWS; i++) {
-        raw_matrix[i] = 0;
-        matrix[i]     = 0;
-    }
-
-    debounce_init(MATRIX_ROWS);
-
-    matrix_init_quantum();
-
-    // Enable Timer Clock
-    SN_SYS1->AHBCLKEN_b.CT16B1CLKEN = 1;
-
-    // Set PWM mode 1 for LED colom pins. PWMCTRL, PWMCTRL1 and PWMCTRL2 don't need to be set, there reset values are zero.
-    SN_CT16B1->PWMENB = used_mrs_mask();
-
-    // Set match interrupts and TC rest
-    SN_CT16B1->MCTRL3 = SN_CT16B1_MCTRL3_MR23IE_Msk;
-
-    // Match register used to generate interrupt.
-    SN_CT16B1->MR23 = 0xFF;
-
-    // Set prescale value, aim for 1.2kHz. Due to overhead the actual freq will be a bit lower, but should still be above 1kHz.
-    // Tests with 12MHz and 6 rows, resulted in a scan frequency of 1.1kHz
-    SN_CT16B1->PRE = SystemCoreClock / (256 * LED_MATRIX_ROWS_HW * 1200) - 1;
-
-    //Set CT16B1 as the up-counting mode.
-    SN_CT16B1->TMRCTRL = SN_CT16B1_TMRCTRL_CRST_Msk;
-
-    // Wait until timer reset done.
-    while (SN_CT16B1->TMRCTRL & SN_CT16B1_TMRCTRL_CRST_Msk);
-
-    // Let TC start counting.
-    SN_CT16B1->TMRCTRL = SN_CT16B1_TMRCTRL_CEN_Msk;
-
-    NVIC_ClearPendingIRQ(CT16B1_IRQn);
-    nvicEnableVector(CT16B1_IRQn, SN32_CT16B1_IRQ_PRIORITY);
-}
-
-uint8_t matrix_scan(void) {
-    bool matrix_changed = false;
-    for (uint8_t current_col = 0; current_col < MATRIX_COLS; current_col++) {
-        for (uint8_t row_index = 0; row_index < MATRIX_ROWS; row_index++) {
-            // Determine if the matrix changed state
-            if ((last_matrix[row_index] != raw_matrix[row_index])) {
-                matrix_changed         = true;
-                last_matrix[row_index] = raw_matrix[row_index];
-            }
+void update_pwm_channels(PWMDriver *pwmp) {
+    for(uint8_t col_idx = 0; col_idx < LED_MATRIX_COLS; col_idx++) {
+        #if(DIODE_DIRECTION == ROW2COL)
+            // Scan the key matrix column
+            matrix_scan_keys(raw_matrix,col_idx);
+        #endif
+        uint8_t led_index = g_led_config.matrix_co[row_idx][col_idx];
+        // Check if we need to enable LED output
+        if (led_state[led_index] != 0) enable_pwm |= true;
+        // Update matching LED channel PWM configuration
+        switch(current_row % LED_MATRIX_ROW_CHANNELS) {
+        case 0:
+                if(enable_pwm) pwmEnableChannelI(pwmp,chan_col_order[col_idx],led_state[led_index]);
+            break;
+        default:
+            ;
         }
     }
-
-    debounce(raw_matrix, matrix, MATRIX_ROWS, matrix_changed);
-
-    matrix_scan_quantum();
-
-    return matrix_changed;
 }
-
-/**
- * @brief   CT16B1 interrupt handler.
- *
- * @isr
- */
-OSAL_IRQ_HANDLER(SN32_CT16B1_HANDLER) {
-    OSAL_IRQ_PROLOGUE();
-
-    // Clear match interrupt status
-    SN_CT16B1->IC = SN_CT16B1_IC_MR23IC_Msk;
-
-    // Turn the selected row off
-    writePinLow(led_row_pins[current_row]);
-
-    // Disable PWM outputs on column pins
-    SN_CT16B1->PWMIOENB = 0;
-
-    // Move to the next row
+void led_callback(PWMDriver *pwmp) {
+    // Disable the interrupt
+    pwmDisablePeriodicNotification(pwmp);
+    // Advance to the next LED channel
     current_row++;
-    if(current_row >= LED_MATRIX_ROWS_HW) current_row = 0;
-
-    if(current_row == 0) {
-
-#if(DIODE_DIRECTION == ROW2COL)
-        // Read the key matrix
-        for (uint8_t col_index = 0; col_index < MATRIX_COLS; col_index++) {
-            // Enable the column
-            writePinLow(col_pins[col_index]);
-
-            // Small delay to let internal pull-up resitors pull-up the input pins.
-            for(int i = 0; i < MATRIX_KEY_SAMPLE_DELAY; i++){ __asm__ volatile("" ::: "memory");  }
-
-            for (uint8_t row_index = 0; row_index < MATRIX_ROWS; row_index++) {
-                // Check row pin state
-                if (readPin(row_pins[row_index]) == 0) {
-                    // Pin LO, set col bit
-                    raw_matrix[row_index] |= (MATRIX_ROW_SHIFTER << col_index);
-                } else {
-                    // Pin HI, clear col bit
-                    raw_matrix[row_index] &= ~(MATRIX_ROW_SHIFTER << col_index);
-                }
-            }
-
-            // Disable the column
-            writePinHigh(col_pins[col_index]);
-        }
-
-#elif(DIODE_DIRECTION == COL2ROW)
-        // Read the key matrix
-        for (uint8_t row_index = 0; row_index < MATRIX_ROWS; row_index++) {
-            // Enable the row
-            writePinLow(row_pins[row_index]);
-
-            // Small delay to let internal pull-up resitors pull-up the input pins.
-            for(int i = 0; i < MATRIX_KEY_SAMPLE_DELAY; i++){ __asm__ volatile("" ::: "memory");  }
-
-            // When MATRIX_COL_PINS is ordered from MR0 to MRn, the following optimization is possible.
-            // This if should be resolved at compile time.
-            if( cols_ordered() ){
-                // Fast implementation
-
-                // Read all col pin values at once into a varable. This allows for better code gen.
-                // The bit position in col_pin_values matches MR numbering.
-                uint32_t col_pin_values = (pal_lld_readport(GPIOA) & 0xFFFF) | ((pal_lld_readport(GPIOD) & 0x3F) << 16);
-
-                // Invert because a pressed key will make a input pin low.
-                col_pin_values = ~col_pin_values;
-
-                // Keep bottom MATRIX_COLS bits.
-                col_pin_values &= ((1 << MATRIX_COLS) - 1);
-
-                raw_matrix[row_index] = col_pin_values;
-            } else {
-                // Slow fallback implementation
-
-                matrix_row_t raw = 0;
-                matrix_row_t mask = 1;
-                for (uint8_t col_index = 0; col_index < MATRIX_COLS; col_index++) {
-                    // Check row pin state
-                    if (readPin(col_pins[col_index]) == 0) {
-                        raw |= mask;
-                    }
-                    mask <<= 1;
-                }
-
-                raw_matrix[row_index] = raw;
-            }
-
-            // Disable the row
-            writePinHigh(row_pins[row_index]);
-        }
-#endif
-
-    }
-
-    // Load MRs with led_state data for the current row
-    load_mrs(current_row);
-
-    // Re-enable PWM on column pins
-    SN_CT16B1->PWMIOENB = used_mrs_mask();
-
-    // Turn the current row on
-    writePinHigh(led_row_pins[current_row]);
-
+    if(current_row >= LED_MATRIX_ROWS) current_row = 0;
+    // Advance to the next key matrix row
+    if(current_row % LED_MATRIX_ROW_CHANNELS == 0) row_idx++;
+    if(row_idx >= LED_MATRIX_ROWS) row_idx = 0;
+    chSysLockFromISR();
+    // Disable LED output before scanning the key matrix
+    shared_matrix_led_disable_leds();
+    shared_matrix_led_disable_pwm();
+    #if(DIODE_DIRECTION == COL2ROW)
+        // Scan the key matrix row
+        matrix_scan_keys(raw_matrix, row_idx);
+    #endif
+    update_pwm_channels(pwmp);
+    if(enable_pwm) writePinHigh(led_row_pins[current_row]);
+    chSysUnlockFromISR();
     // Advance the timer to just before the wrap-around, that will start a new PWM cycle
-    SN_CT16B1->TC = 0xFFFF;
-
-    OSAL_IRQ_EPILOGUE();
+    pwm_lld_change_counter(pwmp, 0xFFFF);
+    // Enable the interrupt
+    pwmEnablePeriodicNotification(pwmp);
 }
 
-// Map pin to MR number
-static inline int8_t pin_to_mr(pin_t pin){
-    switch(pin){
-        case A0:  return 0;
-        case A1:  return 1;
-        case A2:  return 2;
-        case A3:  return 3;
-        case A4:  return 4;
-        case A5:  return 5;
-        case A6:  return 6;
-        case A7:  return 7;
-        case A8:  return 8;
-        case A9:  return 9;
-        case A10: return 10;
-        case A11: return 11;
-        case A12: return 12;
-        case A13: return 13;
-        case A14: return 14;
-        case A15: return 15;
-        case D0:  return 16;
-        case D1:  return 17;
-        case D2:  return 18;
-        case D3:  return 19;
-        case D4:  return 20;
-        case D5:  return 21;
-        case D8:  return 22;
+void SN32F26x_init(void) {
+    for (uint8_t x = 0; x < LED_MATRIX_ROWS; x++) {
+        setPinOutput(led_row_pins[x]);
+        writePinLow(led_row_pins[x]);
     }
-
-    // Should not happen!
-    return 0;
+    // Determine which PWM channels we need to control
+    led_ch_ctrl(&pwmcfg);
+    pwmStart(&PWMD1, &pwmcfg);
+    shared_matrix_led_enable();
 }
 
-// Mask with use MRs
-// This whole function should optimize to a constant.
-static inline uint32_t used_mrs_mask(void) {
-    // Macro that sets the bit n if MRn is used.
-    #define MASK_MR(col)  if(col < LED_MATRIX_COLS) { mask |= 1 << pin_to_mr(led_col_pins[col]); }
-
-    // Manual unroll constructing the mask
-    uint32_t mask = 0;
-    MASK_MR(0);
-    MASK_MR(1);
-    MASK_MR(2);
-    MASK_MR(3);
-    MASK_MR(4);
-    MASK_MR(5);
-    MASK_MR(6);
-    MASK_MR(7);
-    MASK_MR(8);
-    MASK_MR(9);
-    MASK_MR(10);
-    MASK_MR(11);
-    MASK_MR(12);
-    MASK_MR(13);
-    MASK_MR(14);
-    MASK_MR(15);
-    MASK_MR(16);
-    MASK_MR(17);
-    MASK_MR(18);
-    MASK_MR(19);
-    MASK_MR(20);
-    MASK_MR(21);
-    MASK_MR(22);
-    return mask;
+void SN32F26x_set_value(int index, uint8_t value) {
+    led_state[index] = value;
 }
 
-// Given a row, load the MRs with led_state data
-static inline void load_mrs(int row) {
-    // Convince compiler that MRs can be accesssed as an array. This is done to improve code gen.
-    volatile uint32_t (* const MRx)[23] = (volatile uint32_t (*)[23]) &SN_CT16B1->MR0;
-
-    // Marco that load the MR for the given col.
-    // It is a NOP if col >= LED_MATRIX_COLS
-    // This gets compiled into three instruction, two ldrb and one str.
-    // When g_led_config.matrix_co contains a NO_LED (255) entry, led_state[] will be indexed out of bound.
-    // So this will load a unknown value into the MR register, but this doesn't matter because there is no led.
-    #define LOAD_MR(col)  if(col < LED_MATRIX_COLS) { (*MRx)[pin_to_mr(led_col_pins[col])] = led_state[g_led_config.matrix_co[row][col]]; }
-
-    // Manual unroll the loading of the MRs
-    LOAD_MR(0);
-    LOAD_MR(1);
-    LOAD_MR(2);
-    LOAD_MR(3);
-    LOAD_MR(4);
-    LOAD_MR(5);
-    LOAD_MR(6);
-    LOAD_MR(7);
-    LOAD_MR(8);
-    LOAD_MR(9);
-    LOAD_MR(10);
-    LOAD_MR(11);
-    LOAD_MR(12);
-    LOAD_MR(13);
-    LOAD_MR(14);
-    LOAD_MR(15);
-    LOAD_MR(16);
-    LOAD_MR(17);
-    LOAD_MR(18);
-    LOAD_MR(19);
-    LOAD_MR(20);
-    LOAD_MR(21);
-    LOAD_MR(22);
-}
-
-// Return true if MATRIX_COL_PINS is in MR0 to MRn order
-// This whole function should optimize to a constant.
-static inline bool cols_ordered(void){
-    // Tests if MATRIX_COL_PINS[n] maps to MRn
-    #define TEST_ORDER(col) if(col < LED_MATRIX_COLS) { if(col != pin_to_mr(col_pins[col])) return false; }
-
-    // Manual unroll the testing of the order
-    TEST_ORDER(0);
-    TEST_ORDER(1);
-    TEST_ORDER(2);
-    TEST_ORDER(3);
-    TEST_ORDER(4);
-    TEST_ORDER(5);
-    TEST_ORDER(6);
-    TEST_ORDER(7);
-    TEST_ORDER(8);
-    TEST_ORDER(9);
-    TEST_ORDER(10);
-    TEST_ORDER(11);
-    TEST_ORDER(12);
-    TEST_ORDER(13);
-    TEST_ORDER(14);
-    TEST_ORDER(15);
-    TEST_ORDER(16);
-    TEST_ORDER(17);
-    TEST_ORDER(18);
-    TEST_ORDER(19);
-    TEST_ORDER(20);
-    TEST_ORDER(21);
-    TEST_ORDER(22);
-    return true;
+void SN32F26x_set_value_all(uint8_t value) {
+    for (int i=0; i<DRIVER_LED_TOTAL; i++) {
+        SN32F26x_set_value(i, value);
+    }
 }

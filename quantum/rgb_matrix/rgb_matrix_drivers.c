@@ -334,18 +334,4 @@ const rgb_matrix_driver_t rgb_matrix_driver = {
     .set_color     = SN32F24xB_set_color,
     .set_color_all = SN32F24xB_set_color_all,
 };
-#elif defined(SN32F26x)
-static void init(void) {
-    // NOP
-}
-static void flush(void){
-    // NOP
-}
-
-const rgb_matrix_driver_t rgb_matrix_driver = {
-    .init          = init,
-    .flush         = flush,
-    .set_color     = SN32F26x_set_color,
-    .set_color_all = SN32F26x_set_color_all,
-};
 #endif
