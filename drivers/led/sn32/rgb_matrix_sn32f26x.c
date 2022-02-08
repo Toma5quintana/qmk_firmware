@@ -174,32 +174,32 @@ void led_ch_ctrl(PWMConfig *cfg) {
                 chan_col_order[i] = 15;
                 break;
 
-            case C0:
+            case D0:
                 cfg->channels[16].mode = PWM_OUTPUT_ACTIVE_LOW;
                 chan_col_order[i] = 16;
                 break;
 
-            case C1:
+            case D1:
                 cfg->channels[17].mode = PWM_OUTPUT_ACTIVE_LOW;
                 chan_col_order[i] = 17;
                 break;
 
-            case C2:
+            case D2:
                 cfg->channels[18].mode = PWM_OUTPUT_ACTIVE_LOW;
                 chan_col_order[i] = 18;
                 break;
 
-            case C3:
+            case D3:
                 cfg->channels[19].mode = PWM_OUTPUT_ACTIVE_LOW;
                 chan_col_order[i] = 19;
                 break;
 
-            case C5:
+            case D5:
                 cfg->channels[21].mode = PWM_OUTPUT_ACTIVE_LOW;
                 chan_col_order[i] = 20;
                 break;
 
-            case C8:
+            case D8:
                 cfg->channels[22].mode = PWM_OUTPUT_ACTIVE_LOW;
                 chan_col_order[i] = 21;
                 break;
