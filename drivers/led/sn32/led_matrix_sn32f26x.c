@@ -53,14 +53,14 @@ static const uint32_t periodticks = 256;
 static const uint32_t freq = (LED_MATRIX_LED_FLUSH_LIMIT * LED_MATRIX_VAL_STEP * LED_MATRIX_SPD_STEP * LED_MATRIX_LED_PROCESS_LIMIT);
 static const pin_t led_row_pins[LED_MATRIX_ROWS] = LED_MATRIX_ROW_PINS; // We expect a R,B,G order here
 static const pin_t led_col_pins[LED_MATRIX_COLS] = LED_MATRIX_COL_PINS;
-uint8_t led_state[DRIVER_LED_TOTAL]; // led state buffer
+uint8_t led_state[DRIVER_LED_TOTAL]; // LED state buffer
 bool enable_pwm = false;
 
 void led_ch_ctrl(void) {
     /* Enable PWM function, IOs and select the PWM modes for the LED column pins */
     for(uint8_t i = 0; i < LED_MATRIX_COLS; i++) {
         switch(led_col_pins[i]) {
-            // Intentional fall-through for the PWM B-pin mapping
+
             case A0:
                 chan_col_order[i] = 0;
                 break;
@@ -260,7 +260,7 @@ static const PWMConfig pwmcfg = {
         [19] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
 #else
         [19] = {.mode = PWM_OUTPUT_DISABLED },
-#endif
+#endif /* Channel 20 is a dummy channel in 26x .*/
         [20] = {.mode = PWM_OUTPUT_DISABLED },
 #ifdef ACTIVATE_PWM_CHAN_21
         [21] = {.mode = PWM_OUTPUT_ACTIVE_LOW },
