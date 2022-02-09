@@ -147,9 +147,7 @@ const led_matrix_driver_t led_matrix_driver = {
 #    endif
 
 #elif defined(SN32F26x)
-static void flush(void){
-    // NOP
-}
+static void flush(void) {}  // Due to the way we do PWM, every cycle is a flush
 
 const led_matrix_driver_t led_matrix_driver = {
     .init          = SN32F26x_init,
