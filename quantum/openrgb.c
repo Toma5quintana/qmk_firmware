@@ -37,7 +37,9 @@
 #    define OPENRGB_DIRECT_MODE_STARTUP_BLUE 255
 #endif
 
+#if !defined(OPENRGB_DIRECT_MODE_UNBUFFERED)
 RGB                  g_openrgb_direct_mode_colors[DRIVER_LED_TOTAL] = {[0 ... DRIVER_LED_TOTAL - 1] = {OPENRGB_DIRECT_MODE_STARTUP_GREEN, OPENRGB_DIRECT_MODE_STARTUP_RED, OPENRGB_DIRECT_MODE_STARTUP_BLUE}};
+#endif
 static const uint8_t openrgb_rgb_matrix_effects_indexes[]           = {
     1,  2,
 
@@ -268,9 +270,16 @@ void openrgb_get_led_info(uint8_t *data) {
             raw_hid_buffer[data_idx + 1] = g_led_config.point[led_idx].x;
             raw_hid_buffer[data_idx + 2] = g_led_config.point[led_idx].y;
             raw_hid_buffer[data_idx + 3] = g_led_config.flags[led_idx];
+            
+		#ifdef OPENRGB_DIRECT_MODE_UNBUFFERED
+            raw_hid_buffer[data_idx + 4] = 0;
+            raw_hid_buffer[data_idx + 5] = 0;
+            raw_hid_buffer[data_idx + 6] = 0;
+		#else
             raw_hid_buffer[data_idx + 4] = g_openrgb_direct_mode_colors[led_idx].r;
             raw_hid_buffer[data_idx + 5] = g_openrgb_direct_mode_colors[led_idx].g;
             raw_hid_buffer[data_idx + 6] = g_openrgb_direct_mode_colors[led_idx].b;
+		#endif  
         }
 
         uint8_t row   = 0;
@@ -347,9 +356,13 @@ void openrgb_direct_mode_set_single_led(uint8_t *data) {
         return;
     }
 
+#ifdef OPENRGB_DIRECT_MODE_UNBUFFERED
+    rgb_matrix_set_color(led, r, g, b);
+#else
     g_openrgb_direct_mode_colors[led].r = r;
     g_openrgb_direct_mode_colors[led].g = g;
     g_openrgb_direct_mode_colors[led].b = b;
+#endif
 
     raw_hid_buffer[RAW_EPSIZE - 2] = OPENRGB_SUCCESS;
 }
@@ -358,11 +371,15 @@ void openrgb_direct_mode_set_leds(uint8_t *data) {
     const uint8_t number_leds = data[2];
 
     for (uint8_t i = 0; i < number_leds; i++) {
+	#ifdef OPENRGB_DIRECT_MODE_UNBUFFERED
+        rgb_matrix_set_color(i + first_led, data[i * 3 + 3], data[i * 3 + 4], data[i * 3 + 5]);
+	#else
         const uint8_t color_idx = first_led + i;
         const uint8_t data_idx  = i * 3;
 
         g_openrgb_direct_mode_colors[color_idx].r = data[data_idx + 3];
         g_openrgb_direct_mode_colors[color_idx].g = data[data_idx + 4];
         g_openrgb_direct_mode_colors[color_idx].b = data[data_idx + 5];
+#endif
     }
 }
