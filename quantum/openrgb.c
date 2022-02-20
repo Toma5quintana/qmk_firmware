@@ -120,54 +120,57 @@ static const uint8_t openrgb_rgb_matrix_effects_indexes[] = {
 #ifdef ENABLE_RGB_MATRIX_HUE_WAVE
     27,
 #endif
+// TODO: need openrgb qmk controller to support these 2 new effects
+/*
 #ifdef ENABLE_RGB_MATRIX_PIXEL_RAIN
     28,
 #endif
 #ifdef ENABLE_RGB_MATRIX_PIXEL_FRACTAL
     29,
 #endif
+ */
 #if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP)
-    30,
+    28,
 #endif
 #if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_DIGITAL_RAIN)
-    31,
+    29,
 #endif
 #ifdef RGB_MATRIX_KEYREACTIVE_ENABLED
 #    ifdef ENABLE_RGB_MATRIX_SOLID_REACTIVE_SIMPLE
-    32,
+    30,
 #    endif
 #    ifdef ENABLE_RGB_MATRIX_SOLID_REACTIVE
-    33,
+    31,
 #    endif
 #    ifdef ENABLE_RGB_MATRIX_SOLID_REACTIVE_WIDE
-    34,
+    32,
 #    endif
 #    ifdef ENABLE_RGB_MATRIX_SOLID_REACTIVE_MULTIWIDE
-    35,
+    33,
 #    endif
 #    ifdef ENABLE_RGB_MATRIX_SOLID_REACTIVE_CROSS
-    36,
+    34,
 #    endif
 #    ifdef ENABLE_RGB_MATRIX_SOLID_REACTIVE_MULTICROSS
-    37,
+    35,
 #    endif
 #    ifdef ENABLE_RGB_MATRIX_SOLID_REACTIVE_NEXUS
-    38,
+    36,
 #    endif
 #    ifdef ENABLE_RGB_MATRIX_SOLID_REACTIVE_MULTINEXUS
-    39,
+    37,
 #    endif
 #    ifdef ENABLE_RGB_MATRIX_SPLASH
-    40,
+    38,
 #    endif
 #    ifdef ENABLE_RGB_MATRIX_MULTISPLASH
-    41,
+    39,
 #    endif
 #    ifdef ENABLE_RGB_MATRIX_SOLID_SPLASH
-    42,
+    40,
 #    endif
 #    ifdef ENABLE_RGB_MATRIX_SOLID_MULTISPLASH
-    43,
+    41,
 #    endif
 #endif
 };
