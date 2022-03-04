@@ -29,6 +29,3 @@ RGB_MATRIX_DRIVER = SN32F24xB
 
 # project specific files
 SRC = ../../../drivers/led/sn32/matrix_sn32f24xx.c
-
-# build iso by default
-DEFAULT_FOLDER = keychron/k6/rgb/iso

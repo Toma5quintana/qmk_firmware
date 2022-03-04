@@ -17,14 +17,19 @@
 
 #pragma once
 
+#include "config_common.h"
+
+#define VENDOR_ID                   0x3434
+
+#define MANUFACTURER                Keychron
 #define PRODUCT                     K6 White
 
 #define WAIT_FOR_USB
 #define USB_MAX_POWER_CONSUMPTION   100
 
 /* key matrix size */
-#define MATRIX_ROWS                 6
-#define MATRIX_COLS                 17
+#define MATRIX_ROWS                 5
+#define MATRIX_COLS                 16
 
 #define DIODE_DIRECTION             COL2ROW
 
@@ -39,12 +44,6 @@
 
 #define LED_MATRIX_COLS             MATRIX_COLS
 #define LED_MATRIX_COL_PINS         MATRIX_COL_PINS
-
-#ifdef KEYMAP_ISO
-    #define DRIVER_LED_TOTAL (69)
-#else
-    #define DRIVER_LED_TOTAL (68)
-#endif
 
 /* Backlight configuration */
 #define RGB_MATRIX_VAL_STEP             32
@@ -62,6 +61,19 @@
 
 /* Enable NKRO by default */ 
 #define FORCE_NKRO
+
+/* Enable led matrix effects */
+#define ENABLE_LED_MATRIX_ALPHAS_MODS
+#define ENABLE_LED_MATRIX_BREATHING
+#define ENABLE_LED_MATRIX_BAND
+#define ENABLE_LED_MATRIX_BAND_PINWHEEL
+#define ENABLE_LED_MATRIX_BAND_SPIRAL
+#define ENABLE_LED_MATRIX_CYCLE_LEFT_RIGHT
+#define ENABLE_LED_MATRIX_CYCLE_UP_DOWN
+#define ENABLE_LED_MATRIX_CYCLE_OUT_IN
+#define ENABLE_LED_MATRIX_DUAL_BEACON
+#define ENABLE_LED_MATRIX_WAVE_LEFT_RIGHT
+#define ENABLE_LED_MATRIX_WAVE_UP_DOWN
 
 /* Disable the following animation because they are not interesting in monochrome */
 #define DISABLE_RGB_MATRIX_ALPHAS_MODS

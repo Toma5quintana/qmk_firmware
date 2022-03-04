@@ -1,15 +1,20 @@
 /* ANSI keymap LEDs */
+#include "ansi.h"
+
+// readability
+#define NA NO_LED
+
 /// Force g_led_config into flash, because there is no space in RAM.
 /// This should be safe because g_led_config should never be written to.
 /// We cannot make g_led_config const, because rgb_matrix.h, exports it as mutable.
 __attribute__(( section(".rodata.g_led_config") ))
 led_config_t g_led_config = {
     {
-        {   0,       1,       2,       3,       4,       5,       6,       7,       8,       9,      10,      11,      12,      13,      NO_LED,  14 },
-        {  15,      16,      17,      18,      19,      20,      21,      22,      23,      24,      25,      26,      27,      28,      NO_LED,  29 },
-        {  30,      31,      32,      33,      34,      35,      36,      37,      38,      39,      40,      41,      NO_LED,  42,      NO_LED,  43 },
-        {  44,      NO_LED,  45,      46,      47,      48,      49,      50,      51,      52,      53,      54,      NO_LED,  55,      56,      57 },
-        {  58,      59,      60,      NO_LED,  NO_LED,  NO_LED,  61,      NO_LED,  NO_LED,  NO_LED,  62,      63,      64,      65,      66,      67 }
+        {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, NA, 14 },
+        { 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, NA, 29 },
+        { 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, NA, 42, NA, 43 },
+        { 44, NA, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, NA, 55, 56, 57 },
+        { 58, 59, 60, NA, NA, NA, 61, NA, NA, NA, 62, 63, 64, 65, 66, 67 }
     },
     {
         {8,    6}, {22,   6}, {35,   6}, {49,   6}, {63,   6}, {77,   6}, {91,   6}, {105,  6}, {119,  6}, {133,  6}, {146,  6}, {160,  6}, {174,  6}, {195,  6},            {216,  6},

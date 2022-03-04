@@ -2,6 +2,7 @@
 
 #include "quantum.h"
 
+// readability
 #define XXX KC_NO
 
 #define LAYOUT_65_iso( \
