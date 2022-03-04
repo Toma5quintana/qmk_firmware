@@ -17,6 +17,3 @@
 #pragma once
 
 #include "config_common.h"
-
-#define VENDOR_ID       0x3434
-#define MANUFACTURER    Keychron
