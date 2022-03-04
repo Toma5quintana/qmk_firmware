@@ -62,6 +62,30 @@
 /* Enable NKRO by default */ 
 #define FORCE_NKRO
 
+/* LED matrix Hackeroo for RAM. Uncomment to enable COLS */
+#define ACTIVATE_PWM_CHAN_0 //A0
+#define ACTIVATE_PWM_CHAN_1 //A1
+#define ACTIVATE_PWM_CHAN_2 //A2
+#define ACTIVATE_PWM_CHAN_3 //A3
+#define ACTIVATE_PWM_CHAN_4 //A4
+#define ACTIVATE_PWM_CHAN_5 //A5
+#define ACTIVATE_PWM_CHAN_6 //A6
+#define ACTIVATE_PWM_CHAN_7 //A7
+#define ACTIVATE_PWM_CHAN_8 //A8
+#define ACTIVATE_PWM_CHAN_9 //A9
+#define ACTIVATE_PWM_CHAN_10 //A10
+#define ACTIVATE_PWM_CHAN_11 //A11
+#define ACTIVATE_PWM_CHAN_12 //A12
+#define ACTIVATE_PWM_CHAN_13 //A13
+#define ACTIVATE_PWM_CHAN_14 //A14
+#define ACTIVATE_PWM_CHAN_15 //A15
+//#define ACTIVATE_PWM_CHAN_16 //D0
+//#define ACTIVATE_PWM_CHAN_17 //D1
+//#define ACTIVATE_PWM_CHAN_18 //D2
+//#define ACTIVATE_PWM_CHAN_19 //D3
+//#define ACTIVATE_PWM_CHAN_21 //D5
+//#define ACTIVATE_PWM_CHAN_22 //D8
+
 /* Enable led matrix effects */
 #define ENABLE_LED_MATRIX_ALPHAS_MODS
 #define ENABLE_LED_MATRIX_BREATHING
@@ -74,18 +98,3 @@
 #define ENABLE_LED_MATRIX_DUAL_BEACON
 #define ENABLE_LED_MATRIX_WAVE_LEFT_RIGHT
 #define ENABLE_LED_MATRIX_WAVE_UP_DOWN
-
-/* Disable the following animation because they are not interesting in monochrome */
-#define DISABLE_RGB_MATRIX_ALPHAS_MODS
-#define DISABLE_RGB_MATRIX_GRADIENT_UP_DOWN
-#define DISABLE_RGB_MATRIX_GRADIENT_LEFT_RIGHT
-#define DISABLE_RGB_MATRIX_BAND_SAT
-#define DISABLE_RGB_MATRIX_BAND_PINWHEEL_SAT
-#define DISABLE_RGB_MATRIX_BAND_SPIRAL_SAT
-#define DISABLE_RGB_MATRIX_CYCLE_ALL
-#define DISABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
-#define DISABLE_RGB_MATRIX_DUAL_BEACON
-
-/* TODO: Disabled the following animation because they crash the keyboard. Probably due to a too small stack */
-#define DISABLE_RGB_MATRIX_RAINDROPS
-#define DISABLE_RGB_MATRIX_JELLYBEAN_RAINDROPS
