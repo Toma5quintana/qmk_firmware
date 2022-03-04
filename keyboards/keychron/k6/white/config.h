@@ -17,11 +17,7 @@
 
 #pragma once
 
-#include "config_common.h"
-#include <config.h>
-
-#define MANUFACTURER                Keychron
-#define PRODUCT                     Keychron K6 White
+#define PRODUCT                     K6 White
 
 #define WAIT_FOR_USB
 #define USB_MAX_POWER_CONSUMPTION   100

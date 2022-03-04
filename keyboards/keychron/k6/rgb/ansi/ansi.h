@@ -17,23 +17,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #pragma once
-#include <config.h>
 
-// Backlight configuration
-#define BACKLIGHT_LEVELS 8
+#include "quantum.h"
+// readability
+#define XXX KC_NO
 
-#define LED_MATRIX_ROWS MATRIX_ROWS
-#define LED_MATRIX_ROW_CHANNELS 3
-#define LED_MATRIX_ROWS_HW (LED_MATRIX_ROWS * LED_MATRIX_ROW_CHANNELS)
-//note how ROW pins are assined in the following sequence top down row1 RBG, row2 RBG and so on
-#define LED_MATRIX_ROW_PINS { C6, C5, C4, C9, C8, C7, C12, C11, C10, B13, C14, C13, B14, B15, D3 }
-
-#define LED_MATRIX_COLS MATRIX_COLS
-#define LED_MATRIX_COL_PINS MATRIX_COL_PINS
-
-#ifdef KEYMAP_ISO
-    #define DRIVER_LED_TOTAL (69)
-#else
-    #define DRIVER_LED_TOTAL (68)
-#endif
-
+// TODO: ????????
