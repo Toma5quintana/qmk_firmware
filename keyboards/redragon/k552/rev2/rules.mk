@@ -8,6 +8,7 @@ MCU = SN32F248BF
 # Build Options
 #   comment out to disable the options.
 #
+OPENRGB_ENABLE = yes
 LTO_ENABLE = no
 BACKLIGHT_ENABLE = no
 MAGIC_ENABLE = yes
