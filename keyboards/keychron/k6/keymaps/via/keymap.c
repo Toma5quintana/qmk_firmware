@@ -30,7 +30,7 @@ enum layer_names {
 };
 
 enum custom_keycodes {
-    KC_MISSION_CONTROL = SAFE_RANGE,
+    KC_MISSION_CONTROL = USER00,
     KC_LAUNCHPAD
 };
 
@@ -115,4 +115,4 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         default:
             return true;  // Process all other keycodes normally
     }
-}|
+}
