@@ -40,140 +40,252 @@
 #if !defined(OPENRGB_DIRECT_MODE_UNBUFFERED)
 RGB g_openrgb_direct_mode_colors[DRIVER_LED_TOTAL] = {[0 ... DRIVER_LED_TOTAL - 1] = {OPENRGB_DIRECT_MODE_STARTUP_GREEN, OPENRGB_DIRECT_MODE_STARTUP_RED, OPENRGB_DIRECT_MODE_STARTUP_BLUE}};
 #endif
+/* Index is important, it is the enum value of the openrgb effect */
 static const uint8_t openrgb_rgb_matrix_effects_indexes[] = {
-    1,  // SOLID COLOR
+    RGB_MATRIX_OPENRGB_DIRECT,
+    RGB_MATRIX_SOLID_COLOR,
+
 #ifdef ENABLE_RGB_MATRIX_ALPHAS_MODS
-    2,
+    RGB_MATRIX_ALPHAS_MODS,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_GRADIENT_UP_DOWN
-    3,
+    RGB_MATRIX_GRADIENT_UP_DOWN,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_GRADIENT_LEFT_RIGHT
-    4,
+    RGB_MATRIX_GRADIENT_LEFT_RIGHT,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_BREATHING
-    5,
+    RGB_MATRIX_BREATHING,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_BAND_SAT
-    6,
+    RGB_MATRIX_BAND_SAT,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_BAND_VAL
-    7,
+    RGB_MATRIX_BAND_VAL,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_BAND_PINWHEEL_SAT
-    8,
+    RGB_MATRIX_BAND_PINWHEEL_SAT,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_BAND_PINWHEEL_VAL
-    9,
+    RGB_MATRIX_BAND_PINWHEEL_VAL,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_BAND_SPIRAL_SAT
-    10,
+    RGB_MATRIX_BAND_SPIRAL_SAT,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_BAND_SPIRAL_VAL
-    11,
+    RGB_MATRIX_BAND_SPIRAL_VAL,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_CYCLE_ALL
-    12,
+    RGB_MATRIX_CYCLE_ALL,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT
-    13,
+    RGB_MATRIX_CYCLE_LEFT_RIGHT,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_CYCLE_UP_DOWN
-    14,
+    RGB_MATRIX_CYCLE_UP_DOWN,
+#else
+    0,
 #endif
-#ifdef ENABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
-    15,
-#endif
+
 #ifdef ENABLE_RGB_MATRIX_CYCLE_OUT_IN
-    16,
+    RGB_MATRIX_CYCLE_OUT_IN,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_CYCLE_OUT_IN_DUAL
-    17,
+    RGB_MATRIX_CYCLE_OUT_IN_DUAL,
+#else
+    0,
 #endif
+
+#ifdef ENABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
+    RGB_MATRIX_RAINBOW_MOVING_CHEVRON,
+#else
+    0,
+#endif
+
 #ifdef ENABLE_RGB_MATRIX_CYCLE_PINWHEEL
-    18,
+    RGB_MATRIX_CYCLE_PINWHEEL,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_CYCLE_SPIRAL
-    19,
+    RGB_MATRIX_CYCLE_SPIRAL,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_DUAL_BEACON
-    20,
+    RGB_MATRIX_DUAL_BEACON,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_RAINBOW_BEACON
-    21,
+    RGB_MATRIX_RAINBOW_BEACON,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_RAINBOW_PINWHEELS
-    22,
+    RGB_MATRIX_RAINBOW_PINWHEELS,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_RAINDROPS
-    23,
+    RGB_MATRIX_RAINDROPS,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_JELLYBEAN_RAINDROPS
-    24,
+    RGB_MATRIX_JELLYBEAN_RAINDROPS,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_HUE_BREATHING
-    25,
+    RGB_MATRIX_HUE_BREATHING,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_HUE_PENDULUM
-    26,
+    RGB_MATRIX_HUE_PENDULUM,
+#else
+    0,
 #endif
+
 #ifdef ENABLE_RGB_MATRIX_HUE_WAVE
-    27,
+    RGB_MATRIX_HUE_WAVE,
+#else
+    0,
 #endif
-// TODO: need openrgb qmk controller to support these 2 new effects
-/*
-#ifdef ENABLE_RGB_MATRIX_PIXEL_RAIN
-    28,
+
+#if defined RGB_MATRIX_FRAMEBUFFER_EFFECTS && defined ENABLE_RGB_MATRIX_TYPING_HEATMAP
+    RGB_MATRIX_TYPING_HEATMAP,
+#else
+    0,
 #endif
-#ifdef ENABLE_RGB_MATRIX_PIXEL_FRACTAL
-    29,
+
+#if defined RGB_MATRIX_FRAMEBUFFER_EFFECTS && defined ENABLE_RGB_MATRIX_DIGITAL_RAIN
+    RGB_MATRIX_DIGITAL_RAIN,
+#else
+    0,
 #endif
- */
-#if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP)
-    28,
+
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && defined ENABLE_RGB_MATRIX_SOLID_REACTIVE_SIMPLE
+    RGB_MATRIX_SOLID_REACTIVE_SIMPLE,
+#else
+    0,
 #endif
-#if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_DIGITAL_RAIN)
-    29,
+
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && defined ENABLE_RGB_MATRIX_SOLID_REACTIVE
+    RGB_MATRIX_SOLID_REACTIVE,
+#else
+    0,
 #endif
-#ifdef RGB_MATRIX_KEYREACTIVE_ENABLED
-#    ifdef ENABLE_RGB_MATRIX_SOLID_REACTIVE_SIMPLE
-    30,
-#    endif
-#    ifdef ENABLE_RGB_MATRIX_SOLID_REACTIVE
-    31,
-#    endif
-#    ifdef ENABLE_RGB_MATRIX_SOLID_REACTIVE_WIDE
-    32,
-#    endif
-#    ifdef ENABLE_RGB_MATRIX_SOLID_REACTIVE_MULTIWIDE
-    33,
-#    endif
-#    ifdef ENABLE_RGB_MATRIX_SOLID_REACTIVE_CROSS
-    34,
-#    endif
-#    ifdef ENABLE_RGB_MATRIX_SOLID_REACTIVE_MULTICROSS
-    35,
-#    endif
-#    ifdef ENABLE_RGB_MATRIX_SOLID_REACTIVE_NEXUS
-    36,
-#    endif
-#    ifdef ENABLE_RGB_MATRIX_SOLID_REACTIVE_MULTINEXUS
-    37,
-#    endif
-#    ifdef ENABLE_RGB_MATRIX_SPLASH
-    38,
-#    endif
-#    ifdef ENABLE_RGB_MATRIX_MULTISPLASH
-    39,
-#    endif
-#    ifdef ENABLE_RGB_MATRIX_SOLID_SPLASH
-    40,
-#    endif
-#    ifdef ENABLE_RGB_MATRIX_SOLID_MULTISPLASH
-    41,
-#    endif
+
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && defined ENABLE_RGB_MATRIX_SOLID_REACTIVE_WIDE
+    RGB_MATRIX_SOLID_REACTIVE_WIDE,
+#else
+    0,
+#endif
+
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && defined ENABLE_RGB_MATRIX_SOLID_REACTIVE_MULTIWIDE
+    RGB_MATRIX_SOLID_REACTIVE_MULTIWIDE,
+#else
+    0,
+#endif
+
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && defined ENABLE_RGB_MATRIX_SOLID_REACTIVE_CROSS
+    RGB_MATRIX_SOLID_REACTIVE_CROSS,
+#else
+    0,
+#endif
+
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && defined ENABLE_RGB_MATRIX_SOLID_REACTIVE_MULTICROSS
+    RGB_MATRIX_SOLID_REACTIVE_MULTICROSS,
+#else
+    0,
+#endif
+
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && defined ENABLE_RGB_MATRIX_SOLID_REACTIVE_NEXUS
+    RGB_MATRIX_SOLID_REACTIVE_NEXUS,
+#else
+    0,
+#endif
+
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && defined ENABLE_RGB_MATRIX_SOLID_REACTIVE_MULTINEXUS
+    RGB_MATRIX_SOLID_REACTIVE_MULTINEXUS,
+#else
+    0,
+#endif
+
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && defined ENABLE_RGB_MATRIX_SPLASH
+    RGB_MATRIX_SPLASH,
+#else
+    0,
+#endif
+
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && defined ENABLE_RGB_MATRIX_MULTISPLASH
+    RGB_MATRIX_MULTISPLASH,
+#else
+    0,
+#endif
+
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && defined ENABLE_RGB_MATRIX_SOLID_SPLASH
+    RGB_MATRIX_SOLID_SPLASH,
+#else
+    0,
+#endif
+
+#if defined RGB_MATRIX_KEYREACTIVE_ENABLED && defined ENABLE_RGB_MATRIX_SOLID_MULTISPLASH
+    RGB_MATRIX_SOLID_MULTISPLASH,
+#else
+    0,
 #endif
 };
+
 static uint8_t raw_hid_buffer[RAW_EPSIZE];
 
 void raw_hid_receive(uint8_t *data, uint8_t length) {
@@ -319,27 +431,33 @@ void openrgb_get_led_info(uint8_t *data) {
 void openrgb_get_enabled_modes(void) {
     raw_hid_buffer[0]  = OPENRGB_GET_ENABLED_MODES;
     const uint8_t size = sizeof openrgb_rgb_matrix_effects_indexes / sizeof openrgb_rgb_matrix_effects_indexes[0];
+    int pos = 1;
     for (int i = 0; i < size; i++) {
-        raw_hid_buffer[i + 1] = openrgb_rgb_matrix_effects_indexes[i];
+        uint8_t val = openrgb_rgb_matrix_effects_indexes[i];
+        if (val != 0)
+        {
+            raw_hid_buffer[pos++] = val;
+        }
     }
-    raw_hid_buffer[size + 1] = RGB_MATRIX_OPENRGB_DIRECT;
 }
 
 void openrgb_set_mode(uint8_t *data) {
     const uint8_t h     = data[1];
     const uint8_t s     = data[2];
     const uint8_t v     = data[3];
-    const uint8_t mode  = data[4];
+    uint8_t mode        = data[4];
     const uint8_t speed = data[5];
     const uint8_t save  = data[6];
 
     raw_hid_buffer[0] = OPENRGB_SET_MODE;
 
-    if (h > 255 || s > 255 || v > 255 || mode >= RGB_MATRIX_EFFECT_MAX || speed > 255) {
+    const int max_mode = sizeof(openrgb_rgb_matrix_effects_indexes) / sizeof(*openrgb_rgb_matrix_effects_indexes);
+    if (h > 255 || s > 255 || v > 255 || mode >= max_mode || speed > 255) {
         raw_hid_buffer[RAW_EPSIZE - 2] = OPENRGB_FAILURE;
         return;
     }
 
+    mode = openrgb_rgb_matrix_effects_indexes[mode];
     if (save == 1) {
         rgb_matrix_mode(mode);
         rgb_matrix_set_speed(speed);
