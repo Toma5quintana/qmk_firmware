@@ -202,9 +202,11 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
             break;
         case OPENRGB_DIRECT_MODE_SET_SINGLE_LED:
             openrgb_direct_mode_set_single_led(data);
+            rgb_matrix_mode(RGB_MATRIX_OPENRGB_DIRECT);
             break;
         case OPENRGB_DIRECT_MODE_SET_LEDS:
             openrgb_direct_mode_set_leds(data);
+            rgb_matrix_mode(RGB_MATRIX_OPENRGB_DIRECT);
             break;
     }
 
