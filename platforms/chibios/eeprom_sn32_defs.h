@@ -61,18 +61,6 @@
 
 /* Size of emulated eeprom */
 #ifdef FEE_DENSITY_BYTES
-#    if (FEE_DENSITY_BYTES > FEE_DENSITY_MAX_SIZE)
-#        pragma message STR(FEE_DENSITY_BYTES) " > " STR(FEE_DENSITY_MAX_SIZE)
-#        error emulated eeprom: FEE_DENSITY_BYTES exceeds FEE_DENSITY_MAX_SIZE
-#    endif
-#    if (FEE_DENSITY_BYTES == FEE_DENSITY_MAX_SIZE)
-#        pragma message STR(FEE_DENSITY_BYTES) " == " STR(FEE_DENSITY_MAX_SIZE)
-#        warning emulated eeprom: FEE_DENSITY_BYTES leaves no room for a write log.  This will greatly increase the flash wear rate!
-#    endif
-#    if FEE_DENSITY_BYTES > FEE_ADDRESS_MAX_SIZE
-#        pragma message STR(FEE_DENSITY_BYTES) " > " STR(FEE_ADDRESS_MAX_SIZE)
-#        error emulated eeprom: FEE_DENSITY_BYTES is greater than FEE_ADDRESS_MAX_SIZE allows
-#    endif
 #    if ((FEE_DENSITY_BYTES) % 2) == 1
 #        error emulated eeprom: FEE_DENSITY_BYTES must be even
 #    endif
