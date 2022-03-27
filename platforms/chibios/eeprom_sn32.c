@@ -34,7 +34,7 @@
 #    error "not implemented."
 #endif
 
-#ifndef FEE_DENSITY_BYTES
+#if !defined(FEE_DENSITY_BYTES)
 #   define FEE_DENSITY_BYTES (FEE_PAGE_SIZE * FEE_DENSITY_PAGES - 1)
 #endif
 #define FEE_LAST_PAGE_ADDRESS (FEE_PAGE_BASE_ADDRESS + (FEE_PAGE_SIZE * FEE_DENSITY_PAGES))

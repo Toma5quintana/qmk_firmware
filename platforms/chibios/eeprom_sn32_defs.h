@@ -60,7 +60,7 @@
 
 
 /* Size of emulated eeprom */
-#ifdef FEE_DENSITY_BYTES
+#if defined(FEE_DENSITY_BYTES)
 #    if ((FEE_DENSITY_BYTES) % 2) == 1
 #        error emulated eeprom: FEE_DENSITY_BYTES must be even
 #    endif
