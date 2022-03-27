@@ -197,6 +197,11 @@ else
         COMMON_VPATH += $(PLATFORM_PATH)/$(PLATFORM_KEY)/$(DRIVER_DIR)/eeprom
         SRC += eeprom_driver.c
         SRC += eeprom_stm32_L0_L1.c
+      else ifneq ($(filter $(MCU_SERIES),SN32F240B SN32F260),)
+        OPT_DEFS += -DEEPROM_DRIVER -DEEPROM_SN32_FLASH_EMULATED
+        COMMON_VPATH += $(DRIVER_PATH)/eeprom
+        SRC += eeprom_driver.c
+        SRC += $(PLATFORM_COMMON_DIR)/eeprom_sn32.c
       else ifneq ($(filter $(MCU_SERIES),KL2x K20x),)
         # Teensy EEPROM implementations
         OPT_DEFS += -DEEPROM_TEENSY
@@ -803,7 +808,7 @@ ifeq ($(strip $(USBPD_ENABLE)), yes)
 endif
 
 BLUETOOTH_ENABLE ?= no
-VALID_BLUETOOTH_DRIVER_TYPES := BluefruitLE RN42 custom
+VALID_BLUETOOTH_DRIVER_TYPES := BluefruitLE RN42 custom ITON_BT
 ifeq ($(strip $(BLUETOOTH_ENABLE)), yes)
     ifeq ($(filter $(strip $(BLUETOOTH_DRIVER)),$(VALID_BLUETOOTH_DRIVER_TYPES)),)
         $(call CATASTROPHIC_ERROR,Invalid BLUETOOTH_DRIVER,BLUETOOTH_DRIVER="$(BLUETOOTH_DRIVER)" is not a valid Bluetooth driver type)

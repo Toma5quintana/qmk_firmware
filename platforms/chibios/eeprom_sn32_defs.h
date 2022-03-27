@@ -20,7 +20,7 @@
 #if !defined(FEE_PAGE_SIZE) || !defined(FEE_TOTAL_PAGES) || !defined(FEE_DENSITY_PAGES)
 #    if defined(SN32F240B)
 #        ifndef FEE_PAGE_SIZE
-#        define FEE_PAGE_SIZE       (uint16_t)0x0040     // Page size = 64bytes
+#        define FEE_PAGE_SIZE       0x0040     // Page size = 64bytes
 #        endif
 #        ifndef FEE_TOTAL_PAGES
 #        define FEE_TOTAL_PAGES     1024    // How many pages are available
@@ -30,7 +30,7 @@
 #        endif
 #    elif defined(SN32F260)
 #        ifndef FEE_PAGE_SIZE
-#        define FEE_PAGE_SIZE       (uint16_t)0x0040     // Page size = 64bytes
+#        define FEE_PAGE_SIZE       0x0040     // Page size = 64bytes
 #        endif
 #        ifndef FEE_TOTAL_PAGES
 #        define FEE_TOTAL_PAGES     480     // How many pages are available
@@ -56,4 +56,26 @@
 #            define FEE_PAGE_BASE_ADDRESS ((uint32_t)(FEE_PAGE_SIZE * FEE_TOTAL_PAGES - ((FEE_DENSITY_PAGES + 1) * FEE_PAGE_SIZE))) // Guard the last page
 #        endif
 #    endif
+#endif
+
+
+/* Size of emulated eeprom */
+#ifdef FEE_DENSITY_BYTES
+#    if (FEE_DENSITY_BYTES > FEE_DENSITY_MAX_SIZE)
+#        pragma message STR(FEE_DENSITY_BYTES) " > " STR(FEE_DENSITY_MAX_SIZE)
+#        error emulated eeprom: FEE_DENSITY_BYTES exceeds FEE_DENSITY_MAX_SIZE
+#    endif
+#    if (FEE_DENSITY_BYTES == FEE_DENSITY_MAX_SIZE)
+#        pragma message STR(FEE_DENSITY_BYTES) " == " STR(FEE_DENSITY_MAX_SIZE)
+#        warning emulated eeprom: FEE_DENSITY_BYTES leaves no room for a write log.  This will greatly increase the flash wear rate!
+#    endif
+#    if FEE_DENSITY_BYTES > FEE_ADDRESS_MAX_SIZE
+#        pragma message STR(FEE_DENSITY_BYTES) " > " STR(FEE_ADDRESS_MAX_SIZE)
+#        error emulated eeprom: FEE_DENSITY_BYTES is greater than FEE_ADDRESS_MAX_SIZE allows
+#    endif
+#    if ((FEE_DENSITY_BYTES) % 2) == 1
+#        error emulated eeprom: FEE_DENSITY_BYTES must be even
+#    endif
+#else
+#    define FEE_DENSITY_BYTES (FEE_PAGE_SIZE * FEE_DENSITY_PAGES - 1)
 #endif
