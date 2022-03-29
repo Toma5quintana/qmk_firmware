@@ -23,7 +23,7 @@
 #include "Flash.h"
 #include "eeprom_sn32.h"
 
-/*****************************************************************************
+/******************************************************************************
  * Allows to use the internal flash to store non volatile data. To initialize
  * the functionality use the EEPROM_Init() function. Be sure that by reprogramming
  * of the controller just affected pages will be deleted. In other case the non
