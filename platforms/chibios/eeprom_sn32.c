@@ -151,14 +151,14 @@ void eeprom_driver_erase(void) {
 
 void eeprom_read_block(void *buf, const void *addr, size_t len) {
     const uint8_t *p    = (const uint8_t *)addr;
-    uint8_t       *dest = (uint8_t *)buf;
+    uint8_t *      dest = (uint8_t *)buf;
     while (len--) {
         *dest++ = EEPROM_ReadDataByte((uint16_t)(uint32_t)(p++));
     }
 }
 
 void eeprom_write_block(const void *buf, void *addr, size_t len) {
-    uint8_t       *p   = (uint8_t *)addr;
+    uint8_t *      p   = (uint8_t *)addr;
     const uint8_t *src = (const uint8_t *)buf;
     while (len--) {
         EEPROM_WriteDataByte((uint16_t)(uint32_t)p++, *src++);
