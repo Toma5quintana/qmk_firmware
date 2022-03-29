@@ -22,6 +22,4 @@
 
 #if defined(KEYBOARD_keychron_k8_rgb)
     #include "rgb.h"
-#elif defined(KEYBOARD_keychron_k8_white)
-    #include "white.h"
 #endif
