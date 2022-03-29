@@ -20,32 +20,32 @@
 #if !defined(FEE_PAGE_SIZE) || !defined(FEE_TOTAL_PAGES) || !defined(FEE_DENSITY_PAGES)
 #    if defined(SN32F240B)
 #        ifndef FEE_PAGE_SIZE
-#        define FEE_PAGE_SIZE       0x0040     // Page size = 64bytes
+#            define FEE_PAGE_SIZE 0x0040 // Page size = 64bytes
 #        endif
 #        ifndef FEE_TOTAL_PAGES
-#        define FEE_TOTAL_PAGES     1024    // How many pages are available
+#            define FEE_TOTAL_PAGES 1024 // How many pages are available
 #        endif
 #        ifndef FEE_DENSITY_PAGES
-#        define FEE_DENSITY_PAGES   23     // How many pages are used as EEPROM
+#            define FEE_DENSITY_PAGES 23 // How many pages are used as EEPROM
 #        endif
 #    elif defined(SN32F260)
 #        ifndef FEE_PAGE_SIZE
-#        define FEE_PAGE_SIZE       0x0040     // Page size = 64bytes
+#            define FEE_PAGE_SIZE 0x0040 // Page size = 64bytes
 #        endif
 #        ifndef FEE_TOTAL_PAGES
-#        define FEE_TOTAL_PAGES     480     // How many pages are available
+#            define FEE_TOTAL_PAGES 480 // How many pages are available
 #        endif
 #        ifndef FEE_DENSITY_PAGES
-#        define FEE_DENSITY_PAGES   23     // How many pages are used as EEPROM
+#            define FEE_DENSITY_PAGES 23 // How many pages are used as EEPROM
 #        endif
 #    endif
 #endif
 
 #if !defined(FEE_MCU_FLASH_SIZE)
 #    if defined(SN32F240B)
-#        define FEE_MCU_FLASH_SIZE 64  // Size in Kb
+#        define FEE_MCU_FLASH_SIZE 64 // Size in Kb
 #    elif defined(SN32F260)
-#        define FEE_MCU_FLASH_SIZE 30  // Size in Kb
+#        define FEE_MCU_FLASH_SIZE 30 // Size in Kb
 #    endif
 #endif
 
@@ -57,7 +57,6 @@
 #        endif
 #    endif
 #endif
-
 
 /* Size of emulated eeprom */
 #if defined(FEE_DENSITY_BYTES)

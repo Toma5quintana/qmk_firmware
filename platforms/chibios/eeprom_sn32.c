@@ -35,7 +35,7 @@
 #endif
 
 #if !defined(FEE_DENSITY_BYTES)
-#   define FEE_DENSITY_BYTES (FEE_PAGE_SIZE * FEE_DENSITY_PAGES - 1)
+#    define FEE_DENSITY_BYTES (FEE_PAGE_SIZE * FEE_DENSITY_PAGES - 1)
 #endif
 #define FEE_LAST_PAGE_ADDRESS (FEE_PAGE_BASE_ADDRESS + (FEE_PAGE_SIZE * FEE_DENSITY_PAGES))
 #define FEE_ADDR_OFFSET(Address) (Address)
@@ -62,7 +62,6 @@
 #    define eeprom_printf(fmt, ...)
 
 #endif /* NO_DEBUG */
-
 
 /*****************************************************************************
  *  Delete Flash Space used for user Data, deletes the whole space between
@@ -110,11 +109,11 @@ uint8_t EEPROM_WriteDataByte(uint16_t Address, uint8_t DataByte) {
         eeprom_printf("EEPROM_WriteDataByte(0x%04x, 0x%02x) [SKIP SAME]\n", Address, DataByte);
         return FLASH_OKAY;
     }
- 
+
     // update the data byte aligned in a 32-bit dword
-    uint32_t value = *((uint32_t*)(addr & 0xFFFFFFFC));
-    uint8_t* v8 = (uint8_t*)&value;
-    v8[addr & 3] = DataByte;
+    uint32_t value = *((uint32_t *)(addr & 0xFFFFFFFC));
+    uint8_t *v8    = (uint8_t *)&value;
+    v8[addr & 3]   = DataByte;
 
     // program the 32-bit dword
     eeprom_printf("FLASH_ProgramDWord(0x%08x, 0x%04x) [DIRECT]\n", Address, value);
@@ -135,27 +134,31 @@ uint8_t EEPROM_ReadDataByte(uint16_t Address) {
     }
 
     eeprom_printf("EEPROM_ReadDataByte(0x%04x): 0x%02x\n", Address, DataByte);
-    
+
     return DataByte;
 }
 
 /*****************************************************************************
  *  Bind to eeprom_driver.c
  *******************************************************************************/
-void eeprom_driver_init(void) { EEPROM_Init(); }
+void eeprom_driver_init(void) {
+    EEPROM_Init();
+}
 
-void eeprom_driver_erase(void) { EEPROM_Erase(); }
+void eeprom_driver_erase(void) {
+    EEPROM_Erase();
+}
 
 void eeprom_read_block(void *buf, const void *addr, size_t len) {
     const uint8_t *p    = (const uint8_t *)addr;
-    uint8_t *      dest = (uint8_t *)buf;
+    uint8_t       *dest = (uint8_t *)buf;
     while (len--) {
         *dest++ = EEPROM_ReadDataByte((uint16_t)(uint32_t)(p++));
     }
 }
 
 void eeprom_write_block(const void *buf, void *addr, size_t len) {
-    uint8_t *      p   = (uint8_t *)addr;
+    uint8_t       *p   = (uint8_t *)addr;
     const uint8_t *src = (const uint8_t *)buf;
     while (len--) {
         EEPROM_WriteDataByte((uint16_t)(uint32_t)p++, *src++);
