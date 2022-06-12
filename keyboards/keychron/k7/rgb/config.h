@@ -48,7 +48,8 @@
 #define LED_MATRIX_ROW_CHANNELS 3
 #define LED_MATRIX_ROWS_HW (LED_MATRIX_ROWS * LED_MATRIX_ROW_CHANNELS)
 //note how ROW pins are assined in the following sequence top down row1 RBG, row2 RBG and so on
-#define LED_MATRIX_ROW_PINS { A0, A0, A0, A0, A0,A0, A0, A0, A0, A0,A0, A0, A0, A0, A0 }
+
+#define LED_MATRIX_ROW_PINS { A7, C15, A6, C5, C3, C4, C8, C6, C7, C11, C9, C10, D5, D7, D6 }
 
 #define LED_MATRIX_COLS MATRIX_COLS
 #define LED_MATRIX_COL_PINS MATRIX_COL_PINS
