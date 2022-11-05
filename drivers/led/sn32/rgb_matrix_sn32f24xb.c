@@ -26,6 +26,11 @@
 #if !defined(PWM_OUTPUT_ACTIVE_LEVEL)
 #    define PWM_OUTPUT_ACTIVE_LEVEL PWM_OUTPUT_ACTIVE_LOW
 #endif
+
+#if !defined(SN32_PWM_CONTROL)
+#    define SN32_PWM_CONTROL HARDWARE
+#endif
+
 /*
     COLS key / led
     SS8050 transistors NPN driven low
@@ -75,6 +80,9 @@ static RGB            led_state_buf[RGB_MATRIX_LED_COUNT]; // led state buffer
 #ifdef UNDERGLOW_RBG                                       // handle underglow with flipped B,G channels
 static const uint8_t underglow_leds[UNDERGLOW_LEDS] = UNDERGLOW_IDX;
 #endif
+#if (SN32_PWM_CONTROL == SOFTWARE)
+__attribute__((weak)) void pwmSoftwareControl(pwmp);
+#endif
 
 void matrix_output_unselect_delay(uint8_t line, bool key_pressed) {
     for (int i = 0; i < TIME_US2I(MATRIX_IO_DELAY); ++i) {
@@ -100,8 +108,10 @@ static PWMConfig pwmcfg = {
 static void rgb_ch_ctrl(PWMConfig *cfg) {
     /* Enable PWM function, IOs and select the PWM modes for the LED column pins */
     for (uint8_t i = 0; i < LED_MATRIX_COLS; i++) {
+#if (SN32_PWM_CONTROL == HARDWARE)
         // Only P0.0 to P2.15 can be used as pwm output
         if (led_col_pins[i] > C15) continue;
+#endif
         /* We use a tricky here, accordint to pfpa table of sn32f240b datasheet,
            pwm channel and pfpa of pin Px.y can be calculated as below:
              channel = (x*16+y)%24
@@ -121,7 +131,7 @@ static void shared_matrix_rgb_enable(void) {
     pwmEnablePeriodicNotification(&PWMD1);
 }
 
-static void shared_matrix_rgb_disable_pwm(void) {
+__attribute__((weak)) void shared_matrix_rgb_disable_pwm(void) {
     // Disable PWM outputs on column pins
     for (uint8_t y = 0; y < LED_MATRIX_COLS; y++) {
         pwmDisableChannel(&PWMD1, chan_col_order[y]);
@@ -137,7 +147,7 @@ static void shared_matrix_rgb_disable_leds(void) {
     }
 }
 
-static void update_pwm_channels(PWMDriver *pwmp) {
+__attribute__((weak)) void update_pwm_channels(PWMDriver *pwmp) {
     bool         enable_pwm_output = false;
     matrix_row_t row_shifter       = MATRIX_ROW_SHIFTER;
     for (uint8_t col_idx = 0; col_idx < LED_MATRIX_COLS; col_idx++, row_shifter <<= 1) {
@@ -182,6 +192,9 @@ static void update_pwm_channels(PWMDriver *pwmp) {
 static void rgb_callback(PWMDriver *pwmp) {
     // Disable the interrupt
     pwmDisablePeriodicNotification(pwmp);
+#if (SN32_PWM_CONTROL == SOFTWARE)
+    pwmSoftwareControl(pwmp);
+#endif
     // Advance to the next LED RGB channels
     current_row++;
     if (current_row >= LED_MATRIX_ROWS_HW) current_row = 0;
