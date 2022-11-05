@@ -25,20 +25,20 @@ void update_pwm_channels(PWMDriver *pwmp) {
             case 0:
                 led_col_duty_cycle[col_idx] = led_state[led_index].b;
                 ATOMIC_BLOCK_FORCEON {
-                	setPinOutput(led_col_pins[led_col]);
+                    setPinOutput(led_col_pins[led_col]);
                 }
                 break;
             case 1:
                 led_col_duty_cycle[col_idx] = led_state[led_index].g;
                 ATOMIC_BLOCK_FORCEON {
-					setPinOutput(led_col_pins[led_col]);
-				}
+                    setPinOutput(led_col_pins[led_col]);
+                }
                 break;
             case 2:
                 led_col_duty_cycle[col_idx] = led_state[led_index].r;
                 ATOMIC_BLOCK_FORCEON {
-					setPinOutput(led_col_pins[led_col]);
-				}
+                    setPinOutput(led_col_pins[led_col]);
+                }
                 break;
             default:;
         }
@@ -57,26 +57,26 @@ void update_pwm_channels(PWMDriver *pwmp) {
 }
 void shared_matrix_rgb_disable_pwm(void) {
     // Disable PWM outputs on column pins
-    for (uint8_t y = 0; y < LED_MATRIX_COLS; y++) {
-    	uint8_t led_col = chan_col_order[y];
-    	ATOMIC_BLOCK_FORCEON {
-        	setPinInput(led_col_pins[led_col]);
+    for (uint8_t col_idx = 0; col_idx < LED_MATRIX_COLS; col_idx++) {
+        uint8_t led_col = chan_col_order[col_idx];
+        ATOMIC_BLOCK_FORCEON {
+            setPinInput(led_col_pins[led_col]);
         }
     }
 }
 void pwmSoftwareControl(pwmp) {
-    for(uint8_t y = 0; y < LED_MATRIX_COLS; y++) {
-    	uint8_t led_col = chan_col_order[col_idx];
-    	if((pwmp->period <= (led_col_duty_cycle[led_col])) && (led_col_duty_cycle[led_col] > 0)){
-    		//on
-    		ATOMIC_BLOCK_FORCEON {
-    			writePinLow(led_col_pins[led_col]);
-    		}
-    	}else{
-    		//off
-    		ATOMIC_BLOCK_FORCEON {
-    			writePinHigh(led_col_pins[led_col]);
-    		}
-    	}
+    for(uint8_t col_idx = 0; col_idx < LED_MATRIX_COLS; col_idx++) {
+        uint8_t led_col = chan_col_order[col_idx];
+        if((pwmp->period <= (led_col_duty_cycle[led_col])) && (led_col_duty_cycle[led_col] > 0)){
+            //on
+            ATOMIC_BLOCK_FORCEON {
+                writePinLow(led_col_pins[led_col]);
+            }
+        }else{
+            //off
+            ATOMIC_BLOCK_FORCEON {
+                writePinHigh(led_col_pins[led_col]);
+            }
+        }
     }
 }
