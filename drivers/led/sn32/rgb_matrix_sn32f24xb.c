@@ -120,7 +120,9 @@ static void rgb_ch_ctrl(PWMConfig *cfg) {
         uint8_t pio_value             = ((uint32_t)(PAL_PORT(led_col_pins[i])) - (uint32_t)(PAL_PORT(A0))) / ((uint32_t)(PAL_PORT(B0)) - (uint32_t)(PAL_PORT(A0))) * 16 + PAL_PAD(led_col_pins[i]);
         uint8_t ch_idx                = pio_value % 24;
         chan_col_order[i]             = ch_idx;
+#if (SN32_PWM_CONTROL == HARDWARE)
         cfg->channels[ch_idx].pfpamsk = pio_value > 23;
+#endif
         cfg->channels[ch_idx].mode    = PWM_OUTPUT_ACTIVE_LEVEL;
     }
 }
