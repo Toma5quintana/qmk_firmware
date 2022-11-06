@@ -117,9 +117,9 @@ static void rgb_ch_ctrl(PWMConfig *cfg) {
              channel = (x*16+y)%24
              pfpa = 1, when (x*16+y)>23
         */
-        uint8_t pio_value             = ((uint32_t)(PAL_PORT(led_col_pins[i])) - (uint32_t)(PAL_PORT(A0))) / ((uint32_t)(PAL_PORT(B0)) - (uint32_t)(PAL_PORT(A0))) * 16 + PAL_PAD(led_col_pins[i]);
-        uint8_t ch_idx                = pio_value % 24;
-        chan_col_order[i]             = ch_idx;
+        uint8_t pio_value = ((uint32_t)(PAL_PORT(led_col_pins[i])) - (uint32_t)(PAL_PORT(A0))) / ((uint32_t)(PAL_PORT(B0)) - (uint32_t)(PAL_PORT(A0))) * 16 + PAL_PAD(led_col_pins[i]);
+        uint8_t ch_idx    = pio_value % 24;
+        chan_col_order[i] = ch_idx;
 #if (SN32_PWM_CONTROL == HARDWARE)
         cfg->channels[ch_idx].pfpamsk = pio_value > 23;
         cfg->channels[ch_idx].mode    = PWM_OUTPUT_ACTIVE_LEVEL;
@@ -139,9 +139,9 @@ static void shared_matrix_rgb_disable_pwm(void) {
 #if (SN32_PWM_CONTROL == HARDWARE)
         pwmDisableChannel(&PWMD1, chan_col_order[y]);
 #elif (SN32_PWM_CONTROL == SOFTWARE)
-    uint8_t led_col = chan_col_order[col_idx];
-    ATOMIC_BLOCK_FORCEON {
-        setPinInput(led_col_pins[led_col]);
+        uint8_t led_col = chan_col_order[col_idx];
+        ATOMIC_BLOCK_FORCEON {
+            setPinInput(led_col_pins[led_col]);
 #endif
     }
 }
@@ -153,7 +153,7 @@ static void shared_matrix_rgb_disable_leds(void) {
 #if (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_LOW)
             writePinLow(led_row_pins[x]);
 #elif (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_HIGH)
-            writePinLow(led_row_pins[x]);
+                writePinLow(led_row_pins[x]);
 #endif
         }
     }
@@ -175,7 +175,7 @@ static void update_pwm_channels(PWMDriver *pwmp) {
         if (led_state[led_index].b != 0) enable_pwm_output |= true;
         if (led_state[led_index].g != 0) enable_pwm_output |= true;
         if (led_state[led_index].r != 0) enable_pwm_output |= true;
-        // Update matching RGB channel PWM configuration
+            // Update matching RGB channel PWM configuration
 #if (SN32_PWM_CONTROL == HARDWARE)
         switch (current_row % LED_MATRIX_ROW_CHANNELS) {
             case 0:
@@ -190,28 +190,28 @@ static void update_pwm_channels(PWMDriver *pwmp) {
             default:;
         }
 #elif (SN32_PWM_CONTROL == SOFTWARE)
-        uint8_t led_col = chan_col_order[col_idx];
-        switch (current_row % LED_MATRIX_ROW_CHANNELS) {
-            case 0:
-                led_col_duty_cycle[col_idx] = led_state[led_index].b;
-                ATOMIC_BLOCK_FORCEON {
-                    setPinOutput(led_col_pins[led_col]);
-                }
-                break;
-            case 1:
-                led_col_duty_cycle[col_idx] = led_state[led_index].g;
-                ATOMIC_BLOCK_FORCEON {
-                    setPinOutput(led_col_pins[led_col]);
-                }
-                break;
-            case 2:
-                led_col_duty_cycle[col_idx] = led_state[led_index].r;
-                ATOMIC_BLOCK_FORCEON {
-                    setPinOutput(led_col_pins[led_col]);
-                }
-                break;
-            default:;
-        }
+            uint8_t led_col = chan_col_order[col_idx];
+            switch (current_row % LED_MATRIX_ROW_CHANNELS) {
+                case 0:
+                    led_col_duty_cycle[col_idx] = led_state[led_index].b;
+                    ATOMIC_BLOCK_FORCEON {
+                        setPinOutput(led_col_pins[led_col]);
+                    }
+                    break;
+                case 1:
+                    led_col_duty_cycle[col_idx] = led_state[led_index].g;
+                    ATOMIC_BLOCK_FORCEON {
+                        setPinOutput(led_col_pins[led_col]);
+                    }
+                    break;
+                case 2:
+                    led_col_duty_cycle[col_idx] = led_state[led_index].r;
+                    ATOMIC_BLOCK_FORCEON {
+                        setPinOutput(led_col_pins[led_col]);
+                    }
+                    break;
+                default:;
+            }
 #endif
     }
     // Enable RGB output
@@ -220,7 +220,7 @@ static void update_pwm_channels(PWMDriver *pwmp) {
 #if (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_LOW)
             writePinHigh(led_row_pins[current_row]);
 #elif (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_HIGH)
-            writePinLow(led_row_pins[current_row]);
+                writePinLow(led_row_pins[current_row]);
 #endif
         }
     }
@@ -234,16 +234,16 @@ static void rgb_callback(PWMDriver *pwmp) {
     // Disable the interrupt
     pwmDisablePeriodicNotification(pwmp);
 #if (SN32_PWM_CONTROL == SOFTWARE)
-    for(uint8_t col_idx = 0; col_idx < LED_MATRIX_COLS; col_idx++) {
+    for (uint8_t col_idx = 0; col_idx < LED_MATRIX_COLS; col_idx++) {
         uint8_t led_col = chan_col_order[col_idx];
-        if((pwmp->period <= (led_col_duty_cycle[led_col])) && (led_col_duty_cycle[led_col] > 0)){
-            //on
+        if ((pwmp->period <= (led_col_duty_cycle[led_col])) && (led_col_duty_cycle[led_col] > 0)) {
+            // on
             ATOMIC_BLOCK_FORCEON {
-#if (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_LOW)
+#    if (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_LOW)
                 writePinLow(led_col_pins[led_col]);
-#elif (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_HIGH)
+#    elif (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_HIGH)
                 writePinHigh(led_col_pins[led_col]);
-#endif
+#    endif
             }
         }
     }
@@ -294,7 +294,7 @@ void SN32F24xB_init(void) {
 #if (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_LOW)
             writePinLow(led_row_pins[x]);
 #elif (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_HIGH)
-            writePinHigh(led_row_pins[x]);
+                writePinHigh(led_row_pins[x]);
 #endif
         }
     }
