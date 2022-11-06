@@ -122,8 +122,8 @@ static void rgb_ch_ctrl(PWMConfig *cfg) {
         chan_col_order[i]             = ch_idx;
 #if (SN32_PWM_CONTROL == HARDWARE)
         cfg->channels[ch_idx].pfpamsk = pio_value > 23;
-#endif
         cfg->channels[ch_idx].mode    = PWM_OUTPUT_ACTIVE_LEVEL;
+#endif
     }
 }
 static void rgb_callback(PWMDriver *pwmp);
@@ -150,7 +150,11 @@ static void shared_matrix_rgb_disable_leds(void) {
     // Disable LED outputs on RGB channel pins
     for (uint8_t x = 0; x < LED_MATRIX_ROWS_HW; x++) {
         ATOMIC_BLOCK_FORCEON {
+#if (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_LOW)
             writePinLow(led_row_pins[x]);
+#elif (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_HIGH)
+            writePinLow(led_row_pins[x]);
+#endif
         }
     }
 }
@@ -213,7 +217,11 @@ static void update_pwm_channels(PWMDriver *pwmp) {
     // Enable RGB output
     if (enable_pwm_output) {
         ATOMIC_BLOCK_FORCEON {
+#if (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_LOW)
             writePinHigh(led_row_pins[current_row]);
+#elif (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_HIGH)
+            writePinLow(led_row_pins[current_row]);
+#endif
         }
     }
 #if (DIODE_DIRECTION == ROW2COL)
@@ -231,12 +239,11 @@ static void rgb_callback(PWMDriver *pwmp) {
         if((pwmp->period <= (led_col_duty_cycle[led_col])) && (led_col_duty_cycle[led_col] > 0)){
             //on
             ATOMIC_BLOCK_FORCEON {
+#if (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_LOW)
                 writePinLow(led_col_pins[led_col]);
-            }
-        }else{
-            //off
-            ATOMIC_BLOCK_FORCEON {
+#elif (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_HIGH)
                 writePinHigh(led_col_pins[led_col]);
+#endif
             }
         }
     }
@@ -284,7 +291,11 @@ void SN32F24xB_init(void) {
     for (uint8_t x = 0; x < LED_MATRIX_ROWS_HW; x++) {
         ATOMIC_BLOCK_FORCEON {
             setPinOutput(led_row_pins[x]);
+#if (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_LOW)
             writePinLow(led_row_pins[x]);
+#elif (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_HIGH)
+            writePinHigh(led_row_pins[x]);
+#endif
         }
     }
     // Determine which PWM channels we need to control
