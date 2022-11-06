@@ -153,7 +153,7 @@ static void shared_matrix_rgb_disable_leds(void) {
 #if (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_LOW)
             writePinLow(led_row_pins[x]);
 #elif (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_HIGH)
-            writePinHigh(led_row_pins[x]);
+                writePinHigh(led_row_pins[x]);
 #endif
         }
     }
@@ -220,7 +220,7 @@ static void update_pwm_channels(PWMDriver *pwmp) {
 #if (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_LOW)
             writePinHigh(led_row_pins[current_row]);
 #elif (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_HIGH)
-            writePinLow(led_row_pins[current_row]);
+                writePinLow(led_row_pins[current_row]);
 #endif
         }
     }
@@ -294,7 +294,7 @@ void SN32F24xB_init(void) {
 #if (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_LOW)
             writePinLow(led_row_pins[x]);
 #elif (PWM_OUTPUT_ACTIVE_LEVEL == PWM_OUTPUT_ACTIVE_HIGH)
-            writePinHigh(led_row_pins[x]);
+                writePinHigh(led_row_pins[x]);
 #endif
         }
     }
