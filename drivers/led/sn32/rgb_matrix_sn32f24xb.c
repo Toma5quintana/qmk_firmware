@@ -81,7 +81,7 @@ static RGB            led_state_buf[RGB_MATRIX_LED_COUNT]; // led state buffer
 static const uint8_t underglow_leds[UNDERGLOW_LEDS] = UNDERGLOW_IDX;
 #endif
 #if (SN32_PWM_CONTROL == SOFTWARE)
-__attribute__((weak)) void pwmSoftwareControl(pwmp);
+static uint8_t led_col_duty_cycle[LED_MATRIX_COLS] = {0}; // track the channel col duty cycle
 #endif
 
 void matrix_output_unselect_delay(uint8_t line, bool key_pressed) {
@@ -133,10 +133,16 @@ static void shared_matrix_rgb_enable(void) {
     pwmEnablePeriodicNotification(&PWMD1);
 }
 
-__attribute__((weak)) void shared_matrix_rgb_disable_pwm(void) {
+static void shared_matrix_rgb_disable_pwm(void) {
     // Disable PWM outputs on column pins
     for (uint8_t y = 0; y < LED_MATRIX_COLS; y++) {
+#if (SN32_PWM_CONTROL == HARDWARE)
         pwmDisableChannel(&PWMD1, chan_col_order[y]);
+#elif (SN32_PWM_CONTROL == SOFTWARE)
+    uint8_t led_col = chan_col_order[col_idx];
+    ATOMIC_BLOCK_FORCEON {
+        setPinInput(led_col_pins[led_col]);
+#endif
     }
 }
 
@@ -149,7 +155,7 @@ static void shared_matrix_rgb_disable_leds(void) {
     }
 }
 
-__attribute__((weak)) void update_pwm_channels(PWMDriver *pwmp) {
+static void update_pwm_channels(PWMDriver *pwmp) {
     bool         enable_pwm_output = false;
     matrix_row_t row_shifter       = MATRIX_ROW_SHIFTER;
     for (uint8_t col_idx = 0; col_idx < LED_MATRIX_COLS; col_idx++, row_shifter <<= 1) {
@@ -166,6 +172,7 @@ __attribute__((weak)) void update_pwm_channels(PWMDriver *pwmp) {
         if (led_state[led_index].g != 0) enable_pwm_output |= true;
         if (led_state[led_index].r != 0) enable_pwm_output |= true;
         // Update matching RGB channel PWM configuration
+#if (SN32_PWM_CONTROL == HARDWARE)
         switch (current_row % LED_MATRIX_ROW_CHANNELS) {
             case 0:
                 pwmEnableChannel(pwmp, chan_col_order[col_idx], led_state[led_index].b);
@@ -178,6 +185,30 @@ __attribute__((weak)) void update_pwm_channels(PWMDriver *pwmp) {
                 break;
             default:;
         }
+#elif (SN32_PWM_CONTROL == SOFTWARE)
+        uint8_t led_col = chan_col_order[col_idx];
+        switch (current_row % LED_MATRIX_ROW_CHANNELS) {
+            case 0:
+                led_col_duty_cycle[col_idx] = led_state[led_index].b;
+                ATOMIC_BLOCK_FORCEON {
+                    setPinOutput(led_col_pins[led_col]);
+                }
+                break;
+            case 1:
+                led_col_duty_cycle[col_idx] = led_state[led_index].g;
+                ATOMIC_BLOCK_FORCEON {
+                    setPinOutput(led_col_pins[led_col]);
+                }
+                break;
+            case 2:
+                led_col_duty_cycle[col_idx] = led_state[led_index].r;
+                ATOMIC_BLOCK_FORCEON {
+                    setPinOutput(led_col_pins[led_col]);
+                }
+                break;
+            default:;
+        }
+#endif
     }
     // Enable RGB output
     if (enable_pwm_output) {
@@ -195,7 +226,20 @@ static void rgb_callback(PWMDriver *pwmp) {
     // Disable the interrupt
     pwmDisablePeriodicNotification(pwmp);
 #if (SN32_PWM_CONTROL == SOFTWARE)
-    pwmSoftwareControl(pwmp);
+    for(uint8_t col_idx = 0; col_idx < LED_MATRIX_COLS; col_idx++) {
+        uint8_t led_col = chan_col_order[col_idx];
+        if((pwmp->period <= (led_col_duty_cycle[led_col])) && (led_col_duty_cycle[led_col] > 0)){
+            //on
+            ATOMIC_BLOCK_FORCEON {
+                writePinLow(led_col_pins[led_col]);
+            }
+        }else{
+            //off
+            ATOMIC_BLOCK_FORCEON {
+                writePinHigh(led_col_pins[led_col]);
+            }
+        }
+    }
 #endif
     // Advance to the next LED RGB channels
     current_row++;
