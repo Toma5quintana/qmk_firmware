@@ -1,3 +1,5 @@
+#ifdef RGB_MATRIX_ENABLE
+
 #include "rgb_matrix.h"
 
 
@@ -37,3 +39,5 @@ int rand(void) {
     seed                 = seed * 1664525U + 1013904223U;
     return seed;
 }
+
+#endif /* RGB_MATRIX_ENABLE */
