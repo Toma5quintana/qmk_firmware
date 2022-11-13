@@ -18,7 +18,7 @@
 #endif
 
 extern void matrix_scan_keys(matrix_row_t raw_matrix[], uint8_t current);
-static uint8_t chan_row_order[LED_MATRIX_ROWS_HW] = {0}; // track the channel col order
+static uint8_t chan_row_order[LED_MATRIX_ROWS_HW] = {0}; // track the channel order
 static uint8_t current_col = 0; // LED col scan counter
 extern matrix_row_t raw_matrix[MATRIX_ROWS]; //raw values
 static const uint32_t periodticks = 256;
@@ -244,20 +244,6 @@ void shared_matrix_rgb_enable(void) {
     pwmEnablePeriodicNotification(&PWMD1);
 }
 
-void shared_matrix_rgb_disable_pwm(void) {
-    // Disable PWM outputs on column pins
-    for(uint8_t y = 0; y < LED_MATRIX_ROWS_HW; y++) {
-        pwmDisableChannel(&PWMD1,chan_row_order[y]);
-    }
-}
-
-void shared_matrix_rgb_disable_leds(void) {
-    // Disable LED outputs on RGB channel pins
-    for(uint8_t y = 0; y < LED_MATRIX_ROWS_HW; y++) {
-        writePinLow(led_row_pins[y]);
-    }
-}
-
 void update_pwm_channels(PWMDriver *pwmp, uint8_t col_idx) {
     for(uint8_t row_idx = 0; row_idx < LED_MATRIX_ROWS; row_idx++) {
         uint8_t led_index = g_led_config.matrix_co[row_idx][col_idx];
@@ -268,7 +254,7 @@ void update_pwm_channels(PWMDriver *pwmp, uint8_t col_idx) {
         if (led_state[led_index].b != 0) enable_pwm |= true;
         if (led_state[led_index].g != 0) enable_pwm |= true;
         if (led_state[led_index].r != 0) enable_pwm |= true;
-        // Update matching RGB channel PWM configuration
+        // Update RGB rows channel PWM configuration
         if(enable_pwm){
             pwmEnableChannelI(pwmp,chan_row_order[row_idx*LED_MATRIX_ROW_CHANNELS],led_state[led_index].b);
             pwmEnableChannelI(pwmp,chan_row_order[row_idx*LED_MATRIX_ROW_CHANNELS+1],led_state[led_index].g);
@@ -286,10 +272,7 @@ void rgb_callback(PWMDriver *pwmp) {
     current_col++;
     if(current_col >= LED_MATRIX_COLS) current_col = 0;
 
-    if(current_col == 0){
-        // Disable LED output before scanning the key matrix
-        shared_matrix_rgb_disable_pwm();
-        shared_matrix_rgb_disable_leds();
+    if(current_col % 6 == 0){ // Scan keys only on 0 and 6th columns
         for (uint8_t x = 0; x < MATRIX_COLS; x++) {
             writePinHigh(led_col_pins[x]);
         }
