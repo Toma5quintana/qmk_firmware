@@ -256,9 +256,9 @@ void update_pwm_channels(PWMDriver *pwmp, uint8_t col_idx) {
         if (led_state[led_index].r != 0) enable_pwm |= true;
         // Update RGB rows channel PWM configuration
         if(enable_pwm){
-            pwmEnableChannelI(pwmp,chan_row_order[row_idx*LED_MATRIX_ROW_CHANNELS],led_state[led_index].b);
-            pwmEnableChannelI(pwmp,chan_row_order[row_idx*LED_MATRIX_ROW_CHANNELS+1],led_state[led_index].g);
-            pwmEnableChannelI(pwmp,chan_row_order[row_idx*LED_MATRIX_ROW_CHANNELS+2],led_state[led_index].r);
+            pwmEnableChannelI(pwmp,chan_row_order[row_idx*LED_MATRIX_ROW_CHANNELS],led_state[led_index].r);
+            pwmEnableChannelI(pwmp,chan_row_order[row_idx*LED_MATRIX_ROW_CHANNELS+1],led_state[led_index].b);
+            pwmEnableChannelI(pwmp,chan_row_order[row_idx*LED_MATRIX_ROW_CHANNELS+2],led_state[led_index].g);
         }
     }
 }
