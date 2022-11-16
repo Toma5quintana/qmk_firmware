@@ -6,6 +6,9 @@ Keyboard Maintainer: [Alexey Zagorodnikov](https://github.com/iglooom/)
 Based on Redragon K556 by: [Adam Honse](https://github.com/CalcProgrammer1)
 Hardware Supported: SN32F248BF
 
+For some reason, I can't use the default RGB matrix driver for this keyboard. Tried different options without luck, LEDs always had some glow and incorrect colors, even when should be completely off.
+I used the custom driver with PWM on rows instead columns, but for smooth RGB, reading keys performed only twice inside RGB cycle. Good enough for me.
+
 Make example for this keyboard (after setting up your build environment):
 
     make flesports/fl980:default
