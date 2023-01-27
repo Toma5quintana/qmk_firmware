@@ -118,7 +118,7 @@
     },
 
     "layouts": {
-        "LAYOUT_default": {
+        "LAYOUT": {
             "layout": [
                 { "matrix":[0, 0],  "label":"~",   "x":0,    "y":0 },
                 { "matrix":[0, 1],  "label":"!",   "x":1,    "y":0 },
