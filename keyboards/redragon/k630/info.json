@@ -43,11 +43,10 @@
     
     "rgb_matrix": {
         "driver": "SN32F24xB",
-        "hue_steps": 7,
-        "sat_steps": 7,
-        "val_steps": 7,
-        "speed_steps": 7,
-        "max_brightness": 191,
+        "hue_steps": 8,
+        "sat_steps": 8,
+        "val_steps": 8,
+        "speed_steps": 8,
         "layout": [
             { "matrix":[0, 0],  "flags":4,  "x":0,   "y":0 },
             { "matrix":[0, 1],  "flags":4,  "x":1,   "y":0 },
