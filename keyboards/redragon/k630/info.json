@@ -16,7 +16,7 @@
     "features": {
         "audio": false,
         "backlight": false,
-        "bootmagic": false,
+        "bootmagic": true,
         "command": false,
         "console": false,
         "extrakey": true,
