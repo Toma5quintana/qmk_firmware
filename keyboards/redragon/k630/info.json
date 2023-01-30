@@ -32,10 +32,6 @@
         "rows": [ "D11", "D10", "D9",  "D8", "D7" ]
     },
     
-    "tapping": {
-        "term": 150
-    },
-
     "indicators": {
         "caps_lock": "B14",
         "on_state": 0
@@ -43,10 +39,6 @@
     
     "rgb_matrix": {
         "driver": "SN32F24xB",
-        "hue_steps": 8,
-        "sat_steps": 8,
-        "val_steps": 8,
-        "speed_steps": 8,
         "layout": [
             { "matrix":[0, 0],  "flags":4,  "x":0,   "y":0 },
             { "matrix":[0, 1],  "flags":4,  "x":1,   "y":0 },

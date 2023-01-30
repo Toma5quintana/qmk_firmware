@@ -18,4 +18,3 @@
 
 /* Enable VIA RGB matrix and configure EEPROM emulation for VIA */
 #define VIA_QMK_RGBLIGHT_ENABLE
-#define WEAR_LEVELING_SN32_EMULATION_PAGE_COUNT 30
