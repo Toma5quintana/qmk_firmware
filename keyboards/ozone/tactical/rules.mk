@@ -1,6 +1,3 @@
-WAIT_FOR_USB = yes
-KEYBOARD_SHARED_EP = yes
-
 # Custom RGB matrix handling
 RGB_MATRIX_DRIVER = SN32F24xB
 
