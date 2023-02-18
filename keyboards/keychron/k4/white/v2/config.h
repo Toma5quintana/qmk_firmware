@@ -98,5 +98,6 @@
 #define DEBOUNCE                    5
 
 /* LED Status indicators */
+#define LED_NUM_LOCK_PIN            D8
 #define LED_CAPS_LOCK_PIN           D3
 #define LED_PIN_ON_STATE            1
