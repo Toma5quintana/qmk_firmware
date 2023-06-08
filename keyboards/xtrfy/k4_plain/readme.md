@@ -10,4 +10,3 @@ TODO:
 - add ANSI support
 - add RGB support
 - fix CapsLock LED
-- clean RGB elements from plain

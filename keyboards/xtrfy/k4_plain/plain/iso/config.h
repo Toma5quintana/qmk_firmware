@@ -17,9 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// RGB Matrix Config
-#define DRIVER_LED_TOTAL 89
-
 /* USB Device descriptor parameter */
 #define PRODUCT_ID      0x8006
 #define DEVICE_VER		0x0001

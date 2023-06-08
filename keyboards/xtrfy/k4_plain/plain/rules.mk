@@ -14,15 +14,6 @@ BACKLIGHT_ENABLE = no       # Enable keyboard backlight functionality
 AUDIO_ENABLE = no           # Audio output
 
 WAIT_FOR_USB = no
-CUSTOM_MATRIX = yes
-DIP_SWITCH_ENABLE = yes
-
-# Custom RGB matrix handling
-RGB_MATRIX_ENABLE = yes
-RGB_MATRIX_DRIVER = SN32F24xB
-
-# project specific files
-SRC = ../../../drivers/led/sn32/matrix_sn32f24xx.c
 
 # Build ISO by default
 DEFAULT_FOLDER = xtrfy/k4/plain/iso

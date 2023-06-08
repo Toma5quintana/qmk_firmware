@@ -34,11 +34,6 @@ enum layer_names {
 #define KC_FLXP LGUI(KC_E)          // Windows file explorer
 #define KC_CRTN LGUI(KC_C)          // Cortana | Microsoft Teams
 
-#define KC_MSSN LGUI(KC_F3)         // Mission Control
-#define KC_FIND LALT(LGUI(KC_SPC))  // Finder
-#define KC_SIRI LGUI(KC_SPC)        // Siri
-#define KC_MSNP LSFT(LGUI(KC_4))    // Mac snip tool
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Windows layout
     +--------------------------------------------------------------------------+----------------+
@@ -65,12 +60,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [WIN_FN] =  LAYOUT_tkl_iso(
-        RESET,            _______, KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP, KC_KB_MUTE, KC_MSTP, KC_MPRV, KC_MPLY, KC_MNXT, KC_MAIL,  KC_WWW_HOME, DF(LOCKED), KC_CALC,      _______,          _______,          _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,                                  RGB_MODE_PLAIN,   RGB_MODE_BREATHE, RGB_MODE_RAINBOW,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,                                           RGB_MODE_SWIRL,   RGB_MODE_SNAKE,   RGB_MODE_KNIGHT,
+        RESET,            _______, KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP, KC_KB_MUTE, KC_MSTP, KC_MPRV, KC_MPLY, KC_MNXT, KC_MAIL,  KC_WWW_HOME, DF(LOCKED), KC_CALC,      _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,                                  _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,                                           _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______ , _______,                                                            RGB_VAI,
-        _______, GUI_TOG, _______,                   _______,                                     _______,  _______, _______, _______,                                  RGB_MODE_REVERSE, RGB_VAD,          RGB_MODE_FORWARD
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______ , _______,                                                  _______,
+        _______, GUI_TOG, _______,                   _______,                                     _______,  _______, _______, _______,                                  _______, _______, _______
     ),
 
     [LOCKED] =  LAYOUT_tkl_iso(
