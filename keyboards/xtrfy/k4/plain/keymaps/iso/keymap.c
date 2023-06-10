@@ -25,14 +25,14 @@
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
 enum layer_names {
-    WIN_BASE    = 0,
-    WIN_FN      = 1,
-    LOCKED      = 2,
+  WIN_BASE = 0,
+  WIN_FN   = 1,
+  LOCKED   = 2,
 };
 
-#define KC_TASK LGUI(KC_TAB)        // Task viewer
-#define KC_FLXP LGUI(KC_E)          // Windows file explorer
-#define KC_CRTN LGUI(KC_C)          // Cortana | Microsoft Teams
+#define KC_TASK LGUI(KC_TAB)  // Task viewer
+#define KC_FLXP LGUI(KC_E)    // Windows file explorer
+#define KC_CRTN LGUI(KC_C)    // Cortana | Microsoft Teams
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Windows layout
@@ -49,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     +--------------------------------------------------------------------------+------|----|----|
     |LCTRL| LGUI| LALT |            SPACE            | RALT| FN  | RGUI| RCTRL | |LFT |DWN |RGT |
     +--------------------------------------------------------------------------+----------------+
-*/
+    */
     [WIN_BASE] = LAYOUT_tkl_iso(
         KC_ESC,           KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,     KC_F11,    KC_F12,     KC_PSCR, KC_SCRL, KC_PAUS,
         KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS,    KC_EQL,    KC_BSPC,    KC_INS,  KC_HOME, KC_PGUP,
@@ -60,12 +60,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [WIN_FN] =  LAYOUT_tkl_iso(
-        QK_BOOT,            _______, KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP, KC_KB_MUTE, KC_MSTP, KC_MPRV, KC_MPLY, KC_MNXT, KC_MAIL,  KC_WWW_HOME, DF(LOCKED), KC_CALC,      _______, _______, _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,                                  _______, _______, _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,                                           _______, _______, _______,
+        QK_BOOT,          _______, KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP, KC_KB_MUTE, KC_MSTP, KC_MPRV, KC_MPLY, KC_MNXT, KC_MAIL,  KC_WWW_HOME, DF(LOCKED), KC_CALC,     _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,                                 _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,                                          _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______ , _______,                                                  _______,
-        _______, GUI_TOG, _______,                   _______,                                     _______,  _______, _______, _______,                                  _______, _______, _______
+        _______, GUI_TOG, _______,                   _______,                                     _______,  _______, _______, _______,                                 _______, _______, _______
     ),
 
     [LOCKED] =  LAYOUT_tkl_iso(
@@ -73,8 +73,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO, KC_NO,        KC_NO,                          KC_NO, KC_NO, KC_NO,
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO, KC_NO,                                        KC_NO, KC_NO, KC_NO,
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO, KC_NO, KC_NO,
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO , KC_NO,                                                KC_NO,
-        KC_NO, KC_NO, KC_NO,                   KC_NO,                        KC_NO,  MO(WIN_FN), KC_NO, KC_NO,                               KC_NO, KC_NO, KC_NO
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO , KC_NO,                                              KC_NO,
+        KC_NO, KC_NO, KC_NO,                   KC_NO,                        KC_NO,  MO(WIN_FN), KC_NO, KC_NO,                             KC_NO, KC_NO, KC_NO
     )
 };
 
