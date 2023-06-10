@@ -60,7 +60,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [WIN_FN] =  LAYOUT_tkl_iso(
-        RESET,            _______, KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP, KC_KB_MUTE, KC_MSTP, KC_MPRV, KC_MPLY, KC_MNXT, KC_MAIL,  KC_WWW_HOME, DF(LOCKED), KC_CALC,      _______, _______, _______,
+        QK_BOOT,            _______, KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP, KC_KB_MUTE, KC_MSTP, KC_MPRV, KC_MPLY, KC_MNXT, KC_MAIL,  KC_WWW_HOME, DF(LOCKED), KC_CALC,      _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,                                  _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,                                           _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,

@@ -1,4 +1,7 @@
-/* Copyright 2021 Harrison Chan (Xelus)
+/* Copyright 2020 Adam Honse <calcprogrammer1@gmail.com>
+ * Copyright 2020 Dimitris Mantzouranis <d3xter93@gmail.com>
+ * Copyright 2022 Harrison Chan (Xelus)
+ * Copyright 2023 Rasmus Kræmmer Rendsvig <rendsvig@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,3 +18,5 @@
  */
 
 #pragma once
+
+#include "config_common.h"

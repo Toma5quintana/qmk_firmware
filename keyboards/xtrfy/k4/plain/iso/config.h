@@ -1,6 +1,7 @@
 /* Copyright 2020 Adam Honse <calcprogrammer1@gmail.com>
  * Copyright 2020 Dimitris Mantzouranis <d3xter93@gmail.com>
- * Copyright 2021 Harrison Chan (Xelus)
+ * Copyright 2022 Harrison Chan (Xelus)
+ * Copyright 2023 Rasmus Kræmmer Rendsvig <rendsvig@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,5 +16,3 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-#include "k4.h"
