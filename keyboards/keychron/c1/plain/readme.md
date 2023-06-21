@@ -1,11 +1,9 @@
-# Keychron C1 plain
-
-![Keychron C1](https://i.imgur.com/oB9h56v.png)
+# Keychron C1 Plain
 
 A customizable TKL keyboard.
 
-* Keyboard Maintainer(s): [SonixQMK](https://github.com/SonixQMK), [IsaacDynamo](https://github.com/IsaacDynamo), [noldevin](https://github.com/noldevin), [vjdato21](https://github.com/vjdato21)
-* Hardware Supported: Keychron C1 plain (no leds, shares PCB with White Led version)
+* Keyboard Maintainer(s): [SonixQMK](https://github.com/SonixQMK), [edlf](https://github.com/edlf)
+* Hardware Supported: Keychron C1 Plain (SN32F268)
 * Hardware Availability: [Keychron](https://www.keychron.com/products/keychron-c1-wired-mechanical-keyboard)
 
 # Install
@@ -22,11 +20,12 @@ A customizable TKL keyboard.
 
 Without Fn | With Fn
 ---------- | -------
-ESC | Reset keyboard
 F1 | Decrease PC Brightness
 F2 | Increase PC Brightness
 F3 | Task View
 F4 | File Explorer
+F5 | Decrease KB Brightness
+F6 | Increase KB Brightness
 F7 | Previous Track
 F8 | Play/Pause Track
 F9 | Next Track
@@ -34,8 +33,10 @@ F10 | Mute
 F11 | Decrease Volume
 F12 | Increase Volume
 Print Screen | Snip & Sketch
-Cortana | -
-Lock PC | -
+Cortana / Microsoft Teams | None
+Lock your PC | None
+⊞ | GUI Lock Toggle
+Home | NKRO Toggle
 
 </details>
 
@@ -44,11 +45,12 @@ Lock PC | -
 
 Without Fn | With Fn
 ---------- | -------
-ESC | Reset keyboard
 F1 | Decrease PC Brightness
 F2 | Increase PC Brightness
-F3 | None
-F4 | Finder
+F3 | Mission Control
+F4 | None
+F5 | Decrease KB Brightness
+F6 | Increase KB Brightness
 F7 | Previous Track
 F8 | Play/Pause Track
 F9 | Next Track
@@ -56,8 +58,10 @@ F10 | Mute
 F11 | Decrease Volume
 F12 | Increase Volume
 Take a screenshot (whole screen) | Take a screenshot (specific area)
-Siri (hold down) | -
-Lock Mac | -
+Siri (hold down) | None
+Lock your Mac | None
+⌘ | GUI Lock Toggle
+Home | NKRO Toggle
 
 </details>
 
@@ -65,7 +69,7 @@ Lock Mac | -
 
 Make example for this keyboard (after setting up your build environment):
 
-    make keychron/c1/plain
+    make keychron/c1/plain:default
 
 [Video](https://www.youtube.com/watch?v=aUiKHdI5Vk8) explaining installation for a similar keyboard.
 

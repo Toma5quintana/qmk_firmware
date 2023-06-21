@@ -1,32 +1,5 @@
-/* Copyright 2020 Adam Honse <calcprogrammer1@gmail.com>
- * Copyright 2020 Dimitris Mantzouranis <d3xter93@gmail.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-#pragma once
-
-#include "config_common.h"
-
 /* USB Device descriptor parameter */
-#define VENDOR_ID           0x3434
-#define PRODUCT_ID          0xFE20
-#define DEVICE_VER          0x0001
-
-#define MANUFACTURER        Keychron
-#define PRODUCT             Keychron \x43\x31
-#define DESCRIPTION         \x43\x31 RGB Hotswap
+#define DESCRIPTION         \x43\x31 RGB
 
 /* key matrix size */
 #define MATRIX_ROWS         6
@@ -37,23 +10,30 @@
 #define MATRIX_COL_PINS     { A8, A9, A10, A11, A12, A13, A14, A15, B0, B1, B2, B3, B4, B5, B6, B7, B8 }
 #define MATRIX_ROW_PINS     { C15, D11, D10, D9, D8, D7 }
 
+// Backlight configuration
+#define BACKLIGHT_LEVELS 8
+
+#define LED_MATRIX_ROWS MATRIX_ROWS
+#define LED_MATRIX_ROW_CHANNELS 3
+#define LED_MATRIX_ROWS_HW (LED_MATRIX_ROWS * LED_MATRIX_ROW_CHANNELS)
+#define LED_MATRIX_ROW_PINS { C0, C1, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, B13, D3, B15, B14 }
+
+#define LED_MATRIX_COLS MATRIX_COLS
+#define LED_MATRIX_COL_PINS MATRIX_COL_PINS
+
+#define DRIVER_LED_TOTAL (87)
+
 // Connects each switch in the dip switch to the GPIO pin of the MCU
 #define DIP_SWITCH_PINS     { D4 }
 
-/* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
-#define DEBOUNCE            0
+/* Disable RGB while USB is sleeping */
+#define RGB_DISABLE_WHEN_USB_SUSPENDED true
 
 /* LED Status indicators */
 #define LED_CAPS_LOCK_PIN   B10
 #define LED_MAC_PIN         B11 //labeled Mac on KB since no Scroll Lock
 #define LED_WIN_PIN         B12 //labeled Windows on KB since no Numpad
 #define LED_PIN_ON_STATE    1
-
-/* Polling Rate */
-#define USB_POLLING_INTERVAL_MS 1
-
-/* Disable RGB while USB is sleeping */
-#define RGB_DISABLE_WHEN_USB_SUSPENDED true
 
 /* RGB Non-Reactive Effects */
 #define ENABLE_RGB_MATRIX_ALPHAS_MODS
@@ -105,5 +85,3 @@
 #define ENABLE_RGB_MATRIX_MULTISPLASH
 #define ENABLE_RGB_MATRIX_SOLID_SPLASH
 #define ENABLE_RGB_MATRIX_SOLID_MULTISPLASH
-
-#include "config_led.h"

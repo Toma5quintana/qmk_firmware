@@ -1,16 +1,14 @@
 # Keychron C1 RGB
 
-![Keychron C1](https://i.imgur.com/oB9h56v.png)
-
 A customizable TKL keyboard.
 
-* Keyboard Maintainer(s): [SonixQMK](https://github.com/SonixQMK), [IsaacDynamo](https://github.com/IsaacDynamo), [noldevin](https://github.com/noldevin), [vjdato21](https://github.com/vjdato21)
-* Hardware Supported: Keychron C1 RGB
+* Keyboard Maintainer(s): [SonixQMK](https://github.com/SonixQMK), [noldevin](https://github.com/noldevin), [vjdato21](https://github.com/vjdato21)
+* Hardware Supported: Keychron C1 RGB (SN32F248B)
 * Hardware Availability: [Keychron](https://www.keychron.com/products/keychron-c1-wired-mechanical-keyboard)
 
 Make example for this keyboard (after setting up your build environment):
 
-    make keychron/c1/rgb:default | make keychron/c1/rgb:via
+    make keychron/c1/rgb:default
 
 ## How to Flash
 Flashing example for this keyboard:
@@ -40,8 +38,8 @@ F11 | Decrease Volume
 F12 | Increase Volume
 Print Screen | Snip & Sketch
 Cortana / Microsoft Teams | None
-Change RGB | Toggle RGB
-⊞ | Windows Key Lock Toggle
+Cycle RGB Mode | Toggle RGB
+⊞ | GUI Lock Toggle
 Home | NKRO Toggle
 ↑ | Increase RGB Hue
 ← | Decrease RGB Saturation
@@ -58,7 +56,7 @@ Without Fn | With Fn
 F1 | Decrease PC Brightness
 F2 | Increase PC Brightness
 F3 | Mission Control
-F4 | Finder
+F4 | None
 F5 | Decrease KB Brightness
 F6 | Increase KB Brightness
 F7 | Previous Track
@@ -69,13 +67,13 @@ F11 | Decrease Volume
 F12 | Increase Volume
 Take a screenshot (whole screen) | Take a screenshot (specific area)
 Siri (hold down) | None
-Change RGB | Toggle RGB
+Cycle RGB Mode | Toggle RGB
+⌘ | GUI Lock Toggle
 Home | NKRO Toggle
 ↑ | Increase RGB Hue
 ← | Decrease RGB Saturation
 ↓ | Decrease RGB Hue
 → | Increase RGB Saturation
-
 </details>
 
 * * *

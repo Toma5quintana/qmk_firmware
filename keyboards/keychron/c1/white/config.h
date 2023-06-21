@@ -1,5 +1,6 @@
-/* Copyright 2020 Adam Honse <calcprogrammer1@gmail.com>
- * Copyright 2020 Dimitris Mantzouranis <d3xter93@gmail.com>
+/* Copyright 2020 Dimitris Mantzouranis <d3xter93@gmail.com>
+ * Copyright 2021 IsaacDynamo
+ * Copyright 2022 Eduardo Fernandes
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,20 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#include "config_common.h"
-
 /* USB Device descriptor parameter */
-#define VENDOR_ID                   0x05AC
-#define PRODUCT_ID                  0x024F
-#define DEVICE_VER                  0x0001
+#define DESCRIPTION                 Keychron \x43\x31 White
 
-#define MANUFACTURER                Keychron
-// \x43\x31 is "C1" in ASCII hex, this is used to prevent macro expansion, because C1 is also a pin macro.
-#define PRODUCT                     Keychron \x43\x31 White
-
-#define WAIT_FOR_USB
 #define USB_MAX_POWER_CONSUMPTION   100
 
 /* key matrix size */
@@ -82,8 +72,8 @@
 /* Connects each switch in the dip switch to the GPIO pin of the MCU */
 #define DIP_SWITCH_PINS             { D7 }
 
-/* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
-#define DEBOUNCE                    5
+/* Disable RGB while USB is sleeping */
+#define LED_DISABLE_WHEN_USB_SUSPENDED true
 
 /* LED Status indicators */
 #define LED_CAPS_LOCK_PIN           B3
@@ -91,3 +81,16 @@
 
 #define LED_MAC_PIN                 B4
 #define LED_WIN_PIN                 B5
+
+/* Enable led matrix effects */
+#define ENABLE_LED_MATRIX_ALPHAS_MODS
+#define ENABLE_LED_MATRIX_BREATHING
+#define ENABLE_LED_MATRIX_BAND
+#define ENABLE_LED_MATRIX_BAND_PINWHEEL
+#define ENABLE_LED_MATRIX_BAND_SPIRAL
+#define ENABLE_LED_MATRIX_CYCLE_LEFT_RIGHT
+#define ENABLE_LED_MATRIX_CYCLE_UP_DOWN
+#define ENABLE_LED_MATRIX_CYCLE_OUT_IN
+#define ENABLE_LED_MATRIX_DUAL_BEACON
+#define ENABLE_LED_MATRIX_WAVE_LEFT_RIGHT
+#define ENABLE_LED_MATRIX_WAVE_UP_DOWN
