@@ -25,12 +25,12 @@
 
 /* key matrix size */
 #define MATRIX_ROWS 5
-#define MATRIX_COLS 15
+#define MATRIX_COLS 14
 
 #define DIODE_DIRECTION COL2ROW
 
-#define MATRIX_COL_PINS { A8, A9, A10, A11, A12, A13, A14, A15, B0, B1, B2, B3, B4, B5, B6 }
-#define MATRIX_ROW_PINS { D11, D10, D9, D8, D7 }
+#define MATRIX_COL_PINS { C0, C2, A11, B3, B4, B5, B6, B7, B8, B9, B10, B11, B12, B13 }
+#define MATRIX_ROW_PINS { A10, D11, D10, D9, D8 }
 
 // Connects each switch in the dip switch to the GPIO pin of the MCU
 #define DIP_SWITCH_PINS { D6, D5 }
@@ -48,7 +48,8 @@
 #define LED_MATRIX_ROW_CHANNELS 3
 #define LED_MATRIX_ROWS_HW (LED_MATRIX_ROWS * LED_MATRIX_ROW_CHANNELS)
 //note how ROW pins are assined in the following sequence top down row1 RBG, row2 RBG and so on
-#define LED_MATRIX_ROW_PINS { C4, C6, C5, C7, C9, C8, C10, C12, C11, C13, B13, C14, D3, B14, B15 }
+
+#define LED_MATRIX_ROW_PINS { A7, C15, A6, C5, C3, C4, C8, C6, C7, C11, C9, C10, D5, D7, D6 }
 
 #define LED_MATRIX_COLS MATRIX_COLS
 #define LED_MATRIX_COL_PINS MATRIX_COL_PINS
