@@ -1,6 +1,6 @@
 {
     "manufacturer": "CZC.Gaming",
-    "keyboard_name": "dwarf",
+    "keyboard_name": "Dwarf",
     "url": "https://www.czc.cz/czc-gaming-dwarf-herni-klavesnice-kailh-red-cz/288631/produkt",
     "maintainer": "Vesek",
     "bootloader": "sn32-dfu",
@@ -20,9 +20,9 @@
     },
     "processor": "SN32F248BF",
     "usb": {
-        "device_version": "0.0.1",
-        "pid": "0x024F",
-        "vid": "0x05AC"
+        "device_version": "1.0.0",
+        "vid": "0x4347",
+        "pid": "0x4B42"
     },
     "indicators": {
         "caps_lock": "A6",
