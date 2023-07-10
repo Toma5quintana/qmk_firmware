@@ -29,7 +29,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL, KC_LGUI, KC_LALT,                            KC_SPC,                             KC_RALT,   MO(1), KC_APP,  KC_RCTL,    KC_LEFT, KC_DOWN, KC_RGHT
     ),
     [1] = LAYOUT_tkl_ansi(
-        _______,          KC_MYCM, KC_WHOM, KC_MAIL, KC_MSEL, KC_MRWD, KC_MFFD, KC_MPLY, KC_MSTP, KC_VOLU, KC_VOLD, KC_MUTE, KC_CALC,    _______, _______, _______,
+        QK_BOOT,          KC_MYCM, KC_WHOM, KC_MAIL, KC_MSEL, KC_MRWD, KC_MFFD, KC_MPLY, KC_MSTP, KC_VOLU, KC_VOLD, KC_MUTE, KC_CALC,    _______, RGB_MOD, RGB_HUI,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
