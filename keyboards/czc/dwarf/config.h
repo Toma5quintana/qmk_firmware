@@ -16,8 +16,6 @@
 
 #define RGB_DISABLE_WHEN_USB_SUSPENDED // turn off effects when suspended
 
-#define RGB_MATRIX_CENTER { 86, 32 }
-
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 #define RGB_MATRIX_KEYPRESSES
 
