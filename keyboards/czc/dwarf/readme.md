@@ -2,7 +2,7 @@
 
 ![czc/dwarf](https://i.imgur.com/AV2fSoy.png)
 
-A keyboard sold by a dommestic reatiler CZC.cz from the Czech Republic.
+A keyboard sold by a dommestic reatiler CZC.cz from the Czech Republic. It is only produced with an ANSI layout.
 
 * Keyboard Maintainer: [Václav Straka](https://github.com/Vesek) (big thanks to the SonixQMK discord)
 * Hardware Supported: CZC.Gaming Dwarf
@@ -20,4 +20,7 @@ See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_to
 
 ## Bootloader
 
-* **Bootmagic reset**: Hold down the key at (0,0) in the matrix (Escape) and plug in the keyboard
+Enter the bootloader in 2 ways:
+
+* **Bootmagic reset**: Hold down Esc and plug in the keyboard (doesn't work but is still enabled)
+* **Keycode in layout**: Press Fn+Esc which is mapped to `QK_BOOT`
