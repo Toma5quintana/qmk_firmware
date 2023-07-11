@@ -10,11 +10,9 @@ A keyboard sold by a dommestic reatiler CZC.cz from the Czech Republic. It is on
 
 Make example for this keyboard (after setting up your build environment):
 
-    make czc/dwarf:default
+    qmk compile -kb czc/dwarf -km default
 
-Flashing example for this keyboard:
-
-    This keyboard must be flashed with an external tool (https://github.com/SonixQMK/sonix-flasher)
+This keyboard must be flashed with an external [GUI](https://github.com/SonixQMK/sonix-flasher) or [CLI](https://github.com/SonixQMK/SonixFlasherC)
 
 See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).
 
