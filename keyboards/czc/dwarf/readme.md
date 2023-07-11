@@ -14,6 +14,10 @@ Make example for this keyboard (after setting up your build environment):
 
 This keyboard must be flashed with an external [GUI](https://github.com/SonixQMK/sonix-flasher) or [CLI](https://github.com/SonixQMK/SonixFlasherC)
 
+CLI flashing example for this keyboard (after putting it in bootloader mode):
+    
+    sonixflasher -v 0c45/7040 -f czc_dwarf_default.bin
+
 See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).
 
 ## Bootloader
