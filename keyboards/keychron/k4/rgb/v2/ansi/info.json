@@ -274,7 +274,6 @@
             "splash": true, 
             "typing_heatmap": true 
             }, 
-        "driver": "IS31FL3733" 
     }
 
 }
