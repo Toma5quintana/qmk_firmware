@@ -32,5 +32,4 @@
 #define RGB_MATRIX_KEYPRESSES
 
 /* Configure the effects:                                              */
-#define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_CYCLE_LEFT_RIGHT
 #define RGB_MATRIX_TYPING_HEATMAP_DECREASE_DELAY_MS 50
