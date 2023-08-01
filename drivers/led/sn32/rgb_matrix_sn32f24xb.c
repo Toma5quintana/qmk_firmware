@@ -50,6 +50,26 @@
 #if !defined(SN32_PWM_DIRECTION)
 #    define SN32_PWM_DIRECTION DIODE_DIRECTION
 #endif
+
+#if !defined(RGB_MATRIX_ROW_CHANNELS)
+#   define RGB_MATRIX_ROW_CHANNELS 3
+#endif
+
+#if !defined(RGB_MATRIX_ROWS)
+#   define RGB_MATRIX_ROWS MATRIX_ROWS
+#endif
+
+#if !defined(RGB_MATRIX_COLS)
+#   define RGB_MATRIX_COLS MATRIX_COLS
+#endif
+
+#if !defined(RGB_MATRIX_COL_PINS)
+#   define RGB_MATRIX_COL_PINS MATRIX_COL_PINS
+#endif
+
+#if !defined(RGB_MATRIX_ROWS_HW)
+#   define RGB_MATRIX_ROWS_HW (RGB_MATRIX_ROWS * RGB_MATRIX_ROW_CHANNELS)
+#endif
 /*
     Default configuration example
 
