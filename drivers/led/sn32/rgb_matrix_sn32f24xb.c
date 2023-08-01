@@ -52,23 +52,23 @@
 #endif
 
 #if !defined(RGB_MATRIX_ROW_CHANNELS)
-#   define RGB_MATRIX_ROW_CHANNELS 3
+#    define RGB_MATRIX_ROW_CHANNELS 3
 #endif
 
 #if !defined(RGB_MATRIX_ROWS)
-#   define RGB_MATRIX_ROWS MATRIX_ROWS
+#    define RGB_MATRIX_ROWS MATRIX_ROWS
 #endif
 
 #if !defined(RGB_MATRIX_COLS)
-#   define RGB_MATRIX_COLS MATRIX_COLS
+#    define RGB_MATRIX_COLS MATRIX_COLS
 #endif
 
 #if !defined(RGB_MATRIX_COL_PINS)
-#   define RGB_MATRIX_COL_PINS MATRIX_COL_PINS
+#    define RGB_MATRIX_COL_PINS MATRIX_COL_PINS
 #endif
 
 #if !defined(RGB_MATRIX_ROWS_HW)
-#   define RGB_MATRIX_ROWS_HW (RGB_MATRIX_ROWS * RGB_MATRIX_ROW_CHANNELS)
+#    define RGB_MATRIX_ROWS_HW (RGB_MATRIX_ROWS * RGB_MATRIX_ROW_CHANNELS)
 #endif
 /*
     Default configuration example
@@ -134,7 +134,8 @@ static const pin_t    led_row_pins[RGB_MATRIX_ROWS_HW] = RGB_MATRIX_ROW_PINS; //
 static const pin_t    led_col_pins[RGB_MATRIX_COLS]    = RGB_MATRIX_COL_PINS;
 static RGB            led_state[RGB_MATRIX_LED_COUNT];     // led state buffer
 static RGB            led_state_buf[RGB_MATRIX_LED_COUNT]; // led state buffer
-#ifdef UNDERGLOW_RBG                                       // handle underglow with flipped B,G channels
+bool                  led_state_buf_update_required = false;
+#ifdef UNDERGLOW_RBG // handle underglow with flipped B,G channels
 static const uint8_t underglow_leds[UNDERGLOW_LEDS] = UNDERGLOW_IDX;
 #endif
 
@@ -494,7 +495,10 @@ void SN32F24xB_init(void) {
 }
 
 void SN32F24xB_flush(void) {
-    memcpy(led_state, led_state_buf, sizeof(RGB) * RGB_MATRIX_LED_COUNT);
+    if (led_state_buf_update_required) {
+        memcpy(led_state, led_state_buf, sizeof(RGB) * RGB_MATRIX_LED_COUNT);
+        led_state_buf_update_required = false;
+    }
 }
 
 void SN32F24xB_set_color(int index, uint8_t r, uint8_t g, uint8_t b) {
@@ -506,14 +510,24 @@ void SN32F24xB_set_color(int index, uint8_t r, uint8_t g, uint8_t b) {
         }
     }
     if (flip_gb) {
-        led_state_buf[index].r = r;
-        led_state_buf[index].b = g;
-        led_state_buf[index].g = b;
+        if (led_state_buf[index].r == r && led_state_buf[index].b == g && led_state_buf[index].g == b) {
+            return;
+        }
+
+        led_state_buf[index].r        = r;
+        led_state_buf[index].b        = g;
+        led_state_buf[index].g        = b;
+        led_state_buf_update_required = true;
     } else {
 #endif // UNDERGLOW_RBG
-        led_state_buf[index].r = r;
-        led_state_buf[index].b = b;
-        led_state_buf[index].g = g;
+        if (led_state_buf[index].r == r && led_state_buf[index].b == b && led_state_buf[index].g == g) {
+            return;
+        }
+
+        led_state_buf[index].r        = r;
+        led_state_buf[index].b        = b;
+        led_state_buf[index].g        = g;
+        led_state_buf_update_required = true;
 #ifdef UNDERGLOW_RBG
     }
 #endif // UNDERGLOW_RBG
