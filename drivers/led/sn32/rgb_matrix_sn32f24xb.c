@@ -167,7 +167,7 @@ static void rgb_ch_ctrl(PWMConfig *cfg) {
 #    if (SN32_PWM_CONTROL == HARDWARE_PWM)
         // Only P0.0 to P2.15 can be used as pwm output
         if (led_col_pins[i] > C15) continue;
-#    endif
+#    endif // SN32_PWM_CONTROL
         /* We use a tricky here, accordint to pfpa table of sn32f240b datasheet,
            pwm channel and pfpa of pin Px.y can be calculated as below:
              channel = (x*16+y)%24
@@ -181,7 +181,7 @@ static void rgb_ch_ctrl(PWMConfig *cfg) {
 #    if (SN32_PWM_CONTROL == HARDWARE_PWM)
         // Only P0.0 to P2.15 can be used as pwm output
         if (led_row_pins[i] > C15) continue;
-#    endif
+#    endif // SN32_PWM_CONTROL
         /* We use a tricky here, accordint to pfpa table of sn32f240b datasheet,
            pwm channel and pfpa of pin Px.y can be calculated as below:
              channel = (x*16+y)%24
@@ -194,7 +194,7 @@ static void rgb_ch_ctrl(PWMConfig *cfg) {
 #if (SN32_PWM_CONTROL == HARDWARE_PWM)
         cfg->channels[ch_idx].pfpamsk = pio_value > 23;
         cfg->channels[ch_idx].mode    = PWM_OUTPUT_ACTIVE_LEVEL;
-#endif
+#endif // SN32_PWM_CONTROL
     }
 }
 static void rgb_callback(PWMDriver *pwmp);
@@ -251,7 +251,7 @@ static void shared_matrix_rgb_disable_output(void) {
         pwmDisableChannel(&PWMD1, chan_col_order[y]);
 #    elif (SN32_PWM_CONTROL == SOFTWARE_PWM)
         setPinInput(led_col_pins[y]);
-#    endif
+#    endif // SN32_PWM_CONTROL
     }
     // Disable LED outputs on RGB channel pins
     for (uint8_t x = 0; x < RGB_MATRIX_ROWS_HW; x++) {
@@ -259,7 +259,7 @@ static void shared_matrix_rgb_disable_output(void) {
         writePinLow(led_row_pins[x]);
 #    elif (RGB_OUTPUT_ACTIVE_LEVEL == RGB_OUTPUT_ACTIVE_LOW)
         writePinHigh(led_row_pins[x]);
-#    endif
+#    endif // RGB_OUTPUT_ACTIVE_LEVEL
     }
 }
 
@@ -274,7 +274,7 @@ static void update_pwm_channels(PWMDriver *pwmp) {
     if (current_row % RGB_MATRIX_ROW_CHANNELS == 2) current_key_row++;
 #    elif (SN32_PWM_CONTROL == SOFTWARE_PWM)
     if (current_row % RGB_MATRIX_ROW_CHANNELS == 0) current_key_row++;
-#    endif
+#    endif // SN32_PWM_CONTROL
     /* Check if counter has wrapped around, reset before the next pass */
     if (current_key_row == RGB_MATRIX_ROWS) current_key_row = 0;
     // Disable LED output before scanning the key matrix
@@ -287,7 +287,7 @@ static void update_pwm_channels(PWMDriver *pwmp) {
         uint8_t led_index = g_led_config.matrix_co[current_key_row][current_key_col];
 #    if (SN32_PWM_CONTROL == SOFTWARE_PWM)
         if (led_index > RGB_MATRIX_LED_COUNT) continue;
-#    endif
+#    endif // SN32_PWM_CONTROL
         // Check if we need to enable RGB output
         if (led_state[led_index].b > 0) enable_pwm_output |= true;
         if (led_state[led_index].g > 0) enable_pwm_output |= true;
@@ -318,8 +318,8 @@ static void update_pwm_channels(PWMDriver *pwmp) {
 #            elif (RGB_OUTPUT_ACTIVE_LEVEL == RGB_OUTPUT_ACTIVE_LOW)
                 writePinHigh(led_row_pins[current_row + 1]);
                 writePinHigh(led_row_pins[current_row + 2]);
-#            endif
-#        endif
+#            endif // RGB_OUTPUT_ACTIVE_LEVEL
+#        endif     // EVISION_BOTCHED_RED_CHANNEL
                 break;
             case 1:
                 led_duty_cycle[current_key_col] = led_state[led_index].b;
@@ -347,7 +347,7 @@ static void shared_matrix_rgb_disable_output(void) {
     for (uint8_t x = 0; x < RGB_MATRIX_COLS; x++) {
 #    if (DIODE_DIRECTION != SN32_PWM_DIRECTION)
         setPinInput(led_col_pins[x]);
-#    endif
+#    endif // DIODE_DIRECTION != SN32_PWM_DIRECTION
         // Unselect all columns before scanning the key matrix
 #    if (RGB_OUTPUT_ACTIVE_LEVEL == RGB_OUTPUT_ACTIVE_LOW || defined(MATRIX_UNSELECT_DRIVE_HIGH))
         writePinHigh(led_col_pins[x]);
@@ -368,6 +368,13 @@ static void shared_matrix_rgb_disable_output(void) {
 }
 
 static void update_pwm_channels(PWMDriver *pwmp) {
+    /* Advance to the next LED RGB channel and get ready for the next pass */
+    last_key_col = current_key_col;
+    current_key_col++;
+    /* Check if counter has wrapped around, reset before the next pass */
+    if (current_key_col < MATRIX_COLS) row_shifter <<= 1;
+    if (current_key_col == MATRIX_COLS) row_shifter = MATRIX_ROW_SHIFTER;
+    if (current_key_col == RGB_MATRIX_COLS) current_key_col = 0;
     // Disable LED output before scanning the key matrix
     if (current_key_col < MATRIX_COLS) {
         shared_matrix_rgb_disable_output();
@@ -384,25 +391,12 @@ static void update_pwm_channels(PWMDriver *pwmp) {
 #    endif // RGB_OUTPUT_ACTIVE_LEVEL == RGB_OUTPUT_ACTIVE_HIGH && defined(MATRIX_UNSELECT_DRIVE_HIGH)
     }
 
-    /* Advance to the next LED RGB channel and get ready for the next pass */
-    last_key_col = current_key_col;
-    current_key_col++;
-    /* Check if counter has wrapped around, reset before the next pass */
-    if (current_key_col < MATRIX_COLS) {
-        row_shifter <<= 1;
-    }
-    if (current_key_col == MATRIX_COLS) {
-        row_shifter = MATRIX_ROW_SHIFTER;
-    }
-
-    if (current_key_col == RGB_MATRIX_COLS) {
-        current_key_col = 0;
-    }
-
     bool enable_pwm_output = false;
     for (uint8_t current_key_row = 0; current_key_row < MATRIX_ROWS; current_key_row++) {
         uint8_t led_index = g_led_config.matrix_co[current_key_row][current_key_col];
+#    if (SN32_PWM_CONTROL == SOFTWARE_PWM)
         if (led_index > RGB_MATRIX_LED_COUNT) continue;
+#    endif
         uint8_t led_row_id = (current_key_row * RGB_MATRIX_ROW_CHANNELS);
         // Check if we need to enable RGB output
         if (led_state[led_index].b > 0) enable_pwm_output |= true;
@@ -413,22 +407,31 @@ static void update_pwm_channels(PWMDriver *pwmp) {
         pwmEnableChannelI(pwmp, chan_row_order[(led_row_id + 0)], led_state[led_index].r);
         pwmEnableChannelI(pwmp, chan_row_order[(led_row_id + 1)], led_state[led_index].b);
         pwmEnableChannelI(pwmp, chan_row_order[(led_row_id + 2)], led_state[led_index].g);
+    }
+    // Enable RGB output
+    if (enable_pwm_output) {
+#        if (RGB_OUTPUT_ACTIVE_LEVEL == RGB_OUTPUT_ACTIVE_HIGH)
+        writePinHigh(led_col_pins[last_key_col]);
+#        elif (RGB_OUTPUT_ACTIVE_LEVEL == RGB_OUTPUT_ACTIVE_LOW)
+        writePinLow(led_col_pins[last_key_col]);
+#        endif // RGB_OUTPUT_ACTIVE_LEVEL
+    }
 #    elif (SN32_PWM_CONTROL == SOFTWARE_PWM)
         led_duty_cycle[(led_row_id + 0)] = led_state[led_index].r;
         led_duty_cycle[(led_row_id + 1)] = led_state[led_index].b;
         led_duty_cycle[(led_row_id + 2)] = led_state[led_index].g;
-#    endif
     }
     // Enable RGB output
     if (enable_pwm_output) {
-#    if (RGB_OUTPUT_ACTIVE_LEVEL == RGB_OUTPUT_ACTIVE_HIGH)
+#        if (RGB_OUTPUT_ACTIVE_LEVEL == RGB_OUTPUT_ACTIVE_HIGH)
         writePinHigh(led_col_pins[current_key_col]);
-#    elif (RGB_OUTPUT_ACTIVE_LEVEL == RGB_OUTPUT_ACTIVE_LOW)
+#        elif (RGB_OUTPUT_ACTIVE_LEVEL == RGB_OUTPUT_ACTIVE_LOW)
         writePinLow(led_col_pins[current_key_col]);
-#    endif
+#        endif // RGB_OUTPUT_ACTIVE_LEVEL
     }
+#    endif     // SN32_PWM_CONTROL
 }
-#endif // SN32_PWM_DIRECTION == ROW2COL
+#endif         // SN32_PWM_DIRECTION == ROW2COL
 
 static void rgb_callback(PWMDriver *pwmp) {
     // Disable the interrupt
@@ -446,7 +449,7 @@ static void rgb_callback(PWMDriver *pwmp) {
             writePinHigh(led_col_pins[pwm_index]);
         } else {
             setPinInputLow(led_col_pins[pwm_index]);
-#    endif
+#    endif // PWM_OUTPUT_ACTIVE_LEVEL
         }
     }
 #elif ((SN32_PWM_CONTROL == SOFTWARE_PWM) && (SN32_PWM_DIRECTION == ROW2COL))
@@ -465,7 +468,7 @@ static void rgb_callback(PWMDriver *pwmp) {
             writePinHigh(led_row_pins[pwm_index]);
         } else {
             writePinLow(led_row_pins[pwm_index]);
-#    endif
+#    endif // PWM_OUTPUT_ACTIVE_LEVEL
         }
     }
 #endif
