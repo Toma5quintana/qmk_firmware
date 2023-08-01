@@ -289,9 +289,9 @@ static void update_pwm_channels(PWMDriver *pwmp) {
         if (led_index > RGB_MATRIX_LED_COUNT) continue;
 #    endif
         // Check if we need to enable RGB output
-        if (led_state[led_index].b != 0) enable_pwm_output |= true;
-        if (led_state[led_index].g != 0) enable_pwm_output |= true;
-        if (led_state[led_index].r != 0) enable_pwm_output |= true;
+        if (led_state[led_index].b > 0) enable_pwm_output |= true;
+        if (led_state[led_index].g > 0) enable_pwm_output |= true;
+        if (led_state[led_index].r > 0) enable_pwm_output |= true;
             // Update matching RGB channel PWM configuration
 #    if (SN32_PWM_CONTROL == HARDWARE_PWM)
         switch (current_row % RGB_MATRIX_ROW_CHANNELS) {
@@ -405,9 +405,9 @@ static void update_pwm_channels(PWMDriver *pwmp) {
         if (led_index > RGB_MATRIX_LED_COUNT) continue;
         uint8_t led_row_id = (current_key_row * RGB_MATRIX_ROW_CHANNELS);
         // Check if we need to enable RGB output
-        if (led_state[led_index].b != 0) enable_pwm_output |= true;
-        if (led_state[led_index].g != 0) enable_pwm_output |= true;
-        if (led_state[led_index].r != 0) enable_pwm_output |= true;
+        if (led_state[led_index].b > 0) enable_pwm_output |= true;
+        if (led_state[led_index].g > 0) enable_pwm_output |= true;
+        if (led_state[led_index].r > 0) enable_pwm_output |= true;
             // Update matching RGB channel PWM configuration
 #    if (SN32_PWM_CONTROL == HARDWARE_PWM)
         pwmEnableChannelI(pwmp, chan_row_order[(led_row_id + 0)], led_state[led_index].r);
