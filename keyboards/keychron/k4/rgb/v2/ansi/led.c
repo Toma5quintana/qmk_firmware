@@ -1,3 +1,7 @@
+// Copyright 2023 PythonDeployer (@PythonDeployer)
+// SPDX-License-Identifier: GPL-2.0-or-later
+
+
 #include "quantum.h"
 #ifndef RGB_MATRIX_ENABLE
 void matrix_output_unselect_delay(uint8_t line, bool key_pressed) {
