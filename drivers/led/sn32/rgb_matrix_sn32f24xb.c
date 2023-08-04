@@ -286,7 +286,7 @@ static void update_pwm_channels(PWMDriver *pwmp) {
     for (uint8_t current_key_col = 0; current_key_col < RGB_MATRIX_COLS; current_key_col++) {
         uint8_t led_index = g_led_config.matrix_co[current_key_row][current_key_col];
 #    if (SN32_PWM_CONTROL == SOFTWARE_PWM)
-        if (led_index > RGB_MATRIX_LED_COUNT) continue;
+        if (led_index >= RGB_MATRIX_LED_COUNT) continue;
 #    endif // SN32_PWM_CONTROL
         // Check if we need to enable RGB output
         if (led_state[led_index].b > 0) enable_pwm_output |= true;
@@ -395,7 +395,7 @@ static void update_pwm_channels(PWMDriver *pwmp) {
     for (uint8_t current_key_row = 0; current_key_row < MATRIX_ROWS; current_key_row++) {
         uint8_t led_index = g_led_config.matrix_co[current_key_row][current_key_col];
 #    if (SN32_PWM_CONTROL == SOFTWARE_PWM)
-        if (led_index > RGB_MATRIX_LED_COUNT) continue;
+        if (led_index >= RGB_MATRIX_LED_COUNT) continue;
 #    endif
         uint8_t led_row_id = (current_key_row * RGB_MATRIX_ROW_CHANNELS);
         // Check if we need to enable RGB output
