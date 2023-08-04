@@ -373,10 +373,10 @@ static void update_pwm_channels(PWMDriver *pwmp) {
     last_key_col = current_key_col;
     current_key_col++;
     /* Check if counter has wrapped around, reset before the next pass */
-#if (DIODE_DIRECTION == ROW2COL)
+#    if (DIODE_DIRECTION == ROW2COL)
     if (current_key_col < MATRIX_COLS) row_shifter <<= 1;
     if (current_key_col == MATRIX_COLS) row_shifter = MATRIX_ROW_SHIFTER;
-#endif // DIODE_DIRECTION == ROW2COL
+#    endif // DIODE_DIRECTION == ROW2COL
     if (current_key_col == RGB_MATRIX_COLS) current_key_col = 0;
     // Disable LED output before scanning the key matrix
     if (current_key_col < MATRIX_COLS) {
