@@ -120,7 +120,7 @@ static uint8_t last_key_col                       = 0;   // key col scan counter
 static uint8_t led_duty_cycle[RGB_MATRIX_ROWS_HW] = {0}; // track the channel duty cycle
 #    endif
 #endif
-#if ((DIODE_DIRECTION == ROW2COL) || (SN32_PWM_DIRECTION == ROW2COL))
+#if (DIODE_DIRECTION == ROW2COL)
 static matrix_row_t row_shifter = MATRIX_ROW_SHIFTER;
 #endif
 extern matrix_row_t   raw_matrix[MATRIX_ROWS];                  // raw values
@@ -218,7 +218,7 @@ static void shared_matrix_scan_keys(matrix_row_t current_matrix[], uint8_t curre
         }
         if (matrix_locked) {
 #if (DIODE_DIRECTION == COL2ROW)
-#    if (DIODE_DIRECTION == SN32_PWM_DIRECTION)
+#    if (SN32_PWM_DIRECTION == DIODE_DIRECTION)
             matrix_read_cols_on_row(current_matrix, current_key);
 #    else
             // For each row...
@@ -228,14 +228,15 @@ static void shared_matrix_scan_keys(matrix_row_t current_matrix[], uint8_t curre
 
 #    endif // DIODE_DIRECTION == SN32_PWM_DIRECTION
 #elif (DIODE_DIRECTION == ROW2COL)
-#    if (DIODE_DIRECTION == SN32_PWM_DIRECTION)
+#    if (SN32_PWM_DIRECTION == DIODE_DIRECTION)
             matrix_read_rows_on_col(current_matrix, current_key, row_shifter);
 #    else
             // For each col...
+            matrix_row_t row_shifter = MATRIX_ROW_SHIFTER;
             for (uint8_t col_index = 0; col_index < MATRIX_COLS; col_index++, row_shifter <<= 1) {
                 matrix_read_rows_on_col(current_matrix, current_key, row_shifter);
             }
-#    endif // DIODE_DIRECTION == SN32_PWM_DIRECTION
+#    endif // SN32_PWM_DIRECTION
 #endif     // DIODE_DIRECTION
             matrix_scanned = true;
         }
@@ -372,8 +373,10 @@ static void update_pwm_channels(PWMDriver *pwmp) {
     last_key_col = current_key_col;
     current_key_col++;
     /* Check if counter has wrapped around, reset before the next pass */
+#if (DIODE_DIRECTION == ROW2COL)
     if (current_key_col < MATRIX_COLS) row_shifter <<= 1;
     if (current_key_col == MATRIX_COLS) row_shifter = MATRIX_ROW_SHIFTER;
+#endif // DIODE_DIRECTION == ROW2COL
     if (current_key_col == RGB_MATRIX_COLS) current_key_col = 0;
     // Disable LED output before scanning the key matrix
     if (current_key_col < MATRIX_COLS) {
