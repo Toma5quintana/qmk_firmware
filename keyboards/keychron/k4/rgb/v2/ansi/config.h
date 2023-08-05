@@ -16,7 +16,6 @@
 #define RGB_MATRIX_LED_COUNT 100
 
 
-#define BACKLIGHT_LEVELS 8
 
 #define MATRIX_ROWS 6
 #define MATRIX_COLS 19
