@@ -18,3 +18,6 @@
 
 /* Enable VIA RGB matrix and configure EEPROM emulation for VIA */
 #define VIA_QMK_RGBLIGHT_ENABLE
+
+/* Define dynamic keymap layer count */
+#define DYNAMIC_KEYMAP_LAYER_COUNT 2
