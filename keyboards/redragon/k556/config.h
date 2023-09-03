@@ -31,3 +31,6 @@
 /* Configure transistor logic for RGB matrix */
 #define PWM_OUTPUT_ACTIVE_LEVEL PWM_OUTPUT_ACTIVE_HIGH
 #define RGB_OUTPUT_ACTIVE_LEVEL RGB_OUTPUT_ACTIVE_LOW
+
+/* Enable RGB sleep */
+#define RGB_DISABLE_WHEN_USB_SUSPENDED
