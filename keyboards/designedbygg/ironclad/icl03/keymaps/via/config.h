@@ -14,22 +14,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "quantum.h"
-#ifndef RGB_MATRIX_ENABLE
-void matrix_output_unselect_delay(uint8_t line, bool key_pressed) {
-    for (int i = 0; i < TIME_US2I(MATRIX_IO_DELAY); ++i) {
-        __asm__ volatile("" ::: "memory");
-    }
-}
-#endif
-#ifdef LED_WIN_LOCK_PIN
-/* Handle the Win Lock LED */
-void keyboard_pre_init_kb(void) {
-	setPinOutput(LED_WIN_LOCK_PIN);
-	writePin(LED_WIN_LOCK_PIN, !LED_PIN_ON_STATE);
-}
-
-void housekeeping_task_kb(void) {
-	writePin(LED_WIN_LOCK_PIN,!keymap_config.no_gui);
-}
-#endif
+#pragma once
+#define WEAR_LEVELING_SN32_EMULATION_PAGE_COUNT 32
+// Enable RGB Matrix
+#define VIA_QMK_RGBLIGHT_ENABLE
+#define DYNAMIC_KEYMAP_LAYER_COUNT 3
+#define CAPS_LOCK_INDEX 61
+#define NUM_LOCK_INDEX 37

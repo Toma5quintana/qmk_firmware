@@ -14,12 +14,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef RGB_MATRIX_ENABLE
-#define HAL_USE_GPT TRUE
-#define SN32_GPT_USE_CT16B1 TRUE
-#include_next <halconf.h>
-#undef HAL_USE_PWM
-#define HAL_USE_PWM FALSE
-#else
-#include_next <halconf.h>
-#endif
+#pragma once
+
+/* RGB LED Config */
+#define SN32_RGB_MATRIX_ROW_PINS \
+    { C0, C1, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, B6, B7, B8, B9, B10, B11 }
+#define RGB_MATRIX_LED_COUNT (109)
