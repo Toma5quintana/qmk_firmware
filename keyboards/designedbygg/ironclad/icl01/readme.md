@@ -1,4 +1,4 @@
-# GG Ironclad
+# DesignedbyGG Ironclad
 
 Ironclad ICL01 (v1 and v2)
 

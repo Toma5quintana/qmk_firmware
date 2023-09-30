@@ -1,7 +1,7 @@
 {
     "keyboard_name": "Ironclad v3",
-    "manufacturer": "GG",
-    "url": "https://designedby.gg/product/berserker/",
+    "manufacturer": "DesignedbyGG",
+    "url": "https://designedby.gg/product/ironclad-v3/",
     "processor": "SN32F248BF",
     "maintainer": "dexter93",
     "bootloader": "sn32-dfu",
