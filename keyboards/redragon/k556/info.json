@@ -9,8 +9,7 @@
     "usb": {
         "vid": "0x0C45",
         "pid": "0x5004",
-        "device_version": "1.0.0",
-        "force_nkro": true
+        "device_version": "1.0.0"
     },
 
     "features": {
@@ -54,7 +53,7 @@
             "splash" : true,
             "typing_heatmap" : true
         },
-        "driver": "SN32F24xB",
+        "driver": "sn32f24xb",
         "layout": [
             {"matrix": [0, 0], "flags": 4, "x": 0, "y": 0},
 
