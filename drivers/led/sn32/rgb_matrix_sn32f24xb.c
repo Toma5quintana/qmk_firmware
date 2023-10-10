@@ -548,6 +548,26 @@ void sn32f24xb_set_color_all(uint8_t r, uint8_t g, uint8_t b) {
     }
 }
 
+#if defined(SHARED_MATRIX) && defined(BOOTMAGIC_LITE)
+void matrix_init_kb(void) {
+    matrix_init_user();
+    // do a single scan of matrix before RGB is running, for bootmagic lite
+#if (DIODE_DIRECTION == COL2ROW)
+    for (uint8_t row_index = 0; row_index < ROWS_PER_HAND; row_index++) {
+        matrix_read_cols_on_row(shared_matrix, row_index);
+    }
+#elif (DIODE_DIRECTION == ROW2COL)
+    matrix_row_t row_shifter = MATRIX_ROW_SHIFTER;
+    for (uint8_t col_index = 0; col_index < MATRIX_COLS; col_index++, row_shifter <<= 1) {
+        matrix_read_rows_on_col(shared_matrix, col_index, row_shifter);
+    }
+#else
+    #error "Shared matrix direct pins not supported!"
+#endif // DIODE_DIRECTION
+    matrix_scanned = true;
+}
+#endif
+
 bool matrix_scan_custom(matrix_row_t current_matrix[]) {
     if (!matrix_scanned) return false; // Nothing to process until we have the matrix scanned
 
