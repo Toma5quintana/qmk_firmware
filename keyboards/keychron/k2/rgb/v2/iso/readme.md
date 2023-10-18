@@ -9,7 +9,7 @@
 
 Compile example for this keyboard (after setting up your build environment):
 
-    qmk compile -kb keychron/k2/rgb/v2/iso -km iso
+    qmk compile -kb keychron/k2/rgb/v2/iso -km default
 
 Compile example for this keyboard with VIA (after setting up your build environment):
 
