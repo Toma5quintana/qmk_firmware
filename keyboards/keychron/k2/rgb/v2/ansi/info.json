@@ -5,7 +5,7 @@
     "maintainer": "ITNerd69",
     "usb": {
         "pid": "0xFE02",
-		"vid": "0x0001",
+		"vid": "0x3434",
 		"device_version": "1.0.0"
     },
 	"matrix_pins": {
@@ -30,8 +30,6 @@
         "caps_lock": "B9",
         "on_state": 1
     },
-   "width": 16,
-   "height": 6,
    "layouts": {
 		"LAYOUT_ansi": {
 			"layout": [
