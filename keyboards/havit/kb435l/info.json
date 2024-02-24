@@ -1,14 +1,11 @@
 {
+    "keyboard_name": "KB435L",
     "manufacturer": "Havit",
-    "url": "",
-    "maintainer": "humannplayer2",
-    "keyboard_name": "Havit KB435L",
+    "maintainer": "humanplayer2",
     "processor": "SN32F268F",
     "bootloader": "sn32-dfu",
     "matrix_pins": {
-      "cols": ["A8", "A9", "A10", "A11", "A12", "A13", "A14", "A15",
-               "D0", "D1", "D2", "D3", "D4", "D5",
-               "A1", "A2", "A3", "A4", "A5"],
+      "cols": ["A8", "A9", "A10", "A11", "A12", "A13", "A14", "A15", "D0", "D1", "D2", "D3", "D4", "D5", "A1", "A2", "A3", "A4", "A5"],
       "rows": ["B0", "B1", "B2", "B3", "B4", "B5"]
     },
     "usb": {
@@ -21,7 +18,7 @@
     },
     "diode_direction": "ROW2COL",
     "features": {
-        "bootmagic": true,
+        "bootmagic": false,
         "mousekey": false,
         "extrakey": true,
         "console": false,
@@ -31,11 +28,8 @@
         "rgblight": false,
         "audio": false
     },
-    "bootmagic": {
-    "matrix": [0, 0]
-    },
     "layouts": {
-        "LAYOUT": {
+        "LAYOUT_tkl_iso": {
             "layout": [
               {"matrix": [0, 0], "x": 0, "y": 0},
               {"matrix": [0, 1], "x": 1, "y": 0},
@@ -50,11 +44,9 @@
               {"matrix": [0, 10], "x": 10, "y": 0},
               {"matrix": [0, 11], "x": 11, "y": 0},
               {"matrix": [0, 12], "x": 12, "y": 0},
-
               {"matrix": [0, 15], "x": 14, "y": 0},
               {"matrix": [0, 14], "x": 15, "y": 0},
               {"matrix": [0, 16], "x": 16, "y": 0},
-
 
               {"matrix": [1, 0], "x": 0, "y": 1},
               {"matrix": [1, 1], "x": 1, "y": 1},
@@ -74,7 +66,6 @@
               {"matrix": [1, 15], "x": 15, "y": 1},
               {"matrix": [1, 16], "x": 16, "y": 1},
 
-
               {"matrix": [2, 0], "x": 0, "y": 2},
               {"matrix": [2, 1], "x": 1, "y": 2},
               {"matrix": [2, 2], "x": 2, "y": 2},
@@ -88,11 +79,9 @@
               {"matrix": [2, 10], "x": 10, "y": 2},
               {"matrix": [2, 11], "x": 11, "y": 2},
               {"matrix": [2, 12], "x": 12, "y": 2},
-
               {"matrix": [2, 14], "x": 14, "y": 2},
               {"matrix": [2, 15], "x": 15, "y": 2},
               {"matrix": [2, 16], "x": 16, "y": 2},
-
 
               {"matrix": [3, 0], "x": 0, "y": 3},
               {"matrix": [3, 1], "x": 1, "y": 3},
@@ -109,7 +98,6 @@
               {"matrix": [3, 12], "x": 12, "y": 3},
               {"matrix": [3, 13], "x": 13, "y": 3},
 
-
               {"matrix": [4, 0], "x": 0, "y": 4},
               {"matrix": [4, 1], "x": 1, "y": 4},
               {"matrix": [4, 2], "x": 2, "y": 4},
@@ -122,23 +110,17 @@
               {"matrix": [4, 9], "x": 9, "y": 4},
               {"matrix": [4, 10], "x": 10, "y": 4},
               {"matrix": [4, 11], "x": 11, "y": 4},
-
               {"matrix": [4, 13], "x": 13, "y": 4},
-
               {"matrix": [4, 16], "x": 16, "y": 4},
-
 
               {"matrix": [5, 0], "x": 0, "y": 5},
               {"matrix": [5, 1], "x": 1, "y": 5},
               {"matrix": [5, 2], "x": 2, "y": 5},
-
               {"matrix": [5, 4], "x": 4, "y": 5},
-
               {"matrix": [5, 6], "x": 6, "y": 5},
               {"matrix": [5, 7], "x": 7, "y": 5},
               {"matrix": [5, 8], "x": 8, "y": 5},
               {"matrix": [5, 9], "x": 9, "y": 5},
-
               {"matrix": [5, 16], "x": 16, "y": 5},
               {"matrix": [5, 17], "x": 17, "y": 5},
               {"matrix": [5, 18], "x": 18, "y": 5},
