@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 //test
-#include "quantum.h"
+//#include "quantum.h"
 
 
 enum layer_names {
@@ -171,8 +171,8 @@ bool dip_switch_update_user(uint8_t index, bool active) {
 
 void keyboard_post_init_user(void) {
   // Customise these values to desired behaviour
-   debug_enable = true;
-   debug_matrix = true;
+  // debug_enable = true;
+  // debug_matrix = true;
   // debug_keyboard = true;
   // debug_mouse = true;
 }

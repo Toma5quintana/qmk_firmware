@@ -26,8 +26,46 @@
 
 #define LED_CAPS_LOCK_PIN D4
 
+////////////////////////////////////////////////////////////////////////////////
+// source: platforms/chibios/_wait.h
+//
+// ( used by quantum/matrix.c and quantum/matrix_common.c)
+//
+// original = CPU_CLOCK / 1000000L / 4
+//
+// inside quantum/matrix_common.c  there:
+// __attribute__((weak)) void matrix_output_select_delay(void) {
+//    waitInputPinDelay();
+//}
+//
+// so  platforms/chibios/_wait.h =  #define waitInputPinDelay() wait_cpuclock(GPIO_INPUT_PIN_DELAY)
+//
+// there is a big BUG and DIFFERENCE between the Keychron stock firmware and
+// the latest SN32 sonix qmk firmware ( both sn32_devel & sn32_master - on Tue 20 Feb 2024 have THIS bug )
+// whole keys have insane pretouch sensitivity, so it's fixing that issue
+//
+//  suggest that it might be a good idea to write your own matrix.c
+//  but i don't have a time to fix that shit, so don't buy keychron K3v2
+//
+//#define GPIO_INPUT_PIN_DELAY (CPU_CLOCK / 1000000L / 2)
+//
+#define MATRIX_IO_DELAY 200
+//
+//
+//
+////////////////////////////////////////////////////////////////////////////////
+//#define TAPPING_TERM 200
 
-// trash disabled (prevent building why?)
+//#define LEADER_TIMEOUT 200
+
+//#define POINTING_DEVICE_ENABLE = no
+
+//#define TAP_CODE_DELAY 50
+//#define DEBOUNCE 30
+
+//#define NO_DEBUG 0
+
+//// trash disabled (prevent building why?)
 //#define MIDI_ENABLE = no
 //#define STENO_ENABLE = no
 //#define MOUSEKEY_ENABLE = no
@@ -35,16 +73,18 @@
 //#define CONSOLE_ENABLE = no
 //#define MATRIX_HAS_GHOST
 //#define NO_PRINT
+//#define CONSOLE_ENABLE = yes
+//#define DEBUG_MATRIX_SCAN_RATE
+//#define CONSOLE_ENABLE = yes
 
-#define NO_ACTION_TAPPING
+//#define NO_ACTION_TAPPING
 
-#define NO_ACTION_ONESHOT
+//#define NO_ACTION_ONESHOT
 
 //#define DEBOUNCE_TYPE asym_eager_defer_pk
 
 
 //test bugfix
-#define MATRIX_IO_DELAY 100
 
 
 
@@ -74,4 +114,7 @@
 //test
 
 //SRC += rgb_matrix_user.c
+
+/* Temporary solution for matrix delay */
+//#define IGNORE_ATOMIC_BLOCK
 

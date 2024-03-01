@@ -8,6 +8,7 @@
 		"vid": "0x3434",
 		"device_version": "1.0.0"
     },
+        //"polling_interval": "1",
 	"matrix_pins": {
         "cols": ["A8", "A9", "A10", "A11", "A12", "A13", "A14", "A15", "B0", "B1", "B2", "B3", "B4", "B5", "B6", "B7"],
         "rows": ["C15", "D11", "D10", "D9", "D8", "D7"],
@@ -31,9 +32,9 @@
         "caps_lock": "B9",
         "on_state": 1
     },
-   "qmk": {
-        "tap_keycode_delay": 100
-    },
+/*   "qmk": {
+        "tap_keycode_delay": 1000
+    },*/
    "layouts": {
 		"LAYOUT_ansi": {
 			"layout": [
