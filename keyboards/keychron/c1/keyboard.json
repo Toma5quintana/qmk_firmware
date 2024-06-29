@@ -11,7 +11,8 @@
         "extrakey": true,
         "mousekey": true,
         "nkro": true,
-        "rgb_matrix": true
+        "rgb_matrix": true,
+        "dip_switch": true
     },
     "lto": true,
     "indicators": {
@@ -133,6 +134,7 @@
     },
     "rgb_matrix": {
         "driver": "sn32f24xb",
+        "speed": 96,
         "animations": {
             "breathing": true,
             "band_spiral_val": true,
