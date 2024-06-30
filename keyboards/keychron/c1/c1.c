@@ -50,13 +50,18 @@ void keyboard_pre_init_user(void) {
     gpio_set_pin_output(LED_MAC_PIN);
 }
 
-void suspend_power_down_user(void) {
+void suspend_power_down_kb(void) {
     // Turn leds off
     mode_leds_show = false;
     mode_leds_update();
+
+    rgb_matrix_set_suspend_state(true);
 }
 
-void suspend_wakeup_init_user(void) {
+void suspend_wakeup_init_kb(void) {
     mode_leds_show = true;
     mode_leds_update();
+
+    rgb_matrix_set_suspend_state(false);
 }
+
