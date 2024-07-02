@@ -14,7 +14,6 @@
         "rgb_matrix": true,
         "dip_switch": true
     },
-    "lto": true,
     "indicators": {
         "caps_lock": "B10"
     },
@@ -134,7 +133,6 @@
     },
     "rgb_matrix": {
         "driver": "sn32f24xb",
-        "speed": 96,
         "animations": {
             "breathing": true,
             "band_spiral_val": true,
