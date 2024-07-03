@@ -17,12 +17,18 @@
 #include "quantum.h"
 
 bool mode_leds_show = true;
-bool mode_leds_windows;
+
+enum layer_names {
+    WIN_BASE,
+    WIN_FN,
+    MAC_BASE,
+    MAC_FN,
+}; /* Taken from the default keymap for readability */
 
 static void mode_leds_update(void){
-    if (mode_leds_show && mode_leds_windows) {
+    if (mode_leds_show && layer_state_is(WIN_BASE)) {
         gpio_write_pin_high(LED_WIN_PIN);
-    } else if (mode_leds_show && !mode_leds_windows) {
+    } else if (mode_leds_show && layer_state_is(MAC_BASE)) {
         gpio_write_pin_high(LED_MAC_PIN);
     }
 }
@@ -34,10 +40,9 @@ bool dip_switch_update_kb(uint8_t index, bool active) {
         return false;
     }
     if (index == 0) {
-        default_layer_set(1UL << (active ? 2 : 0));
+        default_layer_set(active ? MAC_BASE : WIN_BASE);
     }
 
-    mode_leds_windows = !active;
     mode_leds_update();
     return true;
 }

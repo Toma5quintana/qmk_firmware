@@ -18,4 +18,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define LED_MAC_PIN         B11 // Labeled Mac on KB since no Scroll Lock
 #define LED_WIN_PIN         B12 // Labeled Windows on KB since no Numpad
-
