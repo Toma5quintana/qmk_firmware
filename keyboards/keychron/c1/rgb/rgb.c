@@ -44,7 +44,7 @@ bool dip_switch_update_kb(uint8_t index, bool active) {
 
 #endif // DIP_SWITCH_ENABLE
 
-void keyboard_pre_init_user(void) {
+void keyboard_pre_init_kb(void) {
     // Setup Win & Mac LED Pins as output
     gpio_set_pin_output(LED_WIN_PIN);
     gpio_set_pin_output(LED_MAC_PIN);

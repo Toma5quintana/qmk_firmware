@@ -27,9 +27,7 @@ enum layer_names {
     MAC_FN,
 };
 
-enum custom_keycodes {
-  RST_KB = SAFE_RANGE
-};
+#define RST_KB QK_REBOOT // Readability
 
 #define KC_TASK LGUI(KC_TAB)        // Task viewer
 #define KC_FLXP LGUI(KC_E)          // Windows file explorer
@@ -118,11 +116,4 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     }
 };
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case RST_KB:
-            NVIC_SystemReset();
-            return false;
-    }
-    return true;
-};
+
