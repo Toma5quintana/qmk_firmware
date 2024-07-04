@@ -55,7 +55,7 @@ void keyboard_pre_init_kb(void) {
     gpio_set_pin_output(LED_MAC_PIN);
 }
 
-#ifdef RGB_MATRIX_ENABLE
+#ifdef RGB_MATRIX_SLEEP
     void suspend_power_down_kb(void) {
         // Turn leds off
         mode_leds_show = false;
@@ -70,4 +70,4 @@ void keyboard_pre_init_kb(void) {
 
         rgb_matrix_set_suspend_state(false);
     }
-#endif // RGB_MATRIX_ENABLE
+#endif // RGB_MATRIX_SLEEP
