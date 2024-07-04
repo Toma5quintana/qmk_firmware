@@ -35,17 +35,17 @@ static void mode_leds_update(void){
 
 #ifdef DIP_SWITCH_ENABLE
 
-bool dip_switch_update_kb(uint8_t index, bool active) {
-    if (!dip_switch_update_user(index, active)) {
-        return false;
-    }
-    if (index == 0) {
-        default_layer_set(active ? MAC_BASE : WIN_BASE);
-    }
+    bool dip_switch_update_kb(uint8_t index, bool active) {
+        if (!dip_switch_update_user(index, active)) {
+            return false;
+        }
+        if (index == 0) {
+            default_layer_set(active ? MAC_BASE : WIN_BASE);
+        }
 
-    mode_leds_update();
-    return true;
-}
+        mode_leds_update();
+        return true;
+    }
 
 #endif // DIP_SWITCH_ENABLE
 
@@ -55,18 +55,19 @@ void keyboard_pre_init_kb(void) {
     gpio_set_pin_output(LED_MAC_PIN);
 }
 
-void suspend_power_down_kb(void) {
-    // Turn leds off
-    mode_leds_show = false;
-    mode_leds_update();
+#ifdef RGB_MATRIX_ENABLE
+    void suspend_power_down_kb(void) {
+        // Turn leds off
+        mode_leds_show = false;
+        mode_leds_update();
 
-    rgb_matrix_set_suspend_state(true);
-}
+        rgb_matrix_set_suspend_state(true);
+    }
 
-void suspend_wakeup_init_kb(void) {
-    mode_leds_show = true;
-    mode_leds_update();
+    void suspend_wakeup_init_kb(void) {
+        mode_leds_show = true;
+        mode_leds_update();
 
-    rgb_matrix_set_suspend_state(false);
-}
-
+        rgb_matrix_set_suspend_state(false);
+    }
+#endif // RGB_MATRIX_ENABLE
