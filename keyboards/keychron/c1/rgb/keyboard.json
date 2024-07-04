@@ -1,6 +1,6 @@
 {
     "manufacturer": "Keychron",
-    "keyboard_name": "C1 RGB",
+    "keyboard_name": "Keychron C1",
     "maintainer": "NetUserGet",
     "bootloader": "sn32-dfu",
     "diode_direction": "COL2ROW",
@@ -32,8 +32,8 @@
     "url": "https://www.keychron.com/products/keychron-c1-wired-mechanical-keyboard?variant=32321247182937",
     "usb": {
         "device_version": "1.0.0",
-        "pid": "0x024F",
-        "vid": "0x05AC"
+        "pid": "0xFE20",
+        "vid": "0x3434"
     },
     "layouts": {
         "LAYOUT_tkl_ansi": {
