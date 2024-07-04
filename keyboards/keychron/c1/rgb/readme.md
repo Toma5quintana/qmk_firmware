@@ -6,14 +6,14 @@ A customizable TKL keyboard.
 
 * Keyboard Maintainer(s): [SonixQMK](https://github.com/SonixQMK), [IsaacDynamo](https://github.com/IsaacDynamo), [noldevin](https://github.com/noldevin), [vjdato21](https://github.com/vjdato21) [NetUserGet](https://github.com/NetUserGet)
 * Hardware Supported: Keychron C1 RGB Hot-swappable
-* Hardware Availability: [Keychron](https://www.keychron.com/products/keychron-c1-wired-mechanical-keyboard)
+* Hardware Availability: [Keychron](https://www.keychron.com/products/keychron-c1-wired-mechanical-keyboard?variant=32321246986329)
 
 Make example for this keyboard (after setting up your build environment):
 
     make keychron/c1/rgb:default
 Flashing example for this keyboard:
 1. If your keyboard currently has stock firmware installed, put your keyboard first into bootloader by shorting the boot pins found under the spacebar before plugging in your keyboard to the PC. Otherwise, press `Fn + Esc` to put your keyboard into bootloader.
-1. Download and run [Sonix Flasher](https://github.com/SonixQMK/sonix-flasher/releases/tag/v0.2.1).
+1. Download and run [Sonix Flasher](https://github.com/SonixQMK/sonix-flasher/releases).
 1. In Sonix Flasher, select `SN32F24X` under 'Device'. And select `0x00` as the qmk offset.
 1. Lastly, click 'Flash QMK...' and find the compiled firmware.
 
@@ -21,7 +21,7 @@ Flashing example for this keyboard:
 # Firmware Details
 ### Firmware Version:
 * Default - 0.7.101
-* VIA - EEPROM support currently unavailable for this keyboard/MCU.
+* VIA - Supported
 * * *
 # Keymapping
 ### Windows Mode
@@ -42,7 +42,6 @@ F10 | Mute
 F11 | Decrease Volume
 F12 | Increase Volume
 Print Screen | Snip & Sketch
-Cortana | None
 Change RGB | Toggle RGB
 Home | Increase RGB Saturation
 End | Decrease RGB Saturation
