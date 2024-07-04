@@ -25,15 +25,14 @@ enum layer_names {
     MAC_FN,
 }; /* Taken from the default keymap for readability */
 
-static void mode_leds_update(void){
-    if (mode_leds_show && layer_state_is(WIN_BASE)) {
-        gpio_write_pin_high(LED_WIN_PIN);
-    } else if (mode_leds_show && layer_state_is(MAC_BASE)) {
-        gpio_write_pin_high(LED_MAC_PIN);
-    }
-}
-
 #ifdef DIP_SWITCH_ENABLE
+    static void mode_leds_update(void){
+        if (mode_leds_show && layer_state_is(WIN_BASE)) {
+            gpio_write_pin_high(LED_WIN_PIN);
+        } else if (mode_leds_show && layer_state_is(MAC_BASE)) {
+            gpio_write_pin_high(LED_MAC_PIN);
+        }
+    }
 
     bool dip_switch_update_kb(uint8_t index, bool active) {
         if (!dip_switch_update_user(index, active)) {
@@ -47,13 +46,13 @@ static void mode_leds_update(void){
         return true;
     }
 
+    void keyboard_pre_init_kb(void) {
+        // Setup Win & Mac LED Pins as output
+        gpio_set_pin_output(LED_WIN_PIN);
+        gpio_set_pin_output(LED_MAC_PIN);
+    }
 #endif // DIP_SWITCH_ENABLE
 
-void keyboard_pre_init_kb(void) {
-    // Setup Win & Mac LED Pins as output
-    gpio_set_pin_output(LED_WIN_PIN);
-    gpio_set_pin_output(LED_MAC_PIN);
-}
 
 #ifdef RGB_MATRIX_SLEEP
     void suspend_power_down_kb(void) {
