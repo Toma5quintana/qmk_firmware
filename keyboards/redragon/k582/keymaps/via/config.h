@@ -1,4 +1,3 @@
-
 /* Copyright 2021 Harrison Chan (Xelus)
  *
  * This program is free software: you can redistribute it and/or modify
