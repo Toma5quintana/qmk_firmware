@@ -1,20 +1,20 @@
-# skyfall
+# gravity
 
-![skyfall](https://imgur.com/a/dSAWPTC)
+![gravity](https://imgur.com/TfBlmHo)
 
 *A short description of the keyboard/project*
 
 * Keyboard Maintainer: [Alex](https://github.com/AlexHtr)
-* Hardware Supported: Wired mode only, no side led
-* Hardware Availability: https://hator.gg/keyboards/skyfall-tkl-pro-wireless/
+* Hardware Supported: Wired mode, side led enabled
+* Hardware Availability: https://hator.gg/keyboards/gravity_tkl/
 
 Make example for this keyboard (after setting up your build environment):
 
-    make skyfall:default
+    qmk compile -kb hator/gravity/tkl
 
 Flashing example for this keyboard:
 
-    make skyfall:default:flash
+    qmk flash -kb hator/gravity/tkl -km via
 
 See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).
 
@@ -22,6 +22,6 @@ See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_to
 
 Enter the bootloader in 3 ways:
 
-* **Bootmagic reset**: Hold down the key at (0,0) in the matrix (usually the top left key or Escape) and plug in the keyboard
-* **Physical reset button**: Briefly press the button on the back of the PCB - some may have pads you must short instead
+* **Bootmagic reset**: Hold down the key at (0,0) in the matrix (Escape) and plug in the keyboard
+* **Physical reset button**: You can locate the boot bins ander the Spacebar.
 * **Keycode in layout**: Press the key mapped to `QK_BOOT` if it is available

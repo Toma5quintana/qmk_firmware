@@ -1,5 +1,5 @@
 {
-  "name": "HATOR Gravity",
+  "name": "HATOR Gravity TKL",
   "vendorId": "0x4853",
   "productId": "0x0200",
   "menus": ["qmk_rgb_matrix"],

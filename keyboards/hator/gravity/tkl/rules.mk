@@ -1,3 +1,2 @@
-EEPROM_DRIVER = wear_leveling
-WEAR_LEVELING_DRIVER = sn32_flash
+# This file intentionally left blank
 ENCODER_MAP_ENABLE = yes
