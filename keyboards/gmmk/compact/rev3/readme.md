@@ -2,10 +2,11 @@
 
 Hardware Supported: SN32F268
 Revisions
+```
 rev1: IS31FL3731    , NOT SUPPORTED, red led color only
 rev2: VS12L03A (I2C), SN before SNSS12116xxxxx
 rev3: VS12L17A (SPI), SN equal or after SNSS12116xxxxx
-
+```
 Make example for this keyboard (after setting up your build environment):
 
     to build ANSI keymap:
