@@ -1,3 +1,19 @@
+/*
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "quantum.h"
 
 #ifdef RGB_MATRIX_ENABLE
@@ -99,14 +115,14 @@ const is31fl3737_led_t PROGMEM g_is31fl3737_leds[IS31FL3737_LED_COUNT] = {
 
 led_config_t g_led_config = {
     {
-        {11, 10, 9, 8, 7, 6, 5, 4, 55, 54, 53, 52}, //0
-        {3, 2, 1, 0, 23, 22, 21, 20, 19, 47, 46, 45}, //1
-        {18, 17, 16, 15, 14, 13, 12, 25, 63, 62, 61, 60}, //2
-        {34, 33, 32, 31, 30, 29, 28, 27, 76, 75, 74, 73}, //3
-        {26, NO_LED, 24, 43, 42, 41, 40, 39, 71, 70, 69, 68}, //4
-        {38, 37, 36, NO_LED, 35, NO_LED, NO_LED, 84, 83, 82, NO_LED, NO_LED}, //5
-        {44, 67, NO_LED, 57, 56, 77, 86, 85, 81, 80, 79, 78}, //6
-        {51, 50, 49, 48, 66, 65, 64, 59, 58, NO_LED, 72, NO_LED}  //7
+        {11,     10,      9,      8,      7,      6,      5,      4,     55,     54,     53,     52}, //0
+        { 3,      2,      1,      0,     23,     22,     21,     20,     19,     47,     46,     45}, //1
+        {18,     17,     16,     15,     14,     13,     12,     25,     63,     62,     61,     60}, //2
+        {34,     33,     32,     31,     30,     29,     28,     27,     76,     75,     74,     73}, //3
+        {26, NO_LED,     24,     43,     42,     41,     40,     39,     71,     70,     69,     68}, //4
+        {38,     37,     36, NO_LED,     35, NO_LED, NO_LED,     84,     83,     82, NO_LED, NO_LED}, //5
+        {44,     67, NO_LED,     57,     56,     77,     86,     85,     81,     80,     79,     78}, //6
+        {51,     50,     49,     48,     66,     65,     64,     59,     58, NO_LED,     72, NO_LED}  //7
     }, 
     {
         {0,0},{15,0},{30,0},{45,0},{60,0},{75,0},{90,0},{105,0},{120,0},{135,0},{150,0},{165,0},{180,0},{195,0},{210,0},{224,0},
@@ -117,12 +133,14 @@ led_config_t g_led_config = {
         {0,64},{23,64},{45,64},{68,64},{90,64},{112,64},{135,64},{157,64},{180,64},{202,64},{224,64}
     }, 
     {
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4
+        1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+        1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
+        1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
+        1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
+        1,    4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
+        1, 1, 1,    4,       1, 1, 1,      
+        4,    1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 
+        4, 1, 1, 1, 1, 1, 1, 4, 4,    1,   
     }
 };
 
